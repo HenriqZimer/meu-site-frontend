@@ -1,0 +1,621 @@
+/**
+ * Vuetify Dark Theme Optimizations
+ * Garante que todas as cores funcionem corretamente no tema dark
+ */
+
+/* Base Application Styles */
+.v-application {
+  font-family: 'Inter', sans-serif !important;
+  background: rgb(var(--v-theme-background)) !important;
+}
+
+/* Material Design Icons optimization */
+.mdi::before {
+  font-display: swap;
+}
+
+/* Force transparent backgrounds on ALL icon elements globally */
+[class*="mdi-"],
+i.mdi,
+.v-icon.mdi,
+.v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+[class*="mdi-"]::before,
+[class*="mdi-"]::after,
+i.mdi::before,
+i.mdi::after,
+.v-icon::before,
+.v-icon::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Remove any default backgrounds from Material Design Icons */
+.mdi,
+.mdi::before,
+.mdi::after,
+.v-icon,
+.v-icon::before,
+.v-icon::after {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Font display optimization for Material Design Icons */
+@media (prefers-reduced-motion: no-preference) {
+  .v-icon {
+    transition: transform 0.2s ease;
+  }
+}
+
+/* ===================================
+   DARK THEME COLOR CORRECTIONS
+   =================================== */
+
+/* Text Colors */
+.v-theme--dark {
+  --color-text-primary: rgb(241, 245, 249);
+  --color-text-secondary: rgb(203, 213, 225);
+  --color-text-muted: rgb(148, 163, 184);
+}
+
+.v-theme--dark .text-medium-emphasis {
+  color: rgba(255, 255, 255, 0.87) !important;
+}
+
+.v-theme--light .text-medium-emphasis {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+/* Headings - garantir contraste no dark theme */
+.v-theme--dark h1,
+.v-theme--dark h2,
+.v-theme--dark h3,
+.v-theme--dark h4,
+.v-theme--dark h5,
+.v-theme--dark h6 {
+  color: rgb(241, 245, 249) !important;
+}
+
+/* Better contrast for descriptions */
+.v-theme--dark .hero-description,
+.v-theme--dark .section-description,
+.v-theme--dark .project-description {
+  color: rgb(203, 213, 225) !important;
+}
+
+/* ===================================
+   BUTTONS
+   =================================== */
+
+/* Primary buttons */
+.v-theme--dark .v-btn--variant-flat.v-btn--color-primary {
+  background: rgb(59, 130, 246) !important;
+  color: white !important;
+}
+
+.v-theme--dark .v-btn--variant-flat.v-btn--color-primary:hover {
+  background: rgb(96, 165, 250) !important;
+}
+
+/* Outlined buttons */
+.v-theme--dark .v-btn--variant-outlined {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  color: rgb(203, 213, 225) !important;
+}
+
+.v-theme--dark .v-btn--variant-outlined.v-btn--color-primary {
+  border-color: rgb(59, 130, 246) !important;
+  color: rgb(59, 130, 246) !important;
+}
+
+.v-theme--dark .v-btn--variant-outlined:hover {
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+/* ===================================
+   CARDS & SURFACES
+   =================================== */
+
+.v-theme--dark .v-card,
+.v-theme--dark .v-sheet {
+  color: rgb(241, 245, 249) !important;
+  border-color: rgba(148, 163, 184, 0.15) !important;
+}
+
+/* Card titles and text */
+.v-theme--dark .v-card-title {
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-card-subtitle,
+.v-theme--dark .v-card-text {
+  color: rgb(203, 213, 225) !important;
+}
+
+/* ===================================
+   CHIPS & BADGES
+   =================================== */
+
+.v-theme--dark .v-chip {
+  color: rgb(203, 213, 225) !important;
+}
+
+.v-theme--dark .v-chip--variant-outlined {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+.v-theme--dark .v-chip--variant-elevated.v-chip--color-primary {
+  background: rgb(59, 130, 246) !important;
+  color: white !important;
+}
+
+.v-theme--dark .v-badge__badge {
+  font-weight: 600 !important;
+}
+
+/* ===================================
+   NAVIGATION
+   =================================== */
+
+.v-theme--dark .v-navigation-drawer {
+  background: rgb(30, 41, 59) !important;
+  border-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+.v-theme--dark .v-list-item {
+  color: rgb(203, 213, 225) !important;
+}
+
+.v-theme--dark .v-list-item:hover {
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+.v-theme--dark .v-list-item--active {
+  background: rgba(59, 130, 246, 0.12) !important;
+  color: rgb(96, 165, 250) !important;
+}
+
+/* ===================================
+   FORMS
+   =================================== */
+
+.v-theme--dark .v-text-field input,
+.v-theme--dark .v-textarea textarea,
+.v-theme--dark .v-select input {
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-text-field .v-label,
+.v-theme--dark .v-textarea .v-label,
+.v-theme--dark .v-select .v-label {
+  color: rgb(148, 163, 184) !important;
+}
+
+.v-theme--dark .v-text-field .v-field__outline,
+.v-theme--dark .v-textarea .v-field__outline {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+/* ===================================
+   MENUS & OVERLAYS
+   =================================== */
+
+.v-theme--dark .v-menu .v-list,
+.v-theme--dark .v-dialog .v-card {
+  background: rgb(30, 41, 59) !important;
+}
+
+.v-theme--dark .v-overlay__scrim {
+  background: rgba(15, 23, 42, 0.8) !important;
+}
+
+/* ===================================
+   TOOLTIPS
+   =================================== */
+
+.v-theme--dark .v-tooltip .v-overlay__content {
+  background: rgb(51, 65, 85) !important;
+  color: rgb(241, 245, 249) !important;
+}
+
+/* ===================================
+   DIVIDERS & BORDERS
+   =================================== */
+
+.v-theme--dark .v-divider {
+  border-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+/* ===================================
+   TABLES
+   =================================== */
+
+.v-theme--dark .v-table {
+  background: rgb(30, 41, 59) !important;
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-table thead th {
+  color: rgb(203, 213, 225) !important;
+  border-bottom-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+.v-theme--dark .v-table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.04) !important;
+}
+
+/* ===================================
+   TABS
+   =================================== */
+
+.v-theme--dark .v-tabs {
+  background: rgb(30, 41, 59) !important;
+}
+
+.v-theme--dark .v-tab {
+  color: rgb(148, 163, 184) !important;
+}
+
+.v-theme--dark .v-tab--active {
+  color: rgb(96, 165, 250) !important;
+}
+
+/* ===================================
+   PROGRESS & LOADING
+   =================================== */
+
+.v-theme--dark .v-progress-linear {
+  background: rgba(148, 163, 184, 0.12) !important;
+}
+
+.v-theme--dark .v-progress-circular {
+  color: rgb(59, 130, 246) !important;
+}
+
+/* ===================================
+   SNACKBARS & ALERTS
+   =================================== */
+
+.v-theme--dark .v-snackbar {
+  background: rgb(51, 65, 85) !important;
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-alert {
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+/* ===================================
+   FOCUS & ACCESSIBILITY
+   =================================== */
+
+.v-btn:focus-visible,
+.v-list-item:focus-visible,
+.v-chip:focus-visible {
+  outline: 2px solid rgb(96, 165, 250) !important;
+  outline-offset: 2px !important;
+}
+
+/* Remove default focus outline for mouse users */
+.v-btn:focus:not(:focus-visible),
+.v-list-item:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+/* ===================================
+   ICONS
+   =================================== */
+
+.v-theme--dark .v-icon {
+  color: currentColor;
+}
+
+/* Primary colored icons */
+.v-theme--dark .v-icon.text-primary {
+  color: rgb(96, 165, 250) !important;
+}
+
+/* ===================================
+   ICON COLOR SYSTEM - Dark Theme
+   Cores específicas para ícones de tecnologias e marcas
+   =================================== */
+
+/* Infrastructure & Cloud */
+.v-theme--dark .icon-kubernetes,
+.v-theme--dark [data-icon="kubernetes"] .v-icon {
+  color: rgb(80, 140, 245) !important;
+}
+
+.v-theme--dark .icon-docker,
+.v-theme--dark [data-icon="docker"] .v-icon {
+  color: rgb(72, 169, 255) !important;
+}
+
+.v-theme--dark .icon-terraform,
+.v-theme--dark [data-icon="terraform"] .v-icon {
+  color: rgb(140, 91, 212) !important;
+}
+
+.v-theme--dark .icon-aws,
+.v-theme--dark [data-icon="aws"] .v-icon {
+  color: rgb(255, 169, 77) !important;
+}
+
+.v-theme--dark .icon-ansible,
+.v-theme--dark [data-icon="ansible"] .v-icon {
+  color: rgb(255, 82, 82) !important;
+}
+
+/* Programming Languages */
+.v-theme--dark .icon-python,
+.v-theme--dark [data-icon="python"] .v-icon {
+  color: rgb(87, 138, 201) !important;
+}
+
+.v-theme--dark .icon-nodejs,
+.v-theme--dark [data-icon="nodejs"] .v-icon {
+  color: rgb(104, 184, 104) !important;
+}
+
+.v-theme--dark .icon-go,
+.v-theme--dark [data-icon="go"] .v-icon {
+  color: rgb(77, 199, 237) !important;
+}
+
+.v-theme--dark .icon-typescript,
+.v-theme--dark [data-icon="typescript"] .v-icon {
+  color: rgb(87, 138, 222) !important;
+}
+
+.v-theme--dark .icon-rust,
+.v-theme--dark [data-icon="rust"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+/* Databases */
+.v-theme--dark .icon-postgresql,
+.v-theme--dark [data-icon="postgresql"] .v-icon {
+  color: rgb(89, 132, 169) !important;
+}
+
+.v-theme--dark .icon-mongodb,
+.v-theme--dark [data-icon="mongodb"] .v-icon {
+  color: rgb(104, 184, 104) !important;
+}
+
+.v-theme--dark .icon-redis,
+.v-theme--dark [data-icon="redis"] .v-icon {
+  color: rgb(255, 103, 103) !important;
+}
+
+/* CI/CD & Tools */
+.v-theme--dark .icon-git,
+.v-theme--dark [data-icon="git"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark .icon-github,
+.v-theme--dark [data-icon="github"] .v-icon {
+  color: rgb(203, 213, 225) !important;
+}
+
+.v-theme--dark .icon-gitlab,
+.v-theme--dark [data-icon="gitlab"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark .icon-jenkins,
+.v-theme--dark [data-icon="jenkins"] .v-icon {
+  color: rgb(255, 169, 77) !important;
+}
+
+.v-theme--dark .icon-prometheus,
+.v-theme--dark [data-icon="prometheus"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark .icon-grafana,
+.v-theme--dark [data-icon="grafana"] .v-icon {
+  color: rgb(255, 169, 77) !important;
+}
+
+/* Monitoring */
+.v-theme--dark .icon-datadog,
+.v-theme--dark [data-icon="datadog"] .v-icon {
+  color: rgb(140, 91, 212) !important;
+}
+
+/* Frontend */
+.v-theme--dark .icon-vue,
+.v-theme--dark [data-icon="vue"] .v-icon {
+  color: rgb(104, 184, 104) !important;
+}
+
+.v-theme--dark .icon-react,
+.v-theme--dark [data-icon="react"] .v-icon {
+  color: rgb(77, 199, 237) !important;
+}
+
+.v-theme--dark .icon-nuxt,
+.v-theme--dark [data-icon="nuxt"] .v-icon {
+  color: rgb(104, 184, 104) !important;
+}
+
+/* Specific Technologies by Data Attribute */
+.v-theme--dark [data-icon="helm"] .v-icon {
+  color: rgb(89, 132, 169) !important;
+}
+
+.v-theme--dark [data-icon="gitlab-ci"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark [data-icon="github-actions"] .v-icon {
+  color: rgb(87, 169, 255) !important;
+}
+
+.v-theme--dark [data-icon="argocd"] .v-icon {
+  color: rgb(255, 142, 99) !important;
+}
+
+.v-theme--dark [data-icon="jenkins"] .v-icon {
+  color: rgb(255, 99, 99) !important;
+}
+
+.v-theme--dark [data-icon="prometheus"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark [data-icon="grafana"] .v-icon {
+  color: rgb(255, 169, 77) !important;
+}
+
+.v-theme--dark [data-icon="elk-stack"] .v-icon {
+  color: rgb(77, 169, 169) !important;
+}
+
+.v-theme--dark [data-icon="datadog"] .v-icon {
+  color: rgb(140, 91, 212) !important;
+}
+
+.v-theme--dark [data-icon="opentelemetry"] .v-icon {
+  color: rgb(255, 189, 77) !important;
+}
+
+.v-theme--dark [data-icon="postgresql"] .v-icon {
+  color: rgb(89, 132, 169) !important;
+}
+
+.v-theme--dark [data-icon="redis"] .v-icon {
+  color: rgb(255, 103, 103) !important;
+}
+
+.v-theme--dark [data-icon="rabbitmq"] .v-icon {
+  color: rgb(255, 142, 77) !important;
+}
+
+.v-theme--dark [data-icon="kafka"] .v-icon {
+  color: rgb(203, 213, 225) !important;
+}
+
+.v-theme--dark [data-icon="vault"] .v-icon {
+  color: rgb(255, 229, 92) !important;
+}
+
+.v-theme--dark [data-icon="consul"] .v-icon {
+  color: rgb(255, 122, 162) !important;
+}
+
+.v-theme--dark [data-icon="cilium"] .v-icon {
+  color: rgb(255, 215, 92) !important;
+}
+
+.v-theme--dark [data-icon="ebpf"] .v-icon {
+  color: rgb(255, 169, 92) !important;
+}
+
+.v-theme--dark [data-icon="git"] .v-icon {
+  color: rgb(255, 122, 99) !important;
+}
+
+.v-theme--dark [data-icon="linux"] .v-icon {
+  color: rgb(255, 215, 92) !important;
+}
+
+.v-theme--dark [data-icon="webassembly"] .v-icon {
+  color: rgb(140, 110, 240) !important;
+}
+
+/* Icon Containers - Remove colored backgrounds, keep transparent */
+.v-theme--dark .tech-icon-container,
+.v-theme--dark .icon-wrapper,
+.v-theme--dark .story-icon,
+.v-theme--dark .stat-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Force transparent on v-icon itself and all parent containers */
+.v-theme--dark .v-icon,
+.v-theme--dark .v-icon::before,
+.v-theme--dark .v-icon::after {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Remove any Vuetify default backgrounds from icon containers */
+.v-theme--dark .tech-icon-container *,
+.v-theme--dark .story-icon *,
+.v-theme--dark .stat-icon * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Hover states for icon containers */
+.v-theme--dark .tech-card:hover .tech-icon-container,
+.v-theme--dark .story-card:hover .story-icon,
+.v-theme--dark .stat-icon:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  transform: scale(1.1);
+}
+
+/* Story Icons - About Component */
+.v-theme--dark .story-icon .v-icon {
+  color: rgb(96, 165, 250) !important;
+}
+
+/* Stat Icons - About Component */
+.v-theme--dark .stat-icon .v-icon {
+  color: rgb(96, 165, 250) !important;
+}
+
+/* Value Icons - About Component (when background is set) */
+.v-theme--dark .value-icon .v-icon {
+  color: white !important;
+}
+
+/* Heart Icon - Footer */
+.v-theme--dark .heart-icon {
+  color: rgb(239, 68, 68) !important;
+}
+
+/* ===================================
+   PAGINATION
+   =================================== */
+
+.v-theme--dark .v-pagination__item {
+  background: rgb(30, 41, 59) !important;
+  color: rgb(203, 213, 225) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+.v-theme--dark .v-pagination__item--active {
+  background: rgb(59, 130, 246) !important;
+  color: white !important;
+  border-color: rgb(59, 130, 246) !important;
+}
+
+/* ===================================
+   EXPANSION PANELS
+   =================================== */
+
+.v-theme--dark .v-expansion-panel {
+  background: rgb(30, 41, 59) !important;
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-expansion-panel-title {
+  color: rgb(241, 245, 249) !important;
+}
+
+.v-theme--dark .v-expansion-panel-text {
+  color: rgb(203, 213, 225) !important;
+}

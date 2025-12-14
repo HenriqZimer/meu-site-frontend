@@ -1,0 +1,56 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build outputs
+.output
+.nuxt
+dist
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Development files
+.vscode
+.idea
+
+# Git
+.git
+.gitignore
+
+# CI/CD
+.github
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+./scripts
+Makefile
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+LICENSE
+docker-compose-dev.yml
+docker-compose-swarm.yml
+dockercd -compose-teste.yml

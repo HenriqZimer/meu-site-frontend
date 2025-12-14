@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://henriqzimer.com.br/sitemap.xml
+
+# Search engine specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Block build artifacts and API routes
+Disallow: /_nuxt/
+Disallow: /api/
+Disallow: /.nuxt/
+
+# Allow important static assets
+Allow: /_nuxt/*.css$
+Allow: /_nuxt/*.js$
+Allow: /_nuxt/*.woff2$
+Allow: /_nuxt/*.png$
+Allow: /_nuxt/*.jpg$
+Allow: /_nuxt/*.webp$
+Allow: /_nuxt/*.svg$
+
+# Performance optimization
+Crawl-delay: 1

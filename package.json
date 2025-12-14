@@ -1,0 +1,71 @@
+{
+  "name": "meu-site",
+  "version": "1.0.0",
+  "description": "Portfolio profissional responsivo com Vue 3, Nuxt 3 e Vuetify - Design minimalista focado em DevOps",
+  "author": "Henrique Pereira Zimermann <contato@henriqzimer.com.br>",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "homepage": "https://henriqzimer.com.br",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HenriqZimer/meu-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HenriqZimer/meu-site/issues"
+  },
+  "keywords": [
+    "portfolio",
+    "vue3",
+    "nuxt3",
+    "vuetify",
+    "typescript",
+    "devops",
+    "responsive",
+    "landing-page"
+  ],
+  "engines": {
+    "node": ">=18.14.0 || >=20.0.0 || >=22.0.0 || >=24.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "dev:prod": "nuxt preview",
+    "build": "nuxt build",
+    "build:prod": "NODE_ENV=production nuxt build",
+    "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs",
+    "generate": "nuxt generate",
+    "test:build": "npm run build",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@artmizu/nuxt-prometheus": "^2.7.0",
+    "@googlemaps/markerclusterer": "^2.6.2",
+    "@mdi/font": "^7.4.47",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/scripts": "^0.12.1",
+    "@nuxt/ui": "^4.0.1",
+    "@pinia/nuxt": "^0.11.3",
+    "@unhead/vue": "^2.0.19",
+    "nuxt": "^4.1.3",
+    "pinia": "^3.0.4",
+    "typescript": "^5.9.3",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.10.5",
+    "vuetify-nuxt-module": "^0.18.8"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxtjs/sitemap": "^7.4.7",
+    "@types/node": "^24.7.1",
+    "eslint": "^9.37.0",
+    "sass-embedded": "^1.93.2"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.34.4"
+  }
+}

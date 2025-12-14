@@ -1,0 +1,194 @@
+/**
+ * Critical CSS - Above the fold styles only
+ * Minimal styles needed for initial render
+ */
+
+/* === FONT LOADING === */
+.v-application {
+  font-family: 'Inter', sans-serif !important;
+  font-display: swap;
+  line-height: 1.5;
+  background: rgb(var(--v-theme-background));
+  color: rgb(var(--v-theme-on-surface));
+}
+
+@font-face {
+  font-family: 'Material Design Icons';
+  src: url('https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.mdi::before, .v-icon::before {
+  font-family: 'Material Design Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* === CRITICAL LAYOUT === */
+.v-application .v-container {
+  max-width: 100%;
+  padding: var(--spacing-container-mobile);
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .v-application .v-container {
+    max-width: 600px;
+    padding: var(--spacing-container-tablet);
+  }
+}
+
+@media (min-width: 960px) {
+  .v-application .v-container {
+    max-width: var(--container-max-width);
+    padding: var(--spacing-container-desktop);
+  }
+}
+
+/* === CRITICAL VUETIFY OVERRIDES === */
+.v-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin: calc(-1 * var(--spacing-grid-gutter));
+}
+
+.v-col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  padding: var(--spacing-grid-gutter);
+}
+
+/* === CRITICAL RESPONSIVE GRID === */
+.v-col-12 { flex: 0 0 100%; max-width: 100%; }
+
+@media (min-width: 960px) {
+  .v-col-md-6 { flex: 0 0 50%; max-width: 50%; }
+  .v-col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+  .v-col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+}
+
+@media (max-width: 959px) {
+  .v-col-md-6 { flex: 0 0 100%; max-width: 100%; }
+  .v-col-lg-4 { flex: 0 0 100%; max-width: 100%; }
+  .v-col-lg-6 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* === CRITICAL COMPONENTS === */
+.v-app-bar {
+  display: flex;
+  align-items: center;
+  flex: none;
+  position: relative;
+  min-height: var(--header-height-mobile);
+  background: rgb(var(--v-theme-surface));
+  box-shadow: var(--shadow-soft);
+  z-index: 1000;
+}
+
+@media (min-width: 600px) {
+  .v-app-bar {
+    min-height: var(--header-height-tablet);
+  }
+}
+
+@media (min-width: 960px) {
+  .v-app-bar {
+    min-height: var(--header-height-desktop);
+  }
+}
+
+.v-card {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--border-radius-card);
+  position: relative;
+  background: rgb(var(--v-theme-surface));
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-base);
+}
+
+.v-card:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+.v-btn {
+  align-items: center;
+  border-radius: var(--border-radius-button);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-weight: var(--font-weight-medium);
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  vertical-align: middle;
+  min-height: var(--button-height);
+  padding: 0 var(--spacing-md);
+  background: rgb(var(--v-theme-primary));
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.v-btn:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.v-btn--variant-outlined {
+  background: transparent;
+  border: 1px solid rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-primary));
+}
+
+.v-btn--icon {
+  background: transparent;
+  border-radius: var(--border-radius-full);
+  min-height: var(--button-icon-size);
+  min-width: var(--button-icon-size);
+  padding: 0;
+}
+
+.v-btn--size-large {
+  min-height: var(--button-height-large);
+  padding: 0 var(--spacing-lg);
+}
+
+/* === CRITICAL UTILITIES === */
+.d-flex { display: flex !important; }
+.d-block { display: block !important; }
+.d-none { display: none !important; }
+.text-center { text-align: center !important; }
+.justify-center { justify-content: center !important; }
+.align-center { align-items: center !important; }
+.fill-height { height: 100% !important; }
+
+/* === THEME COLORS === */
+.v-theme--light {
+  color-scheme: light;
+  --v-theme-primary: 43, 99, 235;
+  --v-theme-secondary: 6, 182, 212;
+  --v-theme-background: 255, 255, 255;
+  --v-theme-surface: 249, 250, 251;
+  --v-theme-on-surface: 15, 23, 42;
+}
+
+.v-theme--dark {
+  color-scheme: dark;
+  --v-theme-primary: 59, 130, 246;
+  --v-theme-secondary: 6, 182, 212;
+  --v-theme-background: 15, 23, 42;
+  --v-theme-surface: 30, 41, 59;
+  --v-theme-on-surface: 248, 250, 252;
+}
+
+/* === PERFORMANCE === */
+.v-application--is-booting *,
+.v-application--is-booting *::before,
+.v-application--is-booting *::after {
+  transition: none !important;
+}

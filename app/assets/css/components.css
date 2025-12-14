@@ -1,0 +1,356 @@
+/* ===================================
+   GLOBAL COMPONENT STYLES (DRY)
+   Estilos compartilhados entre componentes
+   =================================== 
+
+   📚 ÍNDICE DE CLASSES:
+   
+   🎨 SECTION HEADERS:
+   - .section-badge          → Badge com ícone (14px, azul)
+   - .section-title          → Título principal (clamp 2.5-3.5rem)
+   - .title-highlight        → Texto em gradiente azul/ciano
+   - .section-description    → Descrição (18px)
+   - .section-header         → Container do header
+   
+   🎭 GRADIENTES:
+   - .text-gradient-primary    → Gradiente azul (#3b82f6 → #06b6d4)
+   - .text-gradient-secondary  → Gradiente azul escuro (#3b82f6 → #1d4ed8)
+   
+   ⚡ TRANSIÇÕES:
+   - .transition-base    → 0.3s ease
+   - .transition-smooth  → 0.3s cubic-bezier
+   - .transition-medium  → 0.4s ease
+   - .transition-slow    → 0.5s cubic-bezier
+   
+   🔄 BORDER RADIUS:
+   - .rounded-sm  → 12px
+   - .rounded-md  → 16px
+   - .rounded-lg  → 20px
+   - .rounded-xl  → 24px
+   
+   💎 GLASSMORPHISM:
+   - .glass-light   → blur(10px), opacity 0.8
+   - .glass-medium  → blur(20px), opacity 0.8
+   - .glass-strong  → blur(20px), opacity 0.95
+   
+   🌟 BOX SHADOWS:
+   - .shadow-sm-primary  → 0 4px 12px (0.3)
+   - .shadow-md-primary  → 0 8px 16px (0.2)
+   - .shadow-lg-primary  → 0 20px 40px (0.15)
+   - .shadow-xl-primary  → 0 20px 40px (0.2)
+   
+   🎪 HOVER EFFECTS:
+   - .hover-lift      → translateY(-4px)
+   - .hover-lift-sm   → translateY(-2px)
+   - .hover-lift-lg   → translateY(-8px)
+   - .hover-scale     → scale(1.05)
+   - .hover-scale-sm  → scale(1.02)
+   
+   🖼️ CARDS:
+   - .card-hover-effect     → Lift + shadow no hover
+   - .card-border-animation → Barra animada no topo
+   
+   🎬 ANIMAÇÕES:
+   - @keyframes fadeInUp   → Fade + slide 30px
+   - @keyframes slideInUp  → Fade + slide 20px
+   
+   🎨 BORDERS:
+   - .border-surface         → 1px surface-bright
+   - .border-surface-light   → 2px surface-light
+   - .border-primary-subtle  → 1px azul (0.2)
+   
+   📐 FLEX:
+   - .flex-center   → center + center
+   - .flex-between  → center + space-between
+   
+   📝 TEXT:
+   - .text-on-surface         → Texto principal
+   - .text-on-surface-variant → Texto secundário
+   - .text-on-background      → Texto background
+   
+   =================================== */
+
+/* Section Header Styles */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(96, 165, 250);
+  margin-bottom: 24px;
+}
+
+.section-badge .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Badges e Chips - ícones sem background */
+.v-badge .v-icon,
+.v-chip .v-icon,
+.v-btn .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: rgb(241, 245, 249);
+  margin-bottom: 16px;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.title-highlight {
+  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(34, 211, 238));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-description {
+  font-size: 18px;
+  color: rgb(203, 213, 225);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Section Container */
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+/* Common Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Utility Classes */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-secondary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card Styles */
+.card-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+/* Border Animation */
+.card-border-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-border-animation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card-border-animation:hover::before {
+  transform: scaleX(1);
+}
+
+/* ===================================
+   UTILITY CLASSES
+   =================================== */
+
+/* Transitions */
+.transition-base {
+  transition: all 0.3s ease;
+}
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-medium {
+  transition: all 0.4s ease;
+}
+
+.transition-slow {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Border Radius */
+.rounded-sm {
+  border-radius: 12px;
+}
+
+.rounded-md {
+  border-radius: 16px;
+}
+
+.rounded-lg {
+  border-radius: 20px;
+}
+
+.rounded-xl {
+  border-radius: 24px;
+}
+
+/* Glassmorphism Effects */
+.glass-light {
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-medium {
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-strong {
+  background: rgba(var(--v-theme-surface), 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Box Shadows - Primary Blue */
+.shadow-sm-primary {
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.shadow-md-primary {
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+}
+
+.shadow-lg-primary {
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.shadow-xl-primary {
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+}
+
+/* Hover Effects */
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-lift-sm:hover {
+  transform: translateY(-2px);
+}
+
+.hover-lift-lg:hover {
+  transform: translateY(-8px);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.02);
+}
+
+/* Surface Borders */
+.border-surface {
+  border: 1px solid rgb(var(--v-theme-surface-bright));
+}
+
+.border-surface-light {
+  border: 2px solid rgb(var(--v-theme-surface-light));
+}
+
+.border-primary-subtle {
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Flexbox Utilities */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Text Utilities */
+.text-on-surface {
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.text-on-surface-variant {
+  color: rgb(var(--v-theme-on-surface-variant));
+}
+
+.text-on-background {
+  color: rgb(var(--v-theme-on-background));
+}
+
+/* V-Expansion-Panels styles moved to individual components (Courses.vue, error.vue) */
