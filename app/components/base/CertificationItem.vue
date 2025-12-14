@@ -90,24 +90,24 @@ const itemStyles = computed(() => ({
     })`,
 }));
 
-const titleClasses = computed(() => [
-  "font-weight-bold",
-  "mb-2",
-  getResponsiveValue({
-    mobile: "text-body-1",
-    tablet: "text-h6",
-    desktop: "text-h6",
-  }),
-]);
+// const titleClasses = computed(() => [
+//   "font-weight-bold",
+//   "mb-2",
+//   getResponsiveValue({
+//     mobile: "text-body-1",
+//     tablet: "text-h6",
+//     desktop: "text-h6",
+//   }),
+// ]);
 
-const subtitleClasses = computed(() => [
-  "font-weight-medium",
-  getResponsiveValue({
-    mobile: "text-body-2",
-    tablet: "text-body-1",
-    desktop: "text-body-1",
-  }),
-]);
+// const subtitleClasses = computed(() => [
+//   "font-weight-medium",
+//   getResponsiveValue({
+//     mobile: "text-body-2",
+//     tablet: "text-body-1",
+//     desktop: "text-body-1",
+//   }),
+// ]);
 
 const avatarSize = computed(() =>
   getResponsiveValue({

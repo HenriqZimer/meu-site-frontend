@@ -176,7 +176,7 @@ const profileImageUrl = "/foto-perfil-profissional.jpg";
 const avatarSize = ref(320);
 
 const updateAvatarSize = () => {
-  if (process.client) {
+  if (import.meta.client) {
     if (isMobile.value) avatarSize.value = 250;
     else if (isTablet.value) avatarSize.value = 280;
     else avatarSize.value = 320;

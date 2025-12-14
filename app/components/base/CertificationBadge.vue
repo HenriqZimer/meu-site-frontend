@@ -1,6 +1,6 @@
 <template>
-  <a :href="link" target="_blank" rel="noopener noreferrer" class="certification-card" @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave" @mousemove="handleMouseMove" :aria-label="`Ver certificado ${name}`">
+  <a :href="link" target="_blank" rel="noopener noreferrer" class="certification-card" :aria-label="`Ver certificado ${name}`"
+    @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" @mousemove="handleMouseMove">
     <!-- Left Border Indicator -->
     <div class="card-border-indicator" />
 
@@ -55,11 +55,11 @@ interface Props {
   lazy?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  lazy: true,
-  date: '',
-  skills: 0
-})
+// const props = withDefaults(defineProps<Props>(), {
+//   lazy: true,
+//   date: '',
+//   skills: 0
+// })
 
 const cardRef = ref<HTMLElement | null>(null)
 

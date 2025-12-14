@@ -32,7 +32,7 @@
             <h3 class="footer-title">Navegação</h3>
             <ul class="footer-links">
               <li v-for="link in quickLinks" :key="link.label">
-                <a :href="link.href" @click.prevent="scrollToSection(link.href)" class="footer-link">
+                <a :href="link.href" class="footer-link" @click.prevent="scrollToSection(link.href)">
                   {{ link.label }}
                 </a>
               </li>
@@ -74,8 +74,8 @@
             <p class="footer-cta-text mb-4">
               Tem um projeto em mente? Entre em contato!
             </p>
-            <v-btn color="primary" variant="flat" block size="large" @click="scrollToSection('contact')"
-              class="cta-btn">
+            <v-btn color="primary" variant="flat" block size="large" class="cta-btn"
+              @click="scrollToSection('contact')">
               <v-icon start>mdi-email-fast</v-icon>
               Enviar Mensagem
             </v-btn>
@@ -104,8 +104,8 @@
     </v-container>
 
     <!-- Scroll to Top Button -->
-    <v-btn v-show="showScrollTop" @click="scrollToTop" icon="mdi-arrow-up" color="primary" size="large" position="fixed"
-      location="bottom end" class="scroll-top-btn" />
+    <v-btn v-show="showScrollTop" icon="mdi-arrow-up" color="primary" size="large" position="fixed" location="bottom end"
+      class="scroll-top-btn" @click="scrollToTop" />
   </v-footer>
 </template>
 
@@ -126,19 +126,19 @@ const email = contactInfo.email;
 const phoneNumber = contactInfo.phone;
 
 const handleScroll = () => {
-  if (process.client) {
+  if (import.meta.client) {
     showScrollTop.value = shouldShowScrollTop();
   }
 };
 
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     window.addEventListener("scroll", handleScroll, { passive: true });
   }
 });
 
 onUnmounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     window.removeEventListener("scroll", handleScroll);
   }
 });

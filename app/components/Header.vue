@@ -92,8 +92,8 @@
         :prepend-icon="item.icon" 
         :title="item.label"
         :active="activeSection === item.id"
-        @click="handleDrawerItemClick(item.id)"
         class="drawer-item"
+        @click="handleDrawerItemClick(item.id)"
       />
     </v-list>
 
@@ -103,8 +103,8 @@
         variant="flat" 
         block
         size="x-large"
-        @click="handleDrawerItemClick('contact')"
         class="mobile-cta-button"
+        @click="handleDrawerItemClick('contact')"
       >
         <v-icon start size="22">mdi-email-fast-outline</v-icon>
         Fale Comigo

@@ -84,32 +84,32 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 // Helper methods
-const getStatusIcon = (status: string) => {
-  const icons = {
-    completed: "mdi-check-circle",
-    "in-progress": "mdi-progress-clock",
-    planning: "mdi-lightbulb-outline",
-  };
-  return icons[status as keyof typeof icons] || "mdi-help-circle";
-};
+// const getStatusIcon = (status: string) => {
+//   const icons = {
+//     completed: "mdi-check-circle",
+//     "in-progress": "mdi-progress-clock",
+//     planning: "mdi-lightbulb-outline",
+//   };
+//   return icons[status as keyof typeof icons] || "mdi-help-circle";
+// };
 
-const getStatusLabel = (status: string) => {
-  const labels = {
-    completed: "Concluído",
-    "in-progress": "Em Andamento",
-    planning: "Planejado",
-  };
-  return labels[status as keyof typeof labels] || "Desconhecido";
-};
+// const getStatusLabel = (status: string) => {
+//   const labels = {
+//     completed: "Concluído",
+//     "in-progress": "Em Andamento",
+//     planning: "Planejado",
+//   };
+//   return labels[status as keyof typeof labels] || "Desconhecido";
+// };
 
-const getStatusColor = (status: string) => {
-  const colors = {
-    completed: "success",
-    "in-progress": "primary",
-    planning: "info",
-  };
-  return colors[status as keyof typeof colors] || "default";
-};
+// const getStatusColor = (status: string) => {
+//   const colors = {
+//     completed: "success",
+//     "in-progress": "primary",
+//     planning: "info",
+//   };
+//   return colors[status as keyof typeof colors] || "default";
+// };
 
 // Computed properties
 const cardStyles = computed(() => ({

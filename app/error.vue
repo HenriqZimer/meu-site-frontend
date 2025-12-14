@@ -45,8 +45,8 @@
             <v-btn color="primary" size="large" variant="flat" :to="'/'" prepend-icon="mdi-home">
               Voltar ao Início
             </v-btn>
-            <v-btn color="secondary" size="large" variant="outlined" @click="handleBack"
-              prepend-icon="mdi-arrow-left">
+            <v-btn color="secondary" size="large" variant="outlined" prepend-icon="mdi-arrow-left"
+              @click="handleBack">
               Página Anterior
             </v-btn>
           </div>
@@ -98,7 +98,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const isDev = process.dev
+const isDev = import.meta.dev
 
 // Icons para animação de background
 const icons = [

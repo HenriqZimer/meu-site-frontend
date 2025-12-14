@@ -44,14 +44,14 @@
 <script setup lang="ts">
 
 // Types
-interface Technology {
-  name: string;
-  category: string;
-  icon: string;
-  color: string;
-  bgColor: string;
-  status?: string;
-}
+// interface Technology {
+//   name: string;
+//   category: string;
+//   icon: string;
+//   color: string;
+//   bgColor: string;
+//   status?: string;
+// }
 
 // Store
 const skillsStore = useSkillsStore()
@@ -63,7 +63,7 @@ onMounted(async () => {
 
 // Computed do store
 const technologies = computed(() => skillsStore.allSkills)
-const loading = computed(() => skillsStore.loading)
+// const loading = computed(() => skillsStore.loading)
 
 </script>
 

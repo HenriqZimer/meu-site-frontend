@@ -90,7 +90,7 @@
     <!-- Snackbar for feedback -->
     <v-snackbar v-model="showSnackbar" :color="snackbarColor" :timeout="5000" location="top" multi-line>
       {{ snackbarMessage }}
-      <template v-slot:actions>
+      <template #actions>
         <v-btn icon="mdi-close" size="small" @click="showSnackbar = false" />
       </template>
     </v-snackbar>

@@ -36,9 +36,9 @@
                                     <v-text-field v-model="loginForm.password" label="Senha"
                                         prepend-inner-icon="mdi-lock-outline" :type="showPassword ? 'text' : 'password'"
                                         :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                                        @click:append-inner="showPassword = !showPassword" variant="outlined"
-                                        density="comfortable" :error-messages="loginError" class="mb-6 custom-input"
-                                        hide-details="auto" />
+                                        variant="outlined" density="comfortable"
+                                        :error-messages="loginError" class="mb-6 custom-input" hide-details="auto"
+                                        @click:append-inner="showPassword = !showPassword" />
 
                                     <v-btn type="submit" color="primary" size="x-large" block :loading="loading"
                                         class="login-btn">
@@ -84,12 +84,12 @@
                                     <span class="user-name">Admin</span>
                                 </div>
                                 <v-btn 
-                                    @click="handleLogout" 
                                     variant="flat" 
                                     color="error" 
-                                    prepend-icon="mdi-logout"
+                                    prepend-icon="mdi-logout" 
                                     class="logout-btn"
                                     size="default"
+                                    @click="handleLogout"
                                 >
                                     Sair
                                 </v-btn>

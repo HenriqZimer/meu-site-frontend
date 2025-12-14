@@ -67,9 +67,9 @@
           color="error"
           variant="outlined"
           size="small"
-          @click="deleteAllRead"
           :disabled="readCount === 0"
           :loading="deletingAll"
+          @click="deleteAllRead"
         >
           <v-icon start>mdi-delete-sweep</v-icon>
           Limpar Lidos
@@ -247,9 +247,9 @@
         <v-card-actions class="dialog-actions">
           <v-btn
             :prepend-icon="viewedItem.read ? 'mdi-email-open' : 'mdi-email-check'"
-            @click="toggleRead(viewedItem)"
             variant="outlined"
             size="large"
+            @click="toggleRead(viewedItem)"
           >
             {{ viewedItem.read ? 'Marcar como não lido' : 'Marcar como lido' }}
           </v-btn>
@@ -285,15 +285,15 @@
         <v-divider />
         
         <v-card-actions class="dialog-actions">
-          <v-btn @click="deleteDialog = false" variant="text" size="large">
+          <v-btn variant="text" size="large" @click="deleteDialog = false">
             Cancelar
           </v-btn>
           <v-btn
             color="error"
-            @click="confirmDelete"
             :loading="deleting"
             variant="flat"
             size="large"
+            @click="confirmDelete"
           >
             Excluir
           </v-btn>

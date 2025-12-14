@@ -21,8 +21,8 @@
     <div class="position-relative">
       <div v-if="filteredProjects.length > 0" class="d-flex align-center ga-3 ga-md-4">
         <!-- Botão Anterior -->
-        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === 0" @click="previousPage"
-          aria-label="Projetos anteriores" size="large" elevation="2">
+        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === 0" aria-label="Projetos anteriores"
+          size="large" elevation="2" @click="previousPage">
           <v-icon icon="mdi-chevron-left" />
         </v-btn>
 
@@ -45,8 +45,8 @@
         </div>
 
         <!-- Botão Próximo -->
-        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === totalPages - 1" @click="nextPage"
-          aria-label="Próximos projetos" size="large" elevation="2">
+        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === totalPages - 1" aria-label="Próximos projetos"
+          size="large" elevation="2" @click="nextPage">
           <v-icon icon="mdi-chevron-right" />
         </v-btn>
       </div>
@@ -54,8 +54,8 @@
       <!-- Indicadores de Página -->
       <div v-if="totalPages > 1" class="d-flex justify-center align-center ga-2 mt-6">
         <button v-for="(page, index) in totalPages" :key="index" class="indicator"
-          :class="{ 'indicator--active': currentPage === index }" @click="goToPage(index)"
-          :aria-label="`Ir para página ${index + 1}`">
+          :class="{ 'indicator--active': currentPage === index }" :aria-label="`Ir para página ${index + 1}`"
+          @click="goToPage(index)">
         </button>
         <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184);">{{ currentPage + 1 }} / {{ totalPages
         }}</span>
@@ -318,12 +318,12 @@ watch(selectedFilter, (newFilter) => {
 })
 
 // Reset page when itemsPerPage changes (ex: resize)
-watch(itemsPerPage, (newValue) => {
-  // Se a página atual ficou fora do range, voltar para a página 0
-  if (currentPage.value >= totalPages.value) {
-    currentPage.value = 0
-  }
-})
+// watch(itemsPerPage, (newValue) => {
+//   // Se a página atual ficou fora do range, voltar para a página 0
+//   if (currentPage.value >= totalPages.value) {
+//     currentPage.value = 0
+//   }
+// })
 
 // Keyboard navigation
 if (typeof window !== 'undefined') {
@@ -344,12 +344,12 @@ const setFilter = (value: string) => {
   filterVersion.value++  // Força recálculo das computeds
 }
 
-const scrollToContact = () => {
-  const element = document.getElementById('contact')
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
-  }
-}
+// const scrollToContact = () => {
+//   const element = document.getElementById('contact')
+//   if (element) {
+//     element.scrollIntoView({ behavior: 'smooth' })
+//   }
+// }
 
 // Cleanup - remover listeners quando o componente for desmontado
 onUnmounted(() => {
