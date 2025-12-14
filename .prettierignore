@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+.nuxt
+.output
+dist
+.vercel
+
+# Misc
+.DS_Store
+*.log
+.env
+.env.local
+.env.production
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
