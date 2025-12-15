@@ -9,7 +9,7 @@ export default defineConfig({
     environment: 'happy-dom',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
       exclude: ['node_modules/', '.nuxt/', '.output/', 'test/', '**/*.spec.ts', '**/*.test.ts'],
     },
   },
