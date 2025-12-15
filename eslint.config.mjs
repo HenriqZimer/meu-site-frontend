@@ -23,5 +23,12 @@ export default createConfigForNuxt()
   })
   .append({
     // Ignora arquivos específicos
-    ignores: ['dist/**', '.output/**', '.nuxt/**', 'node_modules/**'],
+    ignores: [
+      'dist/**',
+      '.output/**',
+      '.nuxt/**',
+      'node_modules/**',
+      '.cypress-cache/**',
+      '**/cypress-cache/**',
+    ],
   })
