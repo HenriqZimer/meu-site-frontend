@@ -5,9 +5,9 @@
       <v-container v-if="!isAuthenticated" class="login-container fill-height">
         <!-- Animated Background -->
         <div class="animated-bg">
-          <div class="bg-shape shape-1"></div>
-          <div class="bg-shape shape-2"></div>
-          <div class="bg-shape shape-3"></div>
+          <div class="bg-shape shape-1" />
+          <div class="bg-shape shape-2" />
+          <div class="bg-shape shape-3" />
         </div>
 
         <v-row align="center" justify="center" class="login-row">
@@ -28,39 +28,17 @@
                 <p class="login-subtitle text-center mb-6">Entre com suas credenciais</p>
 
                 <v-form @submit.prevent="handleLogin">
-                  <v-text-field
-                    v-model="loginForm.username"
-                    label="Usuário"
-                    prepend-inner-icon="mdi-account-outline"
-                    variant="outlined"
-                    density="comfortable"
-                    :error-messages="loginError"
-                    class="mb-4 custom-input"
-                    hide-details="auto"
-                  />
+                  <v-text-field v-model="loginForm.username" label="Usuário" prepend-inner-icon="mdi-account-outline"
+                    variant="outlined" density="comfortable" :error-messages="loginError" class="mb-4 custom-input"
+                    hide-details="auto" />
 
-                  <v-text-field
-                    v-model="loginForm.password"
-                    label="Senha"
-                    prepend-inner-icon="mdi-lock-outline"
+                  <v-text-field v-model="loginForm.password" label="Senha" prepend-inner-icon="mdi-lock-outline"
                     :type="showPassword ? 'text' : 'password'"
-                    :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    variant="outlined"
-                    density="comfortable"
-                    :error-messages="loginError"
-                    class="mb-6 custom-input"
-                    hide-details="auto"
-                    @click:append-inner="showPassword = !showPassword"
-                  />
+                    :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'" variant="outlined"
+                    density="comfortable" :error-messages="loginError" class="mb-6 custom-input" hide-details="auto"
+                    @click:append-inner="showPassword = !showPassword" />
 
-                  <v-btn
-                    type="submit"
-                    color="primary"
-                    size="x-large"
-                    block
-                    :loading="loading"
-                    class="login-btn"
-                  >
+                  <v-btn type="submit" color="primary" size="x-large" block :loading="loading" class="login-btn">
                     <v-icon start>mdi-login</v-icon>
                     Entrar no Painel
                   </v-btn>
@@ -102,14 +80,8 @@
                   <v-icon size="20" class="mr-2">mdi-account-circle</v-icon>
                   <span class="user-name">Admin</span>
                 </div>
-                <v-btn
-                  variant="flat"
-                  color="error"
-                  prepend-icon="mdi-logout"
-                  class="logout-btn"
-                  size="default"
-                  @click="handleLogout"
-                >
+                <v-btn variant="flat" color="error" prepend-icon="mdi-logout" class="logout-btn" size="default"
+                  @click="handleLogout">
                   Sair
                 </v-btn>
               </div>
@@ -261,7 +233,9 @@ useHead({
 .admin-page {
   min-height: 100vh;
   position: relative;
-} /* Login Container with Modern Animated Background */
+}
+
+/* Login Container with Modern Animated Background */
 .login-container {
   position: fixed;
   top: 0;
@@ -327,13 +301,16 @@ useHead({
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1) rotate(0deg);
   }
+
   33% {
     transform: translate(40px, -40px) scale(1.15) rotate(120deg);
   }
+
   66% {
     transform: translate(-30px, 30px) scale(0.85) rotate(240deg);
   }
@@ -379,6 +356,7 @@ useHead({
   0% {
     left: -100%;
   }
+
   100% {
     left: 100%;
   }
@@ -436,10 +414,12 @@ useHead({
 }
 
 @keyframes gradient-shift {
+
   0%,
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -625,7 +605,7 @@ useHead({
   gap: 1rem;
 }
 
-.header-actions > * {
+.header-actions>* {
   margin-left: 0.5rem;
 }
 
@@ -695,11 +675,9 @@ useHead({
 }
 
 :deep(.admin-tabs .v-tab.tab-item.v-tab--selected) {
-  background: linear-gradient(
-    180deg,
-    rgba(59, 130, 246, 0.15) 0%,
-    rgba(59, 130, 246, 0.05) 100%
-  ) !important;
+  background: linear-gradient(180deg,
+      rgba(59, 130, 246, 0.15) 0%,
+      rgba(59, 130, 246, 0.05) 100%) !important;
   color: #3b82f6 !important;
   border-bottom: 3px solid #3b82f6;
   box-shadow: 0 -4px 12px rgba(59, 130, 246, 0.2);
@@ -731,6 +709,7 @@ useHead({
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

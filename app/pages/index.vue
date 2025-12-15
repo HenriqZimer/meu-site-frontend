@@ -37,7 +37,7 @@
 const config = useRuntimeConfig()
 const siteName = config.public.siteName
 const _siteDescription = config.public.siteDescription
-const _siteUrl = config.public.siteUrl
+const siteUrl = config.public.siteUrl
 
 // Configuração de SEO e meta tags
 useHead({
