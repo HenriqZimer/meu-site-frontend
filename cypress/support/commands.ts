@@ -11,14 +11,12 @@
 // ***********************************************
 
 declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Custom command to scroll to a section
-       * @example cy.scrollToSection('#about')
-       */
-      scrollToSection(selector: string): Chainable<JQuery<HTMLElement>>
-    }
+  interface CypressChainable {
+    /**
+     * Custom command to scroll to a section
+     * @example cy.scrollToSection('#about')
+     */
+    scrollToSection(selector: string): Cypress.Chainable<JQuery<HTMLElement>>
   }
 }
 
