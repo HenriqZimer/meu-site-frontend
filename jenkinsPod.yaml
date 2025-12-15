@@ -33,17 +33,24 @@ spec:
           value: '-Xmx4096m -XX:MaxMetaspaceSize=1024m -XX:+UseG1GC'
         - name: JAVA_OPTS
           value: '-Xmx4096m -XX:MaxMetaspaceSize=1024m -XX:+UseG1GC'
-    # - name: kaniko
-    #   image: gcr.io/kaniko-project/executor:debug
-    #   command:
-    #     - sleep
-    #   args:
-    #     - infinity
-    #   volumeMounts:
-    #     - name: harbor-credentials
-    #       mountPath: /kaniko/.docker
-    #     - name: jenkins-artifacts
-    #       mountPath: /artifacts
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:debug
+      command:
+        - sleep
+      args:
+        - infinity
+      resources:
+        requests:
+          memory: '1Gi'
+          cpu: '500m'
+        limits:
+          memory: '2Gi'
+          cpu: '1000m'
+      volumeMounts:
+        - name: harbor-credentials
+          mountPath: /kaniko/.docker
+        - name: jenkins-artifacts
+          mountPath: /artifacts
     # - name: alpine-harbor-scanner
     #   image: alpine
     #   command:
@@ -74,13 +81,13 @@ spec:
   #   volumeMounts:
   #     - name: jenkins-artifacts
   #       mountPath: /artifacts
-  # volumes:
-  #   - name: harbor-credentials
-  #     secret:
-  #       secretName: harbor-credentials
-  #       items:
-  #         - key: .dockerconfigjson
-  #           path: config.json
-  #   - name: jenkins-artifacts
-  #     persistentVolumeClaim:
-  #       claimName: jenkins-artifacts-pvc
+  volumes:
+    - name: harbor-credentials
+      secret:
+        secretName: harbor-credentials
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+    - name: jenkins-artifacts
+      persistentVolumeClaim:
+        claimName: jenkins-artifacts-pvc
