@@ -10,18 +10,9 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-declare global {
-  interface CypressChainable {
-    /**
-     * Custom command to scroll to a section
-     * @example cy.scrollToSection('#about')
-     */
-    scrollToSection(selector: string): Cypress.Chainable<JQuery<HTMLElement>>
-  }
-}
-
-Cypress.Commands.add('scrollToSection', (selector: string) => {
-  return cy.get(selector).scrollIntoView({ duration: 500 })
-})
+// Example custom command (uncomment to use):
+// Cypress.Commands.add('scrollToSection', (selector: string) => {
+//   return cy.get(selector).scrollIntoView({ duration: 500 })
+// })
 
 export {}
