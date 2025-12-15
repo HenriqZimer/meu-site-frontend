@@ -206,7 +206,8 @@
   20% {
     transform: scale3d(0.9, 0.9, 1);
   }
-  50%, 55% {
+  50%,
+  55% {
     opacity: 1;
     transform: scale3d(1.1, 1.1, 1);
   }
@@ -329,10 +330,12 @@
 }
 
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -484,7 +487,8 @@
 
 /* === SPECIAL EFFECTS === */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -497,7 +501,9 @@
     text-shadow: 0 0 5px var(--color-primary-alpha-50);
   }
   to {
-    text-shadow: 0 0 20px var(--color-primary-alpha-80), 0 0 30px var(--color-primary-alpha-60);
+    text-shadow:
+      0 0 20px var(--color-primary-alpha-80),
+      0 0 30px var(--color-primary-alpha-60);
   }
 }
 
@@ -512,12 +518,24 @@
 }
 
 /* === DELAYS === */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-1000 { animation-delay: 1000ms; }
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-1000 {
+  animation-delay: 1000ms;
+}
 
 /* === RESPONSIVE ANIMATIONS === */
 @media (max-width: 600px) {
@@ -525,7 +543,7 @@
     --animation-duration-normal: 200ms;
     --animation-duration-slow: 300ms;
   }
-  
+
   .animate-fade-up,
   .animate-fade-down,
   .animate-slide-up,
@@ -544,12 +562,12 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-initial {
     opacity: 1;
     transform: none;
   }
-  
+
   .typewriter-cursor::after {
     animation: none;
   }
@@ -570,7 +588,7 @@
     animation: none !important;
     transition: none !important;
   }
-  
+
   .animate-initial {
     opacity: 1 !important;
     transform: none !important;

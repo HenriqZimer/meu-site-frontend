@@ -15,7 +15,7 @@
 }
 
 /* Force transparent backgrounds on ALL icon elements globally */
-[class*="mdi-"],
+[class*='mdi-'],
 i.mdi,
 .v-icon.mdi,
 .v-icon {
@@ -24,8 +24,8 @@ i.mdi,
   background-image: none !important;
 }
 
-[class*="mdi-"]::before,
-[class*="mdi-"]::after,
+[class*='mdi-']::before,
+[class*='mdi-']::after,
 i.mdi::before,
 i.mdi::after,
 .v-icon::before,
@@ -328,207 +328,207 @@ i.mdi::after,
 
 /* Infrastructure & Cloud */
 .v-theme--dark .icon-kubernetes,
-.v-theme--dark [data-icon="kubernetes"] .v-icon {
+.v-theme--dark [data-icon='kubernetes'] .v-icon {
   color: rgb(80, 140, 245) !important;
 }
 
 .v-theme--dark .icon-docker,
-.v-theme--dark [data-icon="docker"] .v-icon {
+.v-theme--dark [data-icon='docker'] .v-icon {
   color: rgb(72, 169, 255) !important;
 }
 
 .v-theme--dark .icon-terraform,
-.v-theme--dark [data-icon="terraform"] .v-icon {
+.v-theme--dark [data-icon='terraform'] .v-icon {
   color: rgb(140, 91, 212) !important;
 }
 
 .v-theme--dark .icon-aws,
-.v-theme--dark [data-icon="aws"] .v-icon {
+.v-theme--dark [data-icon='aws'] .v-icon {
   color: rgb(255, 169, 77) !important;
 }
 
 .v-theme--dark .icon-ansible,
-.v-theme--dark [data-icon="ansible"] .v-icon {
+.v-theme--dark [data-icon='ansible'] .v-icon {
   color: rgb(255, 82, 82) !important;
 }
 
 /* Programming Languages */
 .v-theme--dark .icon-python,
-.v-theme--dark [data-icon="python"] .v-icon {
+.v-theme--dark [data-icon='python'] .v-icon {
   color: rgb(87, 138, 201) !important;
 }
 
 .v-theme--dark .icon-nodejs,
-.v-theme--dark [data-icon="nodejs"] .v-icon {
+.v-theme--dark [data-icon='nodejs'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
 .v-theme--dark .icon-go,
-.v-theme--dark [data-icon="go"] .v-icon {
+.v-theme--dark [data-icon='go'] .v-icon {
   color: rgb(77, 199, 237) !important;
 }
 
 .v-theme--dark .icon-typescript,
-.v-theme--dark [data-icon="typescript"] .v-icon {
+.v-theme--dark [data-icon='typescript'] .v-icon {
   color: rgb(87, 138, 222) !important;
 }
 
 .v-theme--dark .icon-rust,
-.v-theme--dark [data-icon="rust"] .v-icon {
+.v-theme--dark [data-icon='rust'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
 /* Databases */
 .v-theme--dark .icon-postgresql,
-.v-theme--dark [data-icon="postgresql"] .v-icon {
+.v-theme--dark [data-icon='postgresql'] .v-icon {
   color: rgb(89, 132, 169) !important;
 }
 
 .v-theme--dark .icon-mongodb,
-.v-theme--dark [data-icon="mongodb"] .v-icon {
+.v-theme--dark [data-icon='mongodb'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
 .v-theme--dark .icon-redis,
-.v-theme--dark [data-icon="redis"] .v-icon {
+.v-theme--dark [data-icon='redis'] .v-icon {
   color: rgb(255, 103, 103) !important;
 }
 
 /* CI/CD & Tools */
 .v-theme--dark .icon-git,
-.v-theme--dark [data-icon="git"] .v-icon {
+.v-theme--dark [data-icon='git'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
 .v-theme--dark .icon-github,
-.v-theme--dark [data-icon="github"] .v-icon {
+.v-theme--dark [data-icon='github'] .v-icon {
   color: rgb(203, 213, 225) !important;
 }
 
 .v-theme--dark .icon-gitlab,
-.v-theme--dark [data-icon="gitlab"] .v-icon {
+.v-theme--dark [data-icon='gitlab'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
 .v-theme--dark .icon-jenkins,
-.v-theme--dark [data-icon="jenkins"] .v-icon {
+.v-theme--dark [data-icon='jenkins'] .v-icon {
   color: rgb(255, 169, 77) !important;
 }
 
 .v-theme--dark .icon-prometheus,
-.v-theme--dark [data-icon="prometheus"] .v-icon {
+.v-theme--dark [data-icon='prometheus'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
 .v-theme--dark .icon-grafana,
-.v-theme--dark [data-icon="grafana"] .v-icon {
+.v-theme--dark [data-icon='grafana'] .v-icon {
   color: rgb(255, 169, 77) !important;
 }
 
 /* Monitoring */
 .v-theme--dark .icon-datadog,
-.v-theme--dark [data-icon="datadog"] .v-icon {
+.v-theme--dark [data-icon='datadog'] .v-icon {
   color: rgb(140, 91, 212) !important;
 }
 
 /* Frontend */
 .v-theme--dark .icon-vue,
-.v-theme--dark [data-icon="vue"] .v-icon {
+.v-theme--dark [data-icon='vue'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
 .v-theme--dark .icon-react,
-.v-theme--dark [data-icon="react"] .v-icon {
+.v-theme--dark [data-icon='react'] .v-icon {
   color: rgb(77, 199, 237) !important;
 }
 
 .v-theme--dark .icon-nuxt,
-.v-theme--dark [data-icon="nuxt"] .v-icon {
+.v-theme--dark [data-icon='nuxt'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
 /* Specific Technologies by Data Attribute */
-.v-theme--dark [data-icon="helm"] .v-icon {
+.v-theme--dark [data-icon='helm'] .v-icon {
   color: rgb(89, 132, 169) !important;
 }
 
-.v-theme--dark [data-icon="gitlab-ci"] .v-icon {
+.v-theme--dark [data-icon='gitlab-ci'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
-.v-theme--dark [data-icon="github-actions"] .v-icon {
+.v-theme--dark [data-icon='github-actions'] .v-icon {
   color: rgb(87, 169, 255) !important;
 }
 
-.v-theme--dark [data-icon="argocd"] .v-icon {
+.v-theme--dark [data-icon='argocd'] .v-icon {
   color: rgb(255, 142, 99) !important;
 }
 
-.v-theme--dark [data-icon="jenkins"] .v-icon {
+.v-theme--dark [data-icon='jenkins'] .v-icon {
   color: rgb(255, 99, 99) !important;
 }
 
-.v-theme--dark [data-icon="prometheus"] .v-icon {
+.v-theme--dark [data-icon='prometheus'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
-.v-theme--dark [data-icon="grafana"] .v-icon {
+.v-theme--dark [data-icon='grafana'] .v-icon {
   color: rgb(255, 169, 77) !important;
 }
 
-.v-theme--dark [data-icon="elk-stack"] .v-icon {
+.v-theme--dark [data-icon='elk-stack'] .v-icon {
   color: rgb(77, 169, 169) !important;
 }
 
-.v-theme--dark [data-icon="datadog"] .v-icon {
+.v-theme--dark [data-icon='datadog'] .v-icon {
   color: rgb(140, 91, 212) !important;
 }
 
-.v-theme--dark [data-icon="opentelemetry"] .v-icon {
+.v-theme--dark [data-icon='opentelemetry'] .v-icon {
   color: rgb(255, 189, 77) !important;
 }
 
-.v-theme--dark [data-icon="postgresql"] .v-icon {
+.v-theme--dark [data-icon='postgresql'] .v-icon {
   color: rgb(89, 132, 169) !important;
 }
 
-.v-theme--dark [data-icon="redis"] .v-icon {
+.v-theme--dark [data-icon='redis'] .v-icon {
   color: rgb(255, 103, 103) !important;
 }
 
-.v-theme--dark [data-icon="rabbitmq"] .v-icon {
+.v-theme--dark [data-icon='rabbitmq'] .v-icon {
   color: rgb(255, 142, 77) !important;
 }
 
-.v-theme--dark [data-icon="kafka"] .v-icon {
+.v-theme--dark [data-icon='kafka'] .v-icon {
   color: rgb(203, 213, 225) !important;
 }
 
-.v-theme--dark [data-icon="vault"] .v-icon {
+.v-theme--dark [data-icon='vault'] .v-icon {
   color: rgb(255, 229, 92) !important;
 }
 
-.v-theme--dark [data-icon="consul"] .v-icon {
+.v-theme--dark [data-icon='consul'] .v-icon {
   color: rgb(255, 122, 162) !important;
 }
 
-.v-theme--dark [data-icon="cilium"] .v-icon {
+.v-theme--dark [data-icon='cilium'] .v-icon {
   color: rgb(255, 215, 92) !important;
 }
 
-.v-theme--dark [data-icon="ebpf"] .v-icon {
+.v-theme--dark [data-icon='ebpf'] .v-icon {
   color: rgb(255, 169, 92) !important;
 }
 
-.v-theme--dark [data-icon="git"] .v-icon {
+.v-theme--dark [data-icon='git'] .v-icon {
   color: rgb(255, 122, 99) !important;
 }
 
-.v-theme--dark [data-icon="linux"] .v-icon {
+.v-theme--dark [data-icon='linux'] .v-icon {
   color: rgb(255, 215, 92) !important;
 }
 
-.v-theme--dark [data-icon="webassembly"] .v-icon {
+.v-theme--dark [data-icon='webassembly'] .v-icon {
   color: rgb(140, 110, 240) !important;
 }
 

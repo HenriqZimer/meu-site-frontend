@@ -15,14 +15,14 @@ export const useCoursesStore = defineStore('courses', {
     courses: [] as Course[],
     loading: false,
     error: null as string | null,
-    lastFetch: null as number | null
+    lastFetch: null as number | null,
   }),
 
   getters: {
-    allCourses: (state) => state.courses,
-    completedCourses: (state) => state.courses.filter(c => c.year !== 'Planejados'),
-    plannedCourses: (state) => state.courses.filter(c => c.year === 'Planejados'),
-    coursesByYear: (state) => {
+    allCourses: state => state.courses,
+    completedCourses: state => state.courses.filter(c => c.year !== 'Planejados'),
+    plannedCourses: state => state.courses.filter(c => c.year === 'Planejados'),
+    coursesByYear: state => {
       const grouped: Record<string, Course[]> = {}
       state.courses.forEach(course => {
         const year = course.year || 'Outros'
@@ -31,7 +31,7 @@ export const useCoursesStore = defineStore('courses', {
         }
         grouped[year].push(course)
       })
-      
+
       return Object.entries(grouped)
         .map(([year, courses]) => ({ year, courses }))
         .sort((a, b) => {
@@ -40,7 +40,7 @@ export const useCoursesStore = defineStore('courses', {
           return parseInt(b.year) - parseInt(a.year)
         })
     },
-    totalHours: (state) => {
+    totalHours: state => {
       return state.courses
         .filter(c => c.year !== 'Planejados')
         .reduce((acc, course) => {
@@ -48,13 +48,13 @@ export const useCoursesStore = defineStore('courses', {
           return acc + hours
         }, 0)
     },
-    coursesCount: (state) => state.courses.length,
-    isLoaded: (state) => state.courses.length > 0,
-    needsRefresh: (state) => {
+    coursesCount: state => state.courses.length,
+    isLoaded: state => state.courses.length > 0,
+    needsRefresh: state => {
       if (!state.lastFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastFetch > fiveMinutes
-    }
+    },
   },
 
   actions: {
@@ -73,14 +73,14 @@ export const useCoursesStore = defineStore('courses', {
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/courses`
         // console.log('[Courses Store] Fetching from:', fullUrl)
-        
+
         const data = await $fetch<Course[]>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         // console.log('[Courses Store] Dados recebidos:', data.length, 'items')
         this.courses = data
         this.lastFetch = Date.now()
@@ -97,6 +97,6 @@ export const useCoursesStore = defineStore('courses', {
     clearCache() {
       this.courses = []
       this.lastFetch = null
-    }
-  }
+    },
+  },
 })

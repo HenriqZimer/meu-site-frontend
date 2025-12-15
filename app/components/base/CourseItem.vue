@@ -1,11 +1,21 @@
 <template>
   <div class="modern-course-item" :class="itemClasses" :style="itemStyles" role="listitem">
-    <a :href="course.link" target="_blank" rel="noopener noreferrer" class="course-link"
-      :aria-label="`Abrir detalhes do curso ${course.name}`">
+    <a
+      :href="course.link"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="course-link"
+      :aria-label="`Abrir detalhes do curso ${course.name}`"
+    >
       <!-- Course Image/Icon -->
       <div class="course-image-container">
         <div v-if="course.image" class="course-image-wrapper">
-          <img :src="course.image" :alt="`Logo ${course.platform}`" class="course-image" loading="lazy" />
+          <img
+            :src="course.image"
+            :alt="`Logo ${course.platform}`"
+            class="course-image"
+            loading="lazy"
+          />
         </div>
         <div v-else class="course-icon-wrapper" :style="iconWrapperStyles">
           <v-icon :icon="course.icon || defaultIcon" :color="course.color || 'primary'" size="32" />
@@ -38,14 +48,25 @@
             <span class="progress-label">Progresso</span>
             <span class="progress-value">{{ course.progress }}%</span>
           </div>
-          <v-progress-linear :model-value="course.progress" color="primary" bg-color="surface-variant" height="6"
-            rounded class="progress-bar" />
+          <v-progress-linear
+            :model-value="course.progress"
+            color="primary"
+            bg-color="surface-variant"
+            height="6"
+            rounded
+            class="progress-bar"
+          />
         </div>
 
         <!-- Status Badge -->
         <div v-if="showStatus" class="course-status">
-          <v-chip :color="statusConfig.color" :prepend-icon="statusConfig.icon" size="small" variant="flat"
-            class="status-chip">
+          <v-chip
+            :color="statusConfig.color"
+            :prepend-icon="statusConfig.icon"
+            size="small"
+            variant="flat"
+            class="status-chip"
+          >
             {{ statusConfig.label }}
           </v-chip>
         </div>
@@ -60,84 +81,84 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
 // Types
 interface Course {
-  name: string;
-  platform: string;
-  instructor?: string;
-  duration?: string;
-  icon?: string;
-  color?: string;
-  image?: string;
-  link: string;
-  progress?: number;
+  name: string
+  platform: string
+  instructor?: string
+  duration?: string
+  icon?: string
+  color?: string
+  image?: string
+  link: string
+  progress?: number
 }
 
 // Props
 interface Props {
-  course: Course;
-  index: number;
-  animationDelay?: number;
-  type: "completed" | "in-progress" | "planned";
-  showStatus?: boolean;
+  course: Course
+  index: number
+  animationDelay?: number
+  type: 'completed' | 'in-progress' | 'planned'
+  showStatus?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   animationDelay: 0,
   showStatus: true,
-});
+})
 
 // Composables
-const { isMobile } = useResponsive();
+const { isMobile } = useResponsive()
 
 // Computed
 const defaultIcon = computed(() => {
-  if (props.type === "completed") return "mdi-check-circle";
-  if (props.type === "planned") return "mdi-target";
-  return "mdi-progress-clock";
-});
+  if (props.type === 'completed') return 'mdi-check-circle'
+  if (props.type === 'planned') return 'mdi-target'
+  return 'mdi-progress-clock'
+})
 
 const itemClasses = computed(() => [
   `course-item--${props.type}`,
   {
-    "course-item--mobile": isMobile.value,
+    'course-item--mobile': isMobile.value,
   },
-]);
+])
 
 const itemStyles = computed(() => ({
-  "--animation-delay": `${props.animationDelay}ms`,
-  "--index": props.index,
-}));
+  '--animation-delay': `${props.animationDelay}ms`,
+  '--index': props.index,
+}))
 
 const iconWrapperStyles = computed(() => ({
   background: props.course.color
     ? `color-mix(in srgb, var(--v-theme-${props.course.color}) 20%, transparent)`
     : 'rgba(var(--v-theme-primary), 0.1)',
-}));
+}))
 
 const statusConfig = computed(() => {
-  if (props.type === "completed") {
+  if (props.type === 'completed') {
     return {
-      label: "Concluído",
-      icon: "mdi-check-circle",
-      color: "success",
-    };
-  } else if (props.type === "planned") {
+      label: 'Concluído',
+      icon: 'mdi-check-circle',
+      color: 'success',
+    }
+  } else if (props.type === 'planned') {
     return {
-      label: "Planejado",
-      icon: "mdi-target",
-      color: "info",
-    };
+      label: 'Planejado',
+      icon: 'mdi-target',
+      color: 'info',
+    }
   } else {
     return {
-      label: "Em Andamento",
-      icon: "mdi-progress-clock",
-      color: "primary",
-    };
+      label: 'Em Andamento',
+      icon: 'mdi-progress-clock',
+      color: 'primary',
+    }
   }
-});
+})
 </script>
 
 <style scoped>
@@ -167,9 +188,7 @@ const statusConfig = computed(() => {
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg,
-      rgb(var(--v-theme-primary)),
-      rgb(var(--v-theme-secondary)));
+  background: linear-gradient(180deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary)));
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -358,15 +377,15 @@ const statusConfig = computed(() => {
 
 /* Type Specific Styles */
 .course-item--completed .course-link::before {
-  background: linear-gradient(180deg,
-      rgb(var(--v-theme-success)),
-      color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black));
+  background: linear-gradient(
+    180deg,
+    rgb(var(--v-theme-success)),
+    color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black)
+  );
 }
 
 .course-item--in-progress .course-link::before {
-  background: linear-gradient(180deg,
-      rgb(var(--v-theme-primary)),
-      rgb(var(--v-theme-secondary)));
+  background: linear-gradient(180deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary)));
 }
 
 /* Responsive */

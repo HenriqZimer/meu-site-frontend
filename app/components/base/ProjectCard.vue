@@ -1,18 +1,35 @@
 <template>
-  <a :href="demoUrl || githubUrl" target="_blank" rel="noopener noreferrer" class="project-card-modern"
-    :style="cardStyles">
+  <a
+    :href="demoUrl || githubUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="project-card-modern"
+    :style="cardStyles"
+  >
     <!-- Left Border Indicator -->
     <div class="card-border-indicator" />
 
     <!-- Project Image -->
     <div v-if="image || $slots.image" class="project-image-container">
       <div class="project-image-wrapper">
-        <img :src="image" :alt="imageAlt" :loading="lazy ? 'lazy' : 'eager'" class="project-image" />
+        <img
+          :src="image"
+          :alt="imageAlt"
+          :loading="lazy ? 'lazy' : 'eager'"
+          class="project-image"
+        />
       </div>
 
       <!-- Status Badge Overlay -->
       <div class="status-badge-overlay">
-        <v-chip v-if="featured" size="small" variant="flat" color="warning" prepend-icon="mdi-star" class="mb-1">
+        <v-chip
+          v-if="featured"
+          size="small"
+          variant="flat"
+          color="warning"
+          prepend-icon="mdi-star"
+          class="mb-1"
+        >
           Destaque
         </v-chip>
       </div>
@@ -37,13 +54,29 @@
 
       <!-- Action Links -->
       <div class="project-actions">
-        <v-btn v-if="demoUrl" variant="text" size="small" color="primary" :href="demoUrl" target="_blank"
-          class="action-link" @click.stop>
+        <v-btn
+          v-if="demoUrl"
+          variant="text"
+          size="small"
+          color="primary"
+          :href="demoUrl"
+          target="_blank"
+          class="action-link"
+          @click.stop
+        >
           <v-icon start size="16">mdi-open-in-new</v-icon>
           Demo
         </v-btn>
-        <v-btn v-if="githubUrl" variant="text" size="small" color="primary" :href="githubUrl" target="_blank"
-          class="action-link" @click.stop>
+        <v-btn
+          v-if="githubUrl"
+          variant="text"
+          size="small"
+          color="primary"
+          :href="githubUrl"
+          target="_blank"
+          class="action-link"
+          @click.stop
+        >
           <v-icon start size="16">mdi-github</v-icon>
           Código
         </v-btn>
@@ -53,35 +86,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  imageAlt?: string;
-  technologies?: string[];
-  demoUrl?: string;
-  githubUrl?: string;
-  lazy?: boolean;
-  animationDelay?: number;
-  featured?: boolean;
-  status?: "completed" | "in-progress" | "planning";
+  title?: string
+  description?: string
+  image?: string
+  imageAlt?: string
+  technologies?: string[]
+  demoUrl?: string
+  githubUrl?: string
+  lazy?: boolean
+  animationDelay?: number
+  featured?: boolean
+  status?: 'completed' | 'in-progress' | 'planning'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: "",
-  description: "",
-  image: "",
-  imageAlt: "",
+  title: '',
+  description: '',
+  image: '',
+  imageAlt: '',
   technologies: () => [],
-  demoUrl: "",
-  githubUrl: "",
+  demoUrl: '',
+  githubUrl: '',
   lazy: true,
   animationDelay: 0,
   featured: false,
-  status: "completed",
-});
+  status: 'completed',
+})
 
 // Helper methods
 // const getStatusIcon = (status: string) => {
@@ -113,8 +146,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Computed properties
 const cardStyles = computed(() => ({
-  "--animation-delay": `${props.animationDelay}ms`,
-}));
+  '--animation-delay': `${props.animationDelay}ms`,
+}))
 </script>
 
 <style scoped>
@@ -154,9 +187,7 @@ const cardStyles = computed(() => ({
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg,
-      rgb(var(--v-theme-primary)),
-      rgb(var(--v-theme-secondary)));
+  background: linear-gradient(180deg, rgb(var(--v-theme-primary)), rgb(var(--v-theme-secondary)));
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -173,7 +204,11 @@ const cardStyles = computed(() => ({
   width: 100%;
   height: 200px;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(var(--v-theme-surface), 0.05) 0%, rgba(var(--v-theme-surface), 0.02) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--v-theme-surface), 0.05) 0%,
+    rgba(var(--v-theme-surface), 0.02) 100%
+  );
 }
 
 .project-image-wrapper {

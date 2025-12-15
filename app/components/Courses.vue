@@ -1,19 +1,38 @@
 <template>
-  <Section id="courses" badge="Cursos" badge-icon="mdi-school" badge-color="success" title-prefix="Meus"
+  <Section
+    id="courses"
+    badge="Cursos"
+    badge-icon="mdi-school"
+    badge-color="success"
+    title-prefix="Meus"
     title-highlight="Cursos Concluídos"
     description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
-    section-class="section-modern" container-class="section-container">
-
+    section-class="section-modern"
+    container-class="section-container"
+  >
     <!-- Statistics Overview -->
     <div class="mb-8 mb-md-10">
-      <StatsGrid class="teste" :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }"
-        :base-delay="200" :delay-increment="100" custom-class="stats-section" />
+      <StatsGrid
+        class="teste"
+        :items="stats"
+        variant="stats"
+        :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }"
+        :base-delay="200"
+        :delay-increment="100"
+        custom-class="stats-section"
+      />
     </div>
 
     <!-- Modern Course Cards Grid -->
     <div class="courses-grid-container">
-      <div v-for="(yearGroup, yearIndex) in coursesByYear" :key="yearGroup.year" class="year-section"
-        :class="yearGroup.year === 'Planejados' ? 'year-section--planned' : 'year-section--completed'">
+      <div
+        v-for="(yearGroup, yearIndex) in coursesByYear"
+        :key="yearGroup.year"
+        class="year-section"
+        :class="
+          yearGroup.year === 'Planejados' ? 'year-section--planned' : 'year-section--completed'
+        "
+      >
         <!-- Year Header -->
         <div class="year-header" data-animate="fade-up" :data-delay="yearIndex * 150">
           <div class="year-header-content">
@@ -23,7 +42,8 @@
             <div class="year-info">
               <h3 class="year-title">{{ yearGroup.year }}</h3>
               <p class="year-count">
-                {{ yearGroup.courses.length }} {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
+                {{ yearGroup.courses.length }}
+                {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
               </p>
             </div>
           </div>
@@ -32,15 +52,31 @@
 
         <!-- Course Cards Grid -->
         <v-row class="courses-grid" justify="center">
-          <v-col v-for="(course, index) in getVisibleCourses(yearGroup)" :key="`${course.name}-${index}`" cols="12" sm="6" md="4"
-            class="course-col">
-            <div class="course-card-wrapper" data-animate="flip-in" :data-delay="yearIndex * 150 + index * 100"
-              @mouseenter="handleCardHover($event)" @mousemove="handleCardMove($event)"
-              @mouseleave="handleCardLeave($event)">
+          <v-col
+            v-for="(course, index) in getVisibleCourses(yearGroup)"
+            :key="`${course.name}-${index}`"
+            cols="12"
+            sm="6"
+            md="4"
+            class="course-col"
+          >
+            <div
+              class="course-card-wrapper"
+              data-animate="flip-in"
+              :data-delay="yearIndex * 150 + index * 100"
+              @mouseenter="handleCardHover($event)"
+              @mousemove="handleCardMove($event)"
+              @mouseleave="handleCardLeave($event)"
+            >
               <v-card class="course-card" elevation="0">
                 <!-- Course Image/Icon -->
                 <div class="course-image-wrapper">
-                  <img v-if="course.image" :src="course.image" :alt="course.name" class="course-image" />
+                  <img
+                    v-if="course.image"
+                    :src="course.image"
+                    :alt="course.name"
+                    class="course-image"
+                  />
                   <div v-else class="course-icon-placeholder">
                     <v-icon icon="mdi-school" size="64" />
                   </div>
@@ -69,8 +105,16 @@
                   </div>
 
                   <!-- View Certificate Button -->
-                  <v-btn v-if="course.link" :href="course.link" target="_blank" variant="flat" color="primary"
-                    size="small" class="course-btn mt-3" block>
+                  <v-btn
+                    v-if="course.link"
+                    :href="course.link"
+                    target="_blank"
+                    variant="flat"
+                    color="primary"
+                    size="small"
+                    class="course-btn mt-3"
+                    block
+                  >
                     <v-icon start>mdi-certificate</v-icon>
                     Ver Certificado
                   </v-btn>
@@ -89,8 +133,14 @@
             class="see-more-btn"
             @click="toggleYearExpansion(yearGroup.year)"
           >
-            <v-icon start>{{ isYearExpanded(yearGroup.year) ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-            {{ isYearExpanded(yearGroup.year) ? 'Ver Menos' : `Ver Mais (${yearGroup.courses.length - 3})` }}
+            <v-icon start>{{
+              isYearExpanded(yearGroup.year) ? 'mdi-chevron-up' : 'mdi-chevron-down'
+            }}</v-icon>
+            {{
+              isYearExpanded(yearGroup.year)
+                ? 'Ver Menos'
+                : `Ver Mais (${yearGroup.courses.length - 3})`
+            }}
           </v-btn>
         </div>
       </div>
@@ -100,8 +150,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { MENU_ITEMS, SCROLL_CONFIG } from '~/constants'
-import CertificationItem from '~/components/base/CertificationItem.vue'
 import type { Stat } from '~/components/base/StatsGrid.vue'
 
 // Types & Interfaces
@@ -125,20 +173,21 @@ interface YearGroup {
 // Store
 const coursesStore = useCoursesStore()
 
+// Scroll Animation
+const { observeElements } = useScrollAnimation()
+
 // Carregar cursos da API no onMounted
 onMounted(async () => {
   await coursesStore.fetchCourses()
   observeElements({
     threshold: 0.1,
-    once: true
+    once: true,
   })
 })
 
 // Computed do store
-const allCourses = computed(() => coursesStore.allCourses)
 const completedCourses = computed(() => coursesStore.completedCourses)
 const totalHours = computed(() => coursesStore.totalHours)
-const loading = computed(() => coursesStore.loading)
 
 // Stats dos cursos
 const stats = computed<Stat[]>(() => [
@@ -146,21 +195,15 @@ const stats = computed<Stat[]>(() => [
     icon: 'mdi-school',
     value: completedCourses.value.length,
     label: 'Cursos Concluídos',
-    color: 'primary'
+    color: 'primary',
   },
   {
     icon: 'mdi-clock-outline',
     value: `${Math.round(totalHours.value)}h`,
     label: 'Horas de Estudo',
-    color: 'success'
-  }
+    color: 'success',
+  },
 ])
-
-// Composables
-const { isMobile, isTablet, isDesktop, getResponsiveValue } = useResponsive()
-
-// Scroll Animation
-const { observeElements } = useScrollAnimation()
 
 // Agrupar cursos por ano (usa getter da store)
 const coursesByYear = computed(() => coursesStore.coursesByYear)
@@ -211,7 +254,8 @@ const handleCardMove = (event: MouseEvent) => {
   const rotateX = ((y - centerY) / centerY) * -8
   const rotateY = ((x - centerX) / centerX) * 8
 
-  card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)'
+  card.style.transform =
+    'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)'
 }
 
 const handleCardLeave = (event: MouseEvent) => {
@@ -244,7 +288,7 @@ const handleCardLeave = (event: MouseEvent) => {
   opacity: 0;
 }
 
-.year-header[data-animate="fade-up"] {
+.year-header[data-animate='fade-up'] {
   animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
@@ -314,7 +358,12 @@ const handleCardLeave = (event: MouseEvent) => {
 
 .year-divider {
   height: 2px;
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(59, 130, 246, 0.5) 0%,
+    rgba(59, 130, 246, 0.1) 50%,
+    transparent 100%
+  );
   border-radius: 2px;
 }
 
@@ -340,7 +389,12 @@ const handleCardLeave = (event: MouseEvent) => {
 }
 
 .year-section--planned .year-divider {
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.5) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.5) 0%,
+    rgba(245, 158, 11, 0.1) 50%,
+    transparent 100%
+  );
 }
 
 /* === COURSE CARDS GRID === */
@@ -360,7 +414,7 @@ const handleCardLeave = (event: MouseEvent) => {
   cursor: pointer;
 }
 
-.course-card-wrapper[data-animate="flip-in"] {
+.course-card-wrapper[data-animate='flip-in'] {
   animation: flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
@@ -708,19 +762,19 @@ const handleCardLeave = (event: MouseEvent) => {
   animation: fadeInScale 0.6s ease forwards;
 }
 
-.modern-courses .stat-item[data-animate-delay="0"] {
+.modern-courses .stat-item[data-animate-delay='0'] {
   animation-delay: 0.8s;
 }
 
-.modern-courses .stat-item[data-animate-delay="100"] {
+.modern-courses .stat-item[data-animate-delay='100'] {
   animation-delay: 0.9s;
 }
 
-.modern-courses .stat-item[data-animate-delay="200"] {
-  animation-delay: 1.0s;
+.modern-courses .stat-item[data-animate-delay='200'] {
+  animation-delay: 1s;
 }
 
-.modern-courses .stat-item[data-animate-delay="300"] {
+.modern-courses .stat-item[data-animate-delay='300'] {
   animation-delay: 1.1s;
 }
 
@@ -942,7 +996,11 @@ const handleCardLeave = (event: MouseEvent) => {
 }
 
 .modern-courses .year-panel-title {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04)) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.08),
+    rgba(96, 165, 250, 0.04)
+  ) !important;
   border-bottom: 1px solid rgba(var(--v-theme-outline), 0.08);
   padding: 20px 24px !important;
   min-height: auto !important;
@@ -950,7 +1008,11 @@ const handleCardLeave = (event: MouseEvent) => {
 }
 
 .modern-courses .year-panel:hover .year-panel-title {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06)) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.12),
+    rgba(96, 165, 250, 0.06)
+  ) !important;
 }
 
 .modern-courses .year-info {

@@ -1,37 +1,67 @@
 <template>
-  <Section id="skills" badge="Skills" badge-icon="mdi-code-braces" badge-color="cyan" title-prefix="Minha Stack"
-    title-highlight="Tecnológica" description="Ferramentas e tecnologias que domino e estou estudando"
-    section-class="py-10 py-md-16" container-class="pa-0">
-
+  <Section
+    id="skills"
+    badge="Skills"
+    badge-icon="mdi-code-braces"
+    badge-color="cyan"
+    title-prefix="Minha Stack"
+    title-highlight="Tecnológica"
+    description="Ferramentas e tecnologias que domino e estou estudando"
+    section-class="py-10 py-md-16"
+    container-class="pa-0"
+  >
     <!-- Tech Carousel -->
     <div class="tech-carousel-container mt-8">
       <div class="tech-carousel-wrapper overflow-x-hidden">
         <div class="tech-carousel-track d-inline-flex ga-4 ga-md-6">
           <!-- First set -->
-          <v-card v-for="tech in technologies" :key="tech.name" class="tech-card elevation-2 rounded-xl" width="180"
-            height="auto">
+          <v-card
+            v-for="tech in technologies"
+            :key="tech.name"
+            class="tech-card elevation-2 rounded-xl"
+            width="180"
+            height="auto"
+          >
             <v-card-text class="d-flex flex-column align-center ga-3 pa-5 text-center">
-              <div class="tech-icon-container d-flex align-center justify-center rounded-lg"
-                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')">
+              <div
+                class="tech-icon-container d-flex align-center justify-center rounded-lg"
+                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')"
+              >
                 <v-icon :icon="tech.icon" size="40" />
               </div>
               <div class="tech-details">
-                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249);">{{ tech.name }}</div>
-                <div class="text-caption" style="color: rgb(148, 163, 184);">{{ tech.category }}</div>
+                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249)">
+                  {{ tech.name }}
+                </div>
+                <div class="text-caption" style="color: rgb(148, 163, 184)">
+                  {{ tech.category }}
+                </div>
               </div>
             </v-card-text>
           </v-card>
           <!-- Duplicate for seamless loop -->
-          <v-card v-for="tech in technologies" :key="`duplicate-${tech.name}`" class="tech-card elevation-2 rounded-xl"
-            width="180" height="auto" aria-hidden="true">
+          <v-card
+            v-for="tech in technologies"
+            :key="`duplicate-${tech.name}`"
+            class="tech-card elevation-2 rounded-xl"
+            width="180"
+            height="auto"
+            aria-hidden="true"
+          >
             <v-card-text class="d-flex flex-column align-center ga-3 pa-5 text-center">
-              <div class="tech-icon-container d-flex align-center justify-center rounded-lg"
-                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')">
+              <div
+                class="tech-icon-container d-flex align-center justify-center rounded-lg"
+                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')"
+              >
                 <v-icon :icon="tech.icon" size="40" />
               </div>
               <div class="tech-details">
-                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249);">{{ tech.name }}</div>
-                <div class="text-caption" style="color: rgb(148, 163, 184);">{{ tech.category }}</div>
+                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249)">
+                  {{ tech.name }}
+                </div>
+                <div class="text-caption" style="color: rgb(148, 163, 184)">
+                  {{ tech.category }}
+                </div>
               </div>
             </v-card-text>
           </v-card>
@@ -42,7 +72,6 @@
 </template>
 
 <script setup lang="ts">
-
 // Types
 // interface Technology {
 //   name: string;
@@ -64,7 +93,6 @@ onMounted(async () => {
 // Computed do store
 const technologies = computed(() => skillsStore.allSkills)
 // const loading = computed(() => skillsStore.loading)
-
 </script>
 
 <style scoped>
@@ -142,7 +170,7 @@ const technologies = computed(() => skillsStore.allSkills)
 }
 
 .tech-card::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -159,10 +187,10 @@ const technologies = computed(() => skillsStore.allSkills)
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg,
-      rgba(59, 130, 246, 0.15),
-      rgba(6, 182, 212, 0.15));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -251,7 +279,6 @@ const technologies = computed(() => skillsStore.allSkills)
 
 /* === ANIMATIONS === */
 @keyframes iconGlow {
-
   0%,
   100% {
     opacity: 0.3;
@@ -288,372 +315,372 @@ const technologies = computed(() => skillsStore.allSkills)
 }
 
 /* Cores específicas das bordas superiores por tecnologia - CORES OFICIAIS */
-.tech-card:has([data-icon="docker"])::before {
+.tech-card:has([data-icon='docker'])::before {
   background: rgb(41, 148, 229) !important;
 }
 
-.tech-card:has([data-icon="kubernetes"])::before {
+.tech-card:has([data-icon='kubernetes'])::before {
   background: rgb(51, 113, 227) !important;
 }
 
-.tech-card:has([data-icon="terraform"])::before {
+.tech-card:has([data-icon='terraform'])::before {
   background: rgb(124, 77, 255) !important;
 }
 
-.tech-card:has([data-icon="ansible"])::before {
+.tech-card:has([data-icon='ansible'])::before {
   background: rgb(238, 0, 0) !important;
 }
 
-.tech-card:has([data-icon="jenkins"])::before {
+.tech-card:has([data-icon='jenkins'])::before {
   background: rgb(213, 66, 49) !important;
 }
 
-.tech-card:has([data-icon="github-actions"])::before {
+.tech-card:has([data-icon='github-actions'])::before {
   background: rgb(42, 129, 246) !important;
 }
 
-.tech-card:has([data-icon="argocd"])::before {
+.tech-card:has([data-icon='argocd'])::before {
   background: rgb(239, 111, 54) !important;
 }
 
-.tech-card:has([data-icon="gitlab-ci"])::before {
+.tech-card:has([data-icon='gitlab-ci'])::before {
   background: rgb(252, 109, 38) !important;
 }
 
-.tech-card:has([data-icon="prometheus"])::before {
+.tech-card:has([data-icon='prometheus'])::before {
   background: rgb(230, 86, 37) !important;
 }
 
-.tech-card:has([data-icon="grafana"])::before {
+.tech-card:has([data-icon='grafana'])::before {
   background: rgb(242, 125, 53) !important;
 }
 
-.tech-card:has([data-icon="elk-stack"])::before {
+.tech-card:has([data-icon='elk-stack'])::before {
   background: rgb(0, 169, 152) !important;
 }
 
-.tech-card:has([data-icon="jaeger"])::before {
+.tech-card:has([data-icon='jaeger'])::before {
   background: rgb(96, 214, 229) !important;
 }
 
-.tech-card:has([data-icon="aws"])::before {
+.tech-card:has([data-icon='aws'])::before {
   background: rgb(255, 153, 0) !important;
 }
 
-.tech-card:has([data-icon="azure"])::before {
+.tech-card:has([data-icon='azure'])::before {
   background: rgb(0, 120, 212) !important;
 }
 
-.tech-card:has([data-icon="gcp"])::before {
+.tech-card:has([data-icon='gcp'])::before {
   background: rgb(234, 67, 53) !important;
 }
 
-.tech-card:has([data-icon="digitalocean"])::before {
+.tech-card:has([data-icon='digitalocean'])::before {
   background: rgb(0, 127, 255) !important;
 }
 
-.tech-card:has([data-icon="python"])::before {
+.tech-card:has([data-icon='python'])::before {
   background: rgb(55, 118, 171) !important;
 }
 
-.tech-card:has([data-icon="go"])::before {
+.tech-card:has([data-icon='go'])::before {
   background: rgb(0, 173, 216) !important;
 }
 
-.tech-card:has([data-icon="javascript"])::before {
+.tech-card:has([data-icon='javascript'])::before {
   background: rgb(247, 223, 30) !important;
 }
 
-.tech-card:has([data-icon="typescript"])::before {
+.tech-card:has([data-icon='typescript'])::before {
   background: rgb(49, 120, 198) !important;
 }
 
-.tech-card:has([data-icon="bash"])::before {
+.tech-card:has([data-icon='bash'])::before {
   background: rgb(76, 175, 80) !important;
 }
 
-.tech-card:has([data-icon="powershell"])::before {
+.tech-card:has([data-icon='powershell'])::before {
   background: rgb(1, 114, 182) !important;
 }
 
-.tech-card:has([data-icon="vue"])::before {
+.tech-card:has([data-icon='vue'])::before {
   background: rgb(65, 184, 131) !important;
 }
 
-.tech-card:has([data-icon="react"])::before {
+.tech-card:has([data-icon='react'])::before {
   background: rgb(97, 218, 251) !important;
 }
 
-.tech-card:has([data-icon="nuxt"])::before {
+.tech-card:has([data-icon='nuxt'])::before {
   background: rgb(0, 220, 130) !important;
 }
 
-.tech-card:has([data-icon="nodejs"])::before {
+.tech-card:has([data-icon='nodejs'])::before {
   background: rgb(104, 160, 99) !important;
 }
 
-.tech-card:has([data-icon="postgresql"])::before {
+.tech-card:has([data-icon='postgresql'])::before {
   background: rgb(51, 103, 145) !important;
 }
 
-.tech-card:has([data-icon="mysql"])::before {
+.tech-card:has([data-icon='mysql'])::before {
   background: rgb(0, 117, 143) !important;
 }
 
-.tech-card:has([data-icon="mongodb"])::before {
+.tech-card:has([data-icon='mongodb'])::before {
   background: rgb(71, 162, 72) !important;
 }
 
-.tech-card:has([data-icon="redis"])::before {
+.tech-card:has([data-icon='redis'])::before {
   background: rgb(220, 61, 50) !important;
 }
 
-.tech-card:has([data-icon="rabbitmq"])::before {
+.tech-card:has([data-icon='rabbitmq'])::before {
   background: rgb(255, 102, 0) !important;
 }
 
-.tech-card:has([data-icon="kafka"])::before {
+.tech-card:has([data-icon='kafka'])::before {
   background: rgb(200, 200, 200) !important;
 }
 
-.tech-card:has([data-icon="nginx"])::before {
+.tech-card:has([data-icon='nginx'])::before {
   background: rgb(0, 150, 57) !important;
 }
 
-.tech-card:has([data-icon="traefik"])::before {
+.tech-card:has([data-icon='traefik'])::before {
   background: rgb(36, 182, 239) !important;
 }
 
-.tech-card:has([data-icon="istio"])::before {
+.tech-card:has([data-icon='istio'])::before {
   background: rgb(70, 132, 217) !important;
 }
 
-.tech-card:has([data-icon="envoy"])::before {
+.tech-card:has([data-icon='envoy'])::before {
   background: rgb(172, 71, 189) !important;
 }
 
-.tech-card:has([data-icon="helm"])::before {
+.tech-card:has([data-icon='helm'])::before {
   background: rgb(12, 192, 224) !important;
 }
 
-.tech-card:has([data-icon="flux"])::before {
+.tech-card:has([data-icon='flux'])::before {
   background: rgb(52, 140, 212) !important;
 }
 
-.tech-card:has([data-icon="kustomize"])::before {
+.tech-card:has([data-icon='kustomize'])::before {
   background: rgb(90, 90, 207) !important;
 }
 
-.tech-card:has([data-icon="linkerd"])::before {
+.tech-card:has([data-icon='linkerd'])::before {
   background: rgb(46, 180, 67) !important;
 }
 
-.tech-card:has([data-icon="consul"])::before {
+.tech-card:has([data-icon='consul'])::before {
   background: rgb(224, 56, 117) !important;
 }
 
-.tech-card:has([data-icon="cilium"])::before {
+.tech-card:has([data-icon='cilium'])::before {
   background: rgb(248, 197, 23) !important;
 }
 
-.tech-card:has([data-icon="ebpf"])::before {
+.tech-card:has([data-icon='ebpf'])::before {
   background: rgb(247, 147, 30) !important;
 }
 
-.tech-card:has([data-icon="git"])::before {
+.tech-card:has([data-icon='git'])::before {
   background: rgb(240, 80, 50) !important;
 }
 
-.tech-card:has([data-icon="linux"])::before {
+.tech-card:has([data-icon='linux'])::before {
   background: rgb(255, 192, 0) !important;
 }
 
-.tech-card:has([data-icon="webassembly"])::before {
+.tech-card:has([data-icon='webassembly'])::before {
   background: rgb(101, 79, 240) !important;
 }
 
 /* Cores dos ícones - mesma cor da borda superior (CORES OFICIAIS) */
-[data-icon="docker"] .v-icon {
+[data-icon='docker'] .v-icon {
   color: rgb(41, 148, 229) !important;
 }
 
-[data-icon="kubernetes"] .v-icon {
+[data-icon='kubernetes'] .v-icon {
   color: rgb(51, 113, 227) !important;
 }
 
-[data-icon="terraform"] .v-icon {
+[data-icon='terraform'] .v-icon {
   color: rgb(124, 77, 255) !important;
 }
 
-[data-icon="ansible"] .v-icon {
+[data-icon='ansible'] .v-icon {
   color: rgb(238, 0, 0) !important;
 }
 
-[data-icon="jenkins"] .v-icon {
+[data-icon='jenkins'] .v-icon {
   color: rgb(213, 66, 49) !important;
 }
 
-[data-icon="github-actions"] .v-icon {
+[data-icon='github-actions'] .v-icon {
   color: rgb(42, 129, 246) !important;
 }
 
-[data-icon="argocd"] .v-icon {
+[data-icon='argocd'] .v-icon {
   color: rgb(239, 111, 54) !important;
 }
 
-[data-icon="gitlab-ci"] .v-icon {
+[data-icon='gitlab-ci'] .v-icon {
   color: rgb(252, 109, 38) !important;
 }
 
-[data-icon="prometheus"] .v-icon {
+[data-icon='prometheus'] .v-icon {
   color: rgb(230, 86, 37) !important;
 }
 
-[data-icon="grafana"] .v-icon {
+[data-icon='grafana'] .v-icon {
   color: rgb(242, 125, 53) !important;
 }
 
-[data-icon="elk-stack"] .v-icon {
+[data-icon='elk-stack'] .v-icon {
   color: rgb(0, 169, 152) !important;
 }
 
-[data-icon="jaeger"] .v-icon {
+[data-icon='jaeger'] .v-icon {
   color: rgb(96, 214, 229) !important;
 }
 
-[data-icon="aws"] .v-icon {
+[data-icon='aws'] .v-icon {
   color: rgb(255, 153, 0) !important;
 }
 
-[data-icon="azure"] .v-icon {
+[data-icon='azure'] .v-icon {
   color: rgb(0, 120, 212) !important;
 }
 
-[data-icon="gcp"] .v-icon {
+[data-icon='gcp'] .v-icon {
   color: rgb(234, 67, 53) !important;
 }
 
-[data-icon="digitalocean"] .v-icon {
+[data-icon='digitalocean'] .v-icon {
   color: rgb(0, 127, 255) !important;
 }
 
-[data-icon="python"] .v-icon {
+[data-icon='python'] .v-icon {
   color: rgb(55, 118, 171) !important;
 }
 
-[data-icon="go"] .v-icon {
+[data-icon='go'] .v-icon {
   color: rgb(0, 173, 216) !important;
 }
 
-[data-icon="javascript"] .v-icon {
+[data-icon='javascript'] .v-icon {
   color: rgb(247, 223, 30) !important;
 }
 
-[data-icon="typescript"] .v-icon {
+[data-icon='typescript'] .v-icon {
   color: rgb(49, 120, 198) !important;
 }
 
-[data-icon="bash"] .v-icon {
+[data-icon='bash'] .v-icon {
   color: rgb(76, 175, 80) !important;
 }
 
-[data-icon="powershell"] .v-icon {
+[data-icon='powershell'] .v-icon {
   color: rgb(33, 150, 243) !important;
 }
 
-[data-icon="vue"] .v-icon {
+[data-icon='vue'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
-[data-icon="react"] .v-icon {
+[data-icon='react'] .v-icon {
   color: rgb(77, 199, 237) !important;
 }
 
-[data-icon="nuxt"] .v-icon {
+[data-icon='nuxt'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
-[data-icon="nodejs"] .v-icon {
+[data-icon='nodejs'] .v-icon {
   color: rgb(104, 184, 104) !important;
 }
 
-[data-icon="postgresql"] .v-icon {
+[data-icon='postgresql'] .v-icon {
   color: rgb(51, 103, 145) !important;
 }
 
-[data-icon="mysql"] .v-icon {
+[data-icon='mysql'] .v-icon {
   color: rgb(0, 117, 143) !important;
 }
 
-[data-icon="mongodb"] .v-icon {
+[data-icon='mongodb'] .v-icon {
   color: rgb(71, 162, 72) !important;
 }
 
-[data-icon="redis"] .v-icon {
+[data-icon='redis'] .v-icon {
   color: rgb(211, 57, 50) !important;
 }
 
-[data-icon="rabbitmq"] .v-icon {
+[data-icon='rabbitmq'] .v-icon {
   color: rgb(255, 102, 0) !important;
 }
 
-[data-icon="kafka"] .v-icon {
+[data-icon='kafka'] .v-icon {
   color: rgb(150, 150, 150) !important;
 }
 
-[data-icon="nginx"] .v-icon {
+[data-icon='nginx'] .v-icon {
   color: rgb(0, 150, 57) !important;
 }
 
-[data-icon="traefik"] .v-icon {
+[data-icon='traefik'] .v-icon {
   color: rgb(36, 182, 239) !important;
 }
 
-[data-icon="istio"] .v-icon {
+[data-icon='istio'] .v-icon {
   color: rgb(70, 132, 217) !important;
 }
 
-[data-icon="envoy"] .v-icon {
+[data-icon='envoy'] .v-icon {
   color: rgb(172, 71, 189) !important;
 }
 
-[data-icon="helm"] .v-icon {
+[data-icon='helm'] .v-icon {
   color: rgb(89, 132, 169) !important;
 }
 
-[data-icon="flux"] .v-icon {
+[data-icon='flux'] .v-icon {
   color: rgb(52, 140, 212) !important;
 }
 
-[data-icon="kustomize"] .v-icon {
+[data-icon='kustomize'] .v-icon {
   color: rgb(90, 90, 207) !important;
 }
 
-[data-icon="linkerd"] .v-icon {
+[data-icon='linkerd'] .v-icon {
   color: rgb(46, 180, 67) !important;
 }
 
-[data-icon="consul"] .v-icon {
+[data-icon='consul'] .v-icon {
   color: rgb(224, 56, 117) !important;
 }
 
-[data-icon="cilium"] .v-icon {
+[data-icon='cilium'] .v-icon {
   color: rgb(248, 197, 23) !important;
 }
 
-[data-icon="ebpf"] .v-icon {
+[data-icon='ebpf'] .v-icon {
   color: rgb(247, 147, 30) !important;
 }
 
-[data-icon="git"] .v-icon {
+[data-icon='git'] .v-icon {
   color: rgb(240, 80, 50) !important;
 }
 
-[data-icon="linux"] .v-icon {
+[data-icon='linux'] .v-icon {
   color: rgb(252, 198, 36) !important;
 }
 
-[data-icon="webassembly"] .v-icon {
+[data-icon='webassembly'] .v-icon {
   color: rgb(101, 79, 240) !important;
 }
 </style>

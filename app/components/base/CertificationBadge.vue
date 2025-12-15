@@ -1,13 +1,26 @@
 <template>
-  <a :href="link" target="_blank" rel="noopener noreferrer" class="certification-card" :aria-label="`Ver certificado ${name}`"
-    @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" @mousemove="handleMouseMove">
+  <a
+    :href="link"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="certification-card"
+    :aria-label="`Ver certificado ${name}`"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+    @mousemove="handleMouseMove"
+  >
     <!-- Left Border Indicator -->
     <div class="card-border-indicator" />
 
     <!-- Image Container -->
     <div class="image-container">
       <div class="image-wrapper">
-        <img :src="image" :alt="name" :loading="lazy ? 'lazy' : 'eager'" class="certification-image" />
+        <img
+          :src="image"
+          :alt="name"
+          :loading="lazy ? 'lazy' : 'eager'"
+          class="certification-image"
+        />
       </div>
     </div>
 
@@ -31,8 +44,6 @@
           {{ skills }} habilidades
         </span>
       </div>
-
-
     </div>
 
     <!-- Action Icon -->
@@ -45,15 +56,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-interface Props {
-  name: string
-  issuer: string
-  image: string
-  link: string
-  date?: string
-  skills?: number
-  lazy?: boolean
-}
+// interface Props {
+//   name: string
+//   issuer: string
+//   image: string
+//   link: string
+//   date?: string
+//   skills?: number
+//   lazy?: boolean
+// }
 
 // const props = withDefaults(defineProps<Props>(), {
 //   lazy: true,
@@ -132,9 +143,11 @@ const handleMouseMove = (e: MouseEvent) => {
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg,
-      rgb(var(--v-theme-success)),
-      color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black));
+  background: linear-gradient(
+    180deg,
+    rgb(var(--v-theme-success)),
+    color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black)
+  );
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);

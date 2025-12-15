@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <v-container class="py-12 py-md-16 position-relative" style="z-index: 2;">
+    <v-container class="py-12 py-md-16 position-relative" style="z-index: 2">
       <v-row align="center" justify="center" class="flex-column-reverse flex-md-row">
         <!-- Text Content -->
         <v-col cols="12" md="7" lg="6" class="text-center text-md-left">
@@ -30,16 +30,26 @@
 
             <!-- Subtitle with Icon -->
             <div class="hero-subtitle-box mb-6 mb-md-8">
-              <div class="d-inline-flex align-center ga-3 flex-wrap justify-center justify-md-start">
+              <div
+                class="d-inline-flex align-center ga-3 flex-wrap justify-center justify-md-start"
+              >
                 <v-chip color="primary" variant="flat" class="subtitle-chip high-contrast-chip">
                   <v-icon icon="mdi-infinity" start size="20" />
                   DevOps
                 </v-chip>
-                <v-chip color="blue-darken-2" variant="flat" class="subtitle-chip high-contrast-chip">
+                <v-chip
+                  color="blue-darken-2"
+                  variant="flat"
+                  class="subtitle-chip high-contrast-chip"
+                >
                   <v-icon icon="mdi-cloud-outline" start size="20" />
                   Cloud
                 </v-chip>
-                <v-chip color="blue-darken-2" variant="flat" class="subtitle-chip high-contrast-chip">
+                <v-chip
+                  color="blue-darken-2"
+                  variant="flat"
+                  class="subtitle-chip high-contrast-chip"
+                >
                   <v-icon icon="mdi-kubernetes" start size="20" />
                   Kubernetes
                 </v-chip>
@@ -48,24 +58,35 @@
 
             <!-- Description -->
             <p class="hero-description text-body-1 text-md-h6 mb-8 mb-md-10 mx-auto mx-md-0">
-              Resolvo problemas de infraestrutura com soluções automatizadas com <span
-                class="text-highlight">CI/CD</span>,
+              Resolvo problemas de infraestrutura com soluções automatizadas com
+              <span class="text-highlight">CI/CD</span>,
               <span class="text-highlight">Kubernetes</span> e
               <span class="text-highlight">Cloud</span>.
             </p>
 
             <!-- CTA Buttons -->
-            <div class="d-flex flex-column flex-sm-row align-center justify-center justify-md-start ga-4 mb-8 mb-md-12">
-              <v-btn size="x-large" color="primary" variant="flat"
-                class="cta-btn-primary text-none rounded-xl px-10 font-weight-bold" elevation="8"
-                @click="scrollToSection('contact')">
+            <div
+              class="d-flex flex-column flex-sm-row align-center justify-center justify-md-start ga-4 mb-8 mb-md-12"
+            >
+              <v-btn
+                size="x-large"
+                color="primary"
+                variant="flat"
+                class="cta-btn-primary text-none rounded-xl px-10 font-weight-bold"
+                elevation="8"
+                @click="scrollToSection('contact')"
+              >
                 <v-icon icon="mdi-send" start />
                 Entre em Contato
               </v-btn>
 
-              <v-btn size="x-large" variant="outlined" color="primary"
+              <v-btn
+                size="x-large"
+                variant="outlined"
+                color="primary"
                 class="cta-btn-secondary text-none rounded-xl px-10 font-weight-bold"
-                @click="scrollToSection('projects')">
+                @click="scrollToSection('projects')"
+              >
                 <v-icon icon="mdi-briefcase-variant-outline" start />
                 Ver Projetos
               </v-btn>
@@ -73,7 +94,7 @@
 
             <!-- Mini Stats -->
             <div class="d-flex justify-center justify-md-start mb-8 mb-md-10 mb-4">
-              <v-row class="hero-mini-stats" style="max-width: 500px;">
+              <v-row class="hero-mini-stats" style="max-width: 500px">
                 <v-col cols="4" class="text-center">
                   <div class="stat-card">
                     <div class="stat-value text-gradient-vibrant">3+</div>
@@ -98,7 +119,12 @@
         </v-col>
 
         <!-- Image with Floating Elements -->
-        <v-col cols="12" md="5" lg="6" class="d-flex flex-column justify-center align-center mb-10 mb-md-0">
+        <v-col
+          cols="12"
+          md="5"
+          lg="6"
+          class="d-flex flex-column justify-center align-center mb-10 mb-md-0"
+        >
           <div class="hero-image-container position-relative">
             <!-- Main Avatar -->
             <div class="avatar-wrapper">
@@ -127,12 +153,24 @@
           <!-- Social Links - Modern Design -->
           <div class="hero-social-links mt-10">
             <div class="social-label mb-4 text-center">
-              <span class="text-body-2 font-weight-medium" style="color: rgb(148, 163, 184);">Conecte-se comigo</span>
+              <span class="text-body-2 font-weight-medium" style="color: rgb(148, 163, 184)"
+                >Conecte-se comigo</span
+              >
             </div>
             <div class="d-flex justify-center ga-3">
-              <v-btn v-for="social in socialLinks" :key="social.name" :href="social.url"
-                :aria-label="`Visitar ${social.name}`" icon rounded="circle" class="social-btn-hero" width="48"
-                height="48" target="_blank" rel="noopener noreferrer">
+              <v-btn
+                v-for="social in socialLinks"
+                :key="social.name"
+                :href="social.url"
+                :aria-label="`Visitar ${social.name}`"
+                icon
+                rounded="circle"
+                class="social-btn-hero"
+                width="48"
+                height="48"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <v-icon :icon="social.icon" size="22" />
               </v-btn>
             </div>
@@ -150,58 +188,58 @@
 </template>
 
 <script setup lang="ts">
-import { useNavigation } from "~/composables/useNavigation";
-import { useSocialLinks } from "~/composables/useSocialLinks";
-import { useProjectsStore } from "~/stores/projects";
-import { useCertificationsStore } from "~/stores/certifications";
+import { useNavigation } from '~/composables/useNavigation'
+import { useSocialLinks } from '~/composables/useSocialLinks'
+import { useProjectsStore } from '~/stores/projects'
+import { useCertificationsStore } from '~/stores/certifications'
 
 // Configuration
-const config = useRuntimeConfig();
-const siteFirstName = config.public.siteFirstName || "Henrique";
+const config = useRuntimeConfig()
+const siteFirstName = config.public.siteFirstName || 'Henrique'
 
 // Composables
-const { scrollToSection } = useNavigation();
-const { socialLinks } = useSocialLinks();
-const { isMobile, isTablet } = useResponsive();
-const { observeElements } = useScrollAnimation();
+const { scrollToSection } = useNavigation()
+const { socialLinks } = useSocialLinks()
+const { isMobile, isTablet } = useResponsive()
+const { observeElements } = useScrollAnimation()
 
 // Stores
-const projectsStore = useProjectsStore();
-const certificationsStore = useCertificationsStore();
+const projectsStore = useProjectsStore()
+const certificationsStore = useCertificationsStore()
 
-const imageAlt = `Foto profissional de ${siteFirstName}`;
-const profileImageUrl = "/foto-perfil-profissional.jpg";
+const imageAlt = `Foto profissional de ${siteFirstName}`
+const profileImageUrl = '/foto-perfil-profissional.jpg'
 
 // Avatar size responsivo - inicializar com valor padrão para evitar hidratação mismatch
-const avatarSize = ref(320);
+const avatarSize = ref(320)
 
 const updateAvatarSize = () => {
   if (import.meta.client) {
-    if (isMobile.value) avatarSize.value = 250;
-    else if (isTablet.value) avatarSize.value = 280;
-    else avatarSize.value = 320;
+    if (isMobile.value) avatarSize.value = 250
+    else if (isTablet.value) avatarSize.value = 280
+    else avatarSize.value = 320
   }
-};
+}
 
 // Dynamic stats from stores
-const projectCount = computed(() => projectsStore.projectsCount);
-const certificationCount = computed(() => certificationsStore.certificationsCount);
+const projectCount = computed(() => projectsStore.projectsCount)
+const certificationCount = computed(() => certificationsStore.certificationsCount)
 
 onMounted(() => {
-  updateAvatarSize();
-  
+  updateAvatarSize()
+
   observeElements({
     threshold: 0.2,
     once: true,
-  });
+  })
 
   // Fetch stats from backend
-  projectsStore.fetchStats();
-  certificationsStore.fetchStats();
-});
+  projectsStore.fetchStats()
+  certificationsStore.fetchStats()
+})
 
 // Watch para mudanças responsivas
-watch([isMobile, isTablet], updateAvatarSize);
+watch([isMobile, isTablet], updateAvatarSize)
 </script>
 
 <style scoped>
@@ -278,7 +316,6 @@ watch([isMobile, isTablet], updateAvatarSize);
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translate(0, 0);
@@ -294,7 +331,6 @@ watch([isMobile, isTablet], updateAvatarSize);
 }
 
 @keyframes gradientShift {
-
   0%,
   100% {
     opacity: 1;
@@ -514,7 +550,6 @@ watch([isMobile, isTablet], updateAvatarSize);
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 1;
@@ -657,7 +692,6 @@ watch([isMobile, isTablet], updateAvatarSize);
 }
 
 @keyframes bounce {
-
   0%,
   100% {
     transform: translateX(-50%) translateY(0);

@@ -1,8 +1,15 @@
 <template>
-  <Section id="contact" badge="Contato" badge-icon="mdi-email-outline" badge-color="error" title-prefix="Interessado em"
-    title-highlight="trabalhar comigo" description="Vamos conversar sobre seu próximo projeto"
-    section-class="py-10 py-md-16" container-class="px-4 px-md-6">
-
+  <Section
+    id="contact"
+    badge="Contato"
+    badge-icon="mdi-email-outline"
+    badge-color="error"
+    title-prefix="Interessado em"
+    title-highlight="trabalhar comigo"
+    description="Vamos conversar sobre seu próximo projeto"
+    section-class="py-10 py-md-16"
+    container-class="px-4 px-md-6"
+  >
     <v-row justify="center">
       <!-- Contact Form -->
       <v-col cols="12" md="6">
@@ -15,40 +22,69 @@
           <v-form ref="formRef" v-model="valid" @submit.prevent="submitForm">
             <div class="form-field mb-4">
               <label class="field-label">Nome *</label>
-              <input v-model="formData.name" type="text" class="field-input" placeholder="Seu nome completo"
-                :class="{ 'field-error': errors.name }" @blur="validateField('name')" />
+              <input
+                v-model="formData.name"
+                type="text"
+                class="field-input"
+                placeholder="Seu nome completo"
+                :class="{ 'field-error': errors.name }"
+                @blur="validateField('name')"
+              />
               <span v-if="errors.name" class="error-message">{{ errors.name }}</span>
             </div>
 
             <div class="form-field mb-4">
               <label class="field-label">Email *</label>
-              <input v-model="formData.email" type="email" class="field-input" placeholder="seu@email.com"
-                :class="{ 'field-error': errors.email }" @blur="validateField('email')" />
+              <input
+                v-model="formData.email"
+                type="email"
+                class="field-input"
+                placeholder="seu@email.com"
+                :class="{ 'field-error': errors.email }"
+                @blur="validateField('email')"
+              />
               <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
             </div>
 
             <div class="form-field mb-4">
               <label class="field-label">Assunto *</label>
-              <input v-model="formData.subject" type="text" class="field-input" placeholder="Assunto da mensagem"
-                :class="{ 'field-error': errors.subject }" @blur="validateField('subject')" />
+              <input
+                v-model="formData.subject"
+                type="text"
+                class="field-input"
+                placeholder="Assunto da mensagem"
+                :class="{ 'field-error': errors.subject }"
+                @blur="validateField('subject')"
+              />
               <span v-if="errors.subject" class="error-message">{{ errors.subject }}</span>
             </div>
 
             <div class="form-field mb-6">
               <label class="field-label">Mensagem *</label>
-              <textarea v-model="formData.message" class="field-textarea"
-                placeholder="Descreva seu projeto ou dúvida..." rows="6" :class="{ 'field-error': errors.message }"
-                @blur="validateField('message')"></textarea>
+              <textarea
+                v-model="formData.message"
+                class="field-textarea"
+                placeholder="Descreva seu projeto ou dúvida..."
+                rows="6"
+                :class="{ 'field-error': errors.message }"
+                @blur="validateField('message')"
+              ></textarea>
               <span v-if="errors.message" class="error-message">{{ errors.message }}</span>
             </div>
 
-            <v-btn type="submit" color="primary" size="large" block class="submit-btn" :loading="loading"
-              :disabled="!valid || loading">
+            <v-btn
+              type="submit"
+              color="primary"
+              size="large"
+              block
+              class="submit-btn"
+              :loading="loading"
+              :disabled="!valid || loading"
+            >
               <v-icon start>mdi-send</v-icon>
               {{ loading ? 'Enviando...' : 'Enviar Mensagem' }}
             </v-btn>
           </v-form>
-
         </div>
       </v-col>
 
@@ -61,23 +97,53 @@
           </div>
 
           <div class="contact-items mb-6">
-            <ContactItem icon="mdi-email" label="Email" :value="email" :href="`mailto:${email}`" :delay="400" />
-            <ContactItem icon="mdi-phone" label="Telefone" :value="phone" :href="`tel:${phone}`" :delay="450" />
-            <ContactItem icon="mdi-whatsapp" label="WhatsApp" :value="phone" :href="contactInfo.whatsapp" :delay="500"
-              external />
+            <ContactItem
+              icon="mdi-email"
+              label="Email"
+              :value="email"
+              :href="`mailto:${email}`"
+              :delay="400"
+            />
+            <ContactItem
+              icon="mdi-phone"
+              label="Telefone"
+              :value="phone"
+              :href="`tel:${phone}`"
+              :delay="450"
+            />
+            <ContactItem
+              icon="mdi-whatsapp"
+              label="WhatsApp"
+              :value="phone"
+              :href="contactInfo.whatsapp"
+              :delay="500"
+              external
+            />
             <ContactItem icon="mdi-map-marker" label="Localização" :value="location" :delay="550" />
           </div>
 
           <div class="social-section">
             <h4 class="social-title mb-4">Redes Sociais</h4>
             <div class="d-flex flex-wrap ga-3">
-              <v-btn variant="outlined" color="primary" class="social-btn" :href="githubUrl" target="_blank"
-                size="large">
+              <v-btn
+                variant="outlined"
+                color="primary"
+                class="social-btn"
+                :href="githubUrl"
+                target="_blank"
+                size="large"
+              >
                 <v-icon start icon="mdi-github" />
                 GitHub
               </v-btn>
-              <v-btn variant="outlined" color="primary" class="social-btn" :href="linkedinUrl" target="_blank"
-                size="large">
+              <v-btn
+                variant="outlined"
+                color="primary"
+                class="social-btn"
+                :href="linkedinUrl"
+                target="_blank"
+                size="large"
+              >
                 <v-icon start icon="mdi-linkedin" />
                 LinkedIn
               </v-btn>
@@ -88,7 +154,13 @@
     </v-row>
 
     <!-- Snackbar for feedback -->
-    <v-snackbar v-model="showSnackbar" :color="snackbarColor" :timeout="5000" location="top" multi-line>
+    <v-snackbar
+      v-model="showSnackbar"
+      :color="snackbarColor"
+      :timeout="5000"
+      location="top"
+      multi-line
+    >
       {{ snackbarMessage }}
       <template #actions>
         <v-btn icon="mdi-close" size="small" @click="showSnackbar = false" />
@@ -98,89 +170,89 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useSocialLinks } from "~/composables/useSocialLinks";
+import { ref } from 'vue'
+import { useSocialLinks } from '~/composables/useSocialLinks'
 
 // Composables
-const { contactInfo } = useSocialLinks();
-const config = useRuntimeConfig();
+const { contactInfo } = useSocialLinks()
+const config = useRuntimeConfig()
 
 // Data
-const formRef = ref(null);
-const valid = ref(false);
-const loading = ref(false);
-const showSnackbar = ref(false);
-const snackbarMessage = ref('');
-const snackbarColor = ref('success');
+const formRef = ref(null)
+const valid = ref(false)
+const loading = ref(false)
+const showSnackbar = ref(false)
+const snackbarMessage = ref('')
+const snackbarColor = ref('success')
 
 const formData = ref({
   name: '',
   email: '',
   subject: '',
   message: '',
-});
+})
 
 const errors = ref({
   name: '',
   email: '',
   subject: '',
   message: '',
-});
+})
 
 // Variables
-const email = contactInfo.email;
-const phone = contactInfo.phone;
-const location = contactInfo.location;
-const githubUrl = "https://github.com/henriqzimer";
-const linkedinUrl = "https://linkedin.com/in/henrique-zimermann";
+const email = contactInfo.email
+const phone = contactInfo.phone
+const location = contactInfo.location
+const githubUrl = 'https://github.com/henriqzimer'
+const linkedinUrl = 'https://linkedin.com/in/henrique-zimermann'
 
 // Validation functions
 const validateField = (field: 'name' | 'email' | 'subject' | 'message') => {
-  errors.value[field] = '';
+  errors.value[field] = ''
 
   if (field === 'name') {
     if (!formData.value.name.trim()) {
-      errors.value.name = 'O nome é obrigatório';
+      errors.value.name = 'O nome é obrigatório'
     } else if (formData.value.name.trim().length < 3) {
-      errors.value.name = 'O nome deve ter pelo menos 3 caracteres';
+      errors.value.name = 'O nome deve ter pelo menos 3 caracteres'
     }
   }
 
   if (field === 'email') {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!formData.value.email.trim()) {
-      errors.value.email = 'O email é obrigatório';
+      errors.value.email = 'O email é obrigatório'
     } else if (!emailRegex.test(formData.value.email)) {
-      errors.value.email = 'Email inválido';
+      errors.value.email = 'Email inválido'
     }
   }
 
   if (field === 'subject') {
     if (!formData.value.subject.trim()) {
-      errors.value.subject = 'O assunto é obrigatório';
+      errors.value.subject = 'O assunto é obrigatório'
     } else if (formData.value.subject.trim().length < 3) {
-      errors.value.subject = 'O assunto deve ter pelo menos 3 caracteres';
+      errors.value.subject = 'O assunto deve ter pelo menos 3 caracteres'
     }
   }
 
   if (field === 'message') {
     if (!formData.value.message.trim()) {
-      errors.value.message = 'A mensagem é obrigatória';
+      errors.value.message = 'A mensagem é obrigatória'
     } else if (formData.value.message.trim().length < 10) {
-      errors.value.message = 'A mensagem deve ter pelo menos 10 caracteres';
+      errors.value.message = 'A mensagem deve ter pelo menos 10 caracteres'
     }
   }
 
-  updateValidStatus();
-};
+  updateValidStatus()
+}
 
 const validateAllFields = () => {
-  validateField('name');
-  validateField('email');
-  validateField('subject');
-  validateField('message');
-  return !Object.values(errors.value).some(error => error !== '');
-};
+  validateField('name')
+  validateField('email')
+  validateField('subject')
+  validateField('message')
+  return !Object.values(errors.value).some(error => error !== '')
+}
 
 const updateValidStatus = () => {
   valid.value =
@@ -188,26 +260,26 @@ const updateValidStatus = () => {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email) &&
     formData.value.subject.trim().length >= 3 &&
     formData.value.message.trim().length >= 10 &&
-    !Object.values(errors.value).some(error => error !== '');
-};
+    !Object.values(errors.value).some(error => error !== '')
+}
 
 // Submit form
 const submitForm = async () => {
   if (!validateAllFields()) {
-    return;
+    return
   }
-  loading.value = true;
+  loading.value = true
 
   try {
-    const response = await $fetch(`${config.public.apiUrl}/contacts`, {
+    await $fetch(`${config.public.apiUrl}/contacts`, {
       method: 'POST',
       body: formData.value,
-    });
+    })
 
     // Show success notification
-    snackbarMessage.value = 'Mensagem enviada com sucesso! Entrarei em contato em breve.';
-    snackbarColor.value = 'success';
-    showSnackbar.value = true;
+    snackbarMessage.value = 'Mensagem enviada com sucesso! Entrarei em contato em breve.'
+    snackbarColor.value = 'success'
+    showSnackbar.value = true
 
     // Reset form
     formData.value = {
@@ -215,26 +287,25 @@ const submitForm = async () => {
       email: '',
       subject: '',
       message: '',
-    };
+    }
     errors.value = {
       name: '',
       email: '',
       subject: '',
       message: '',
-    };
-    valid.value = false;
-
+    }
+    valid.value = false
   } catch (error: any) {
-    console.error('Erro ao enviar mensagem:', error);
+    console.error('Erro ao enviar mensagem:', error)
 
     // Show error notification
-    snackbarMessage.value = error.data?.message || 'Erro ao enviar mensagem. Tente novamente.';
-    snackbarColor.value = 'error';
-    showSnackbar.value = true;
+    snackbarMessage.value = error.data?.message || 'Erro ao enviar mensagem. Tente novamente.'
+    snackbarColor.value = 'error'
+    showSnackbar.value = true
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 
 <style scoped>

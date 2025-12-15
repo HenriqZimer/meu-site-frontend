@@ -5,20 +5,20 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
   state: () => ({
     contacts: [] as Contact[],
     loading: false,
-    error: null as string | null
+    error: null as string | null,
   }),
 
   getters: {
-    allContacts: (state) => state.contacts,
-    unreadCount: (state) => state.contacts.filter(c => !c.read).length,
-    readCount: (state) => state.contacts.filter(c => c.read).length,
-    todayCount: (state) => {
+    allContacts: state => state.contacts,
+    unreadCount: state => state.contacts.filter(c => !c.read).length,
+    readCount: state => state.contacts.filter(c => c.read).length,
+    todayCount: state => {
       const today = new Date().toDateString()
       return state.contacts.filter(c => {
         const contactDate = new Date(c.createdAt || '').toDateString()
         return contactDate === today
       }).length
-    }
+    },
   },
 
   actions: {
@@ -28,7 +28,9 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
 
       try {
         const config = useRuntimeConfig()
-        const response = await $fetch<{ data: Contact[], count: number }>(`${config.public.apiUrl}/contacts`)
+        const response = await $fetch<{ data: Contact[]; count: number }>(
+          `${config.public.apiUrl}/contacts`
+        )
         const contacts = response.data || []
         this.contacts = contacts.sort((a, b) => {
           const dateA = new Date(a.createdAt || 0).getTime()
@@ -48,17 +50,17 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
     async toggleRead(id: string) {
       try {
         const config = useRuntimeConfig()
-        const response = await $fetch<{ data: Contact, message: string }>(
+        const response = await $fetch<{ data: Contact; message: string }>(
           `${config.public.apiUrl}/contacts/${id}/toggle-read`,
           { method: 'PATCH' }
         )
-        
+
         // Update local state immediately
         const contactIndex = this.contacts.findIndex(c => c._id === id)
         if (contactIndex !== -1) {
           this.contacts[contactIndex] = response.data
         }
-        
+
         return response.data
       } catch (error: any) {
         console.error('Erro ao alterar status de leitura:', error)
@@ -70,7 +72,7 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
       try {
         const config = useRuntimeConfig()
         await $fetch(`${config.public.apiUrl}/contacts/${id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
         })
         await this.fetchContacts()
       } catch (error: any) {
@@ -82,14 +84,12 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
     async deleteAllRead() {
       try {
         const readContacts = this.contacts.filter(c => c.read)
-        await Promise.all(
-          readContacts.map(contact => this.deleteContact(contact._id!))
-        )
+        await Promise.all(readContacts.map(contact => this.deleteContact(contact._id!)))
         await this.fetchContacts()
       } catch (error: any) {
         console.error('Erro ao excluir contatos lidos:', error)
         throw error
       }
-    }
-  }
+    },
+  },
 })

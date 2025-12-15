@@ -59,7 +59,7 @@
     <!-- Skills Table -->
     <v-card class="table-card">
       <v-card-title class="d-flex justify-space-between align-center">
-        <div class="d-flex align-center" style="gap: 12px;">
+        <div class="d-flex align-center" style="gap: 12px">
           <v-icon icon="mdi-star-circle" size="28" color="primary" />
           <span class="table-title">Gerenciar Skills</span>
         </div>
@@ -103,14 +103,30 @@
             <div class="action-buttons">
               <v-tooltip text="Editar" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="primary" class="action-btn-icon" @click="editItem(item)">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="primary"
+                    class="action-btn-icon"
+                    @click="editItem(item)"
+                  >
                     <v-icon size="18">mdi-pencil</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip text="Excluir" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="error" class="action-btn-icon" @click="deleteItem(item)">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="error"
+                    class="action-btn-icon"
+                    @click="deleteItem(item)"
+                  >
                     <v-icon size="18">mdi-delete</v-icon>
                   </v-btn>
                 </template>
@@ -184,11 +200,7 @@
               class="mb-4"
             />
 
-            <v-switch
-              v-model="editedItem.active"
-              label="Ativo"
-              color="primary"
-            />
+            <v-switch v-model="editedItem.active" label="Ativo" color="primary" />
           </v-form>
         </v-card-text>
 
@@ -210,19 +222,25 @@
           <v-icon icon="mdi-alert" color="error" class="mr-2" />
           Confirmar Exclusão
         </v-card-title>
-        
+
         <v-divider />
-        
+
         <v-card-text class="dialog-content text-center py-6">
-          Tem certeza que deseja excluir esta skill?<br>
+          Tem certeza que deseja excluir esta skill?<br />
           Esta ação não pode ser desfeita.
         </v-card-text>
-        
+
         <v-divider />
-        
+
         <v-card-actions class="dialog-actions">
           <v-btn variant="text" size="large" @click="deleteDialog = false">Cancelar</v-btn>
-          <v-btn color="error" :loading="deleting" variant="flat" size="large" @click="confirmDelete">
+          <v-btn
+            color="error"
+            :loading="deleting"
+            variant="flat"
+            size="large"
+            @click="confirmDelete"
+          >
             Excluir
           </v-btn>
         </v-card-actions>
@@ -248,7 +266,7 @@ const headers = [
   { title: 'Cor', key: 'color', sortable: false },
   { title: 'Status', key: 'active' },
   { title: 'Ordem', key: 'order' },
-  { title: 'Ações', key: 'actions', sortable: false }
+  { title: 'Ações', key: 'actions', sortable: false },
 ]
 
 const dialog = ref(false)
@@ -270,14 +288,14 @@ const defaultItem: Skill = {
   color: '#3b82f6',
   bgColor: '#e3f2fd',
   order: 1,
-  active: true
+  active: true,
 }
 
 const editedItem = ref<Skill>({ ...defaultItem })
 const editedIndex = ref(-1)
 
 const rules = {
-  required: (v: any) => !!v || 'Campo obrigatório'
+  required: (v: any) => !!v || 'Campo obrigatório',
 }
 
 // Computed from store
@@ -290,7 +308,7 @@ const categoriesCount = computed(() => skillsStore.categoriesCount)
 const fetchSkills = async () => {
   try {
     await skillsStore.fetchSkills()
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao carregar skills', 'error')
   }
 }
@@ -319,7 +337,7 @@ const saveItem = async () => {
   saving.value = true
   try {
     const { _id, createdAt, updatedAt, __v, ...skillData } = editedItem.value as any
-    
+
     if (isEditing.value && _id) {
       console.log('Atualizando skill:', _id)
       await skillsStore.updateSkill(_id, editedItem.value)
@@ -344,7 +362,7 @@ const toggleActive = async (item: Skill) => {
   try {
     await skillsStore.toggleActive(item)
     showSnackbar(`Skill ${!item.active ? 'ativada' : 'desativada'} com sucesso`)
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao alterar status da skill', 'error')
   } finally {
     toggleLoading.value = null
@@ -363,7 +381,7 @@ const confirmDelete = async () => {
     await skillsStore.deleteSkill(editedItem.value._id!)
     showSnackbar('Skill excluída com sucesso')
     deleteDialog.value = false
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao excluir skill', 'error')
   } finally {
     deleting.value = false
@@ -569,20 +587,20 @@ onMounted(() => {
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .stat-icon-wrapper :deep(.v-icon) {
     font-size: 24px !important;
   }
-  
+
   .dialog-content {
     max-height: calc(85vh - 160px);
   }

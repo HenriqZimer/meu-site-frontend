@@ -1,19 +1,40 @@
 <template>
-  <Section id="projects" badge="Projetos" badge-icon="mdi-briefcase-variant" badge-color="primary" title-prefix="Meus"
-    title-highlight="Projetos" description="Alguns dos meus trabalhos recentes e soluções desenvolvidas"
-    section-class="py-10 py-md-16" container-class="px-4 px-md-6">
-
+  <Section
+    id="projects"
+    badge="Projetos"
+    badge-icon="mdi-briefcase-variant"
+    badge-color="primary"
+    title-prefix="Meus"
+    title-highlight="Projetos"
+    description="Alguns dos meus trabalhos recentes e soluções desenvolvidas"
+    section-class="py-10 py-md-16"
+    container-class="px-4 px-md-6"
+  >
     <!-- Filtros -->
-    <div class="d-flex flex-wrap justify-center ga-3 mb-10 mb-md-12" data-animate="fade-up" data-delay="400">
-      <v-chip v-for="filter in filters" :key="filter.value"
+    <div
+      class="d-flex flex-wrap justify-center ga-3 mb-10 mb-md-12"
+      data-animate="fade-up"
+      data-delay="400"
+    >
+      <v-chip
+        v-for="filter in filters"
+        :key="filter.value"
         :color="selectedFilter === filter.value ? 'primary' : 'default'"
         :variant="selectedFilter === filter.value ? 'flat' : 'outlined'"
-        :class="{ 'filter-chip--active': selectedFilter === filter.value }" class="filter-chip" size="default"
-        @click="setFilter(filter.value)">
+        :class="{ 'filter-chip--active': selectedFilter === filter.value }"
+        class="filter-chip"
+        size="default"
+        @click="setFilter(filter.value)"
+      >
         <v-icon start size="18">{{ filter.icon }}</v-icon>
         {{ filter.label }}
-        <v-badge v-if="filter.count > 0" :content="filter.count"
-          :color="selectedFilter === filter.value ? 'white' : 'primary'" inline class="ml-2" />
+        <v-badge
+          v-if="filter.count > 0"
+          :content="filter.count"
+          :color="selectedFilter === filter.value ? 'white' : 'primary'"
+          inline
+          class="ml-2"
+        />
       </v-chip>
     </div>
 
@@ -21,23 +42,49 @@
     <div class="position-relative">
       <div v-if="filteredProjects.length > 0" class="d-flex align-center ga-3 ga-md-4">
         <!-- Botão Anterior -->
-        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === 0" aria-label="Projetos anteriores"
-          size="large" elevation="2" @click="previousPage">
+        <v-btn
+          icon
+          class="carousel-nav flex-shrink-0"
+          :disabled="currentPage === 0"
+          aria-label="Projetos anteriores"
+          size="large"
+          elevation="2"
+          @click="previousPage"
+        >
           <v-icon icon="mdi-chevron-left" />
         </v-btn>
 
         <!-- Carrossel -->
         <div class="flex-grow-1 overflow-hidden carousel-wrapper">
-          <div class="carousel-track d-flex" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
-            <div v-for="(page, pageIndex) in paginatedProjects"
-              :key="`page-${pageIndex}-${selectedFilter}-${filterVersion}`" class="carousel-page">
+          <div
+            class="carousel-track d-flex"
+            :style="{ transform: `translateX(-${currentPage * 100}%)` }"
+          >
+            <div
+              v-for="(page, pageIndex) in paginatedProjects"
+              :key="`page-${pageIndex}-${selectedFilter}-${_filterVersion}`"
+              class="carousel-page"
+            >
               <div class="carousel-grid">
-                <div v-for="(project, index) in page" :key="project._id || project.id || index"
-                  :data-animate="index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'zoom-in' : 'slide-in-up'"
-                  :data-delay="index * 150" class="project-card-wrapper">
-                  <ProjectCard :title="project.title" :description="project.description" :image="project.image"
-                    :technologies="project.technologies" :demo-url="project.demoUrl" :github-url="project.githubUrl"
-                    size="medium" :lazy="pageIndex > 0" />
+                <div
+                  v-for="(project, index) in page"
+                  :key="project._id || project.id || index"
+                  :data-animate="
+                    index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'zoom-in' : 'slide-in-up'
+                  "
+                  :data-delay="index * 150"
+                  class="project-card-wrapper"
+                >
+                  <ProjectCard
+                    :title="project.title"
+                    :description="project.description"
+                    :image="project.image"
+                    :technologies="project.technologies"
+                    :demo-url="project.demoUrl"
+                    :github-url="project.githubUrl"
+                    size="medium"
+                    :lazy="pageIndex > 0"
+                  />
                 </div>
               </div>
             </div>
@@ -45,27 +92,44 @@
         </div>
 
         <!-- Botão Próximo -->
-        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === totalPages - 1" aria-label="Próximos projetos"
-          size="large" elevation="2" @click="nextPage">
+        <v-btn
+          icon
+          class="carousel-nav flex-shrink-0"
+          :disabled="currentPage === totalPages - 1"
+          aria-label="Próximos projetos"
+          size="large"
+          elevation="2"
+          @click="nextPage"
+        >
           <v-icon icon="mdi-chevron-right" />
         </v-btn>
       </div>
 
       <!-- Indicadores de Página -->
       <div v-if="totalPages > 1" class="d-flex justify-center align-center ga-2 mt-6">
-        <button v-for="(page, index) in totalPages" :key="index" class="indicator"
-          :class="{ 'indicator--active': currentPage === index }" :aria-label="`Ir para página ${index + 1}`"
-          @click="goToPage(index)">
-        </button>
-        <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184);">{{ currentPage + 1 }} / {{ totalPages
-        }}</span>
+        <button
+          v-for="(page, index) in totalPages"
+          :key="index"
+          class="indicator"
+          :class="{ 'indicator--active': currentPage === index }"
+          :aria-label="`Ir para página ${index + 1}`"
+          @click="goToPage(index)"
+        ></button>
+        <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184)"
+          >{{ currentPage + 1 }} / {{ totalPages }}</span
+        >
       </div>
 
       <!-- Empty State -->
       <div v-if="filteredProjects.length === 0" class="text-center py-16">
-        <v-icon size="64" class="mb-6" style="color: rgb(148, 163, 184); opacity: 0.5;">mdi-folder-open-outline</v-icon>
-        <div class="text-h6 font-weight-medium mb-3" style="color: rgb(241, 245, 249);">Nenhum projeto encontrado</div>
-        <p class="text-body-1" style="color: rgb(148, 163, 184); opacity: 0.8;">Tente selecionar uma categoria diferente
+        <v-icon size="64" class="mb-6" style="color: rgb(148, 163, 184); opacity: 0.5"
+          >mdi-folder-open-outline</v-icon
+        >
+        <div class="text-h6 font-weight-medium mb-3" style="color: rgb(241, 245, 249)">
+          Nenhum projeto encontrado
+        </div>
+        <p class="text-body-1" style="color: rgb(148, 163, 184); opacity: 0.8">
+          Tente selecionar uma categoria diferente
         </p>
       </div>
     </div>
@@ -73,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onMounted, onUnmounted, triggerRef, shallowRef } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { PROJECT_FILTERS } from '~/constants'
 
 // Scroll Animation
@@ -81,8 +145,8 @@ const { observeElements } = useScrollAnimation()
 
 // Types
 interface Project {
-  _id?: string  // MongoDB ID
-  id?: number   // ID opcional (legado)
+  _id?: string // MongoDB ID
+  id?: number // ID opcional (legado)
   title: string
   description: string
   image: string
@@ -106,7 +170,7 @@ const projectsStore = useProjectsStore()
 
 // Reactive state
 const selectedFilter = ref('all')
-const filterVersion = ref(0)  // Usado para forçar recálculo
+const _filterVersion = ref(0) // Usado para forçar recálculo
 
 // Função para animar os cards - será chamada no mount e quando o filtro mudar
 const animateProjectCards = () => {
@@ -118,9 +182,12 @@ const animateProjectCards = () => {
       const element = el as HTMLElement
       const delay = element.getAttribute('data-delay')
 
-      setTimeout(() => {
-        element.classList.add('is-visible')
-      }, delay ? parseInt(delay) : index * 100)
+      setTimeout(
+        () => {
+          element.classList.add('is-visible')
+        },
+        delay ? parseInt(delay) : index * 100
+      )
     })
   })
 }
@@ -140,7 +207,7 @@ onMounted(async () => {
   // Inicializar scroll animations
   observeElements({
     threshold: 0.1,
-    once: true
+    once: true,
   })
 
   // Animar cards iniciais
@@ -165,11 +232,16 @@ onMounted(async () => {
           const rotateXVal = ((y - centerY) / centerY) * -6
           const rotateYVal = ((x - centerX) / centerX) * 6
 
-          element.style.transform = 'perspective(1000px) rotateX(' + rotateXVal + 'deg) rotateY(' + rotateYVal + 'deg) translateY(-8px) scale(1.02)'
+          element.style.transform =
+            'perspective(1000px) rotateX(' +
+            rotateXVal +
+            'deg) rotateY(' +
+            rotateYVal +
+            'deg) translateY(-8px) scale(1.02)'
         })
 
         card.addEventListener('mouseleave', () => {
-          (card as HTMLElement).style.transform = ''
+          ;(card as HTMLElement).style.transform = ''
         })
       })
     }, 300)
@@ -178,71 +250,71 @@ onMounted(async () => {
 
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
-const loading = computed(() => projectsStore.loading)
+// const loading = computed(() => projectsStore.loading)
 
 // Other Technologies Data
-const otherTechnologies = [
-  {
-    name: 'Docker',
-    description: 'Containerização e deployment',
-    icon: 'mdi-docker',
-    color: '#0db7ed',
-    level: 85
-  },
-  {
-    name: 'PostgreSQL',
-    description: 'Banco de dados relacional',
-    icon: 'mdi-database',
-    color: '#336791',
-    level: 80
-  },
-  {
-    name: 'MongoDB',
-    description: 'Banco de dados NoSQL',
-    icon: 'mdi-leaf',
-    color: '#47A248',
-    level: 75
-  },
-  {
-    name: 'Git',
-    description: 'Controle de versão',
-    icon: 'mdi-git',
-    color: '#F05032',
-    level: 90
-  },
-  {
-    name: 'AWS',
-    description: 'Serviços de nuvem',
-    icon: 'mdi-aws',
-    color: '#FF9900',
-    level: 70
-  },
-  {
-    name: 'Figma',
-    description: 'Design e prototipação',
-    icon: 'mdi-figma',
-    color: '#F24E1E',
-    level: 85
-  }
-]
+// const otherTechnologies = [
+//   {
+//     name: 'Docker',
+//     description: 'Containerização e deployment',
+//     icon: 'mdi-docker',
+//     color: '#0db7ed',
+//     level: 85,
+//   },
+//   {
+//     name: 'PostgreSQL',
+//     description: 'Banco de dados relacional',
+//     icon: 'mdi-database',
+//     color: '#336791',
+//     level: 80,
+//   },
+//   {
+//     name: 'MongoDB',
+//     description: 'Banco de dados NoSQL',
+//     icon: 'mdi-leaf',
+//     color: '#47A248',
+//     level: 75,
+//   },
+//   {
+//     name: 'Git',
+//     description: 'Controle de versão',
+//     icon: 'mdi-git',
+//     color: '#F05032',
+//     level: 90,
+//   },
+//   {
+//     name: 'AWS',
+//     description: 'Serviços de nuvem',
+//     icon: 'mdi-aws',
+//     color: '#FF9900',
+//     level: 70,
+//   },
+//   {
+//     name: 'Figma',
+//     description: 'Design e prototipação',
+//     icon: 'mdi-figma',
+//     color: '#F24E1E',
+//     level: 85,
+//   },
+// ]
 
 // Computed filters with counts - using constants base
 const filters = computed<Filter[]>(() =>
   PROJECT_FILTERS.map(filter => ({
     ...filter,
-    count: filter.value === 'all'
-      ? projects.value.length
-      : projects.value.filter(p => p.category === filter.value).length
+    count:
+      filter.value === 'all'
+        ? projects.value.length
+        : projects.value.filter(p => p.category === filter.value).length,
   }))
 )
 
 // Computed filtered projects - usando função getter para garantir reatividade
 const filteredProjects = computed(() => {
   // Incluir filterVersion para forçar recálculo
-  const version = filterVersion.value
+  // const version = filterVersion.value
   const allProjects = projects.value
   const currentFilter = selectedFilter.value
-
 
   // Retorna todos os projetos quando filtro é 'all' ou vazio
   if (!currentFilter || currentFilter === 'all') {
@@ -280,7 +352,6 @@ const paginatedProjects = computed(() => {
   const perPage = itemsPerPage.value
   const pages: Project[][] = []
 
-
   for (let i = 0; i < projectsList.length; i += perPage) {
     pages.push(projectsList.slice(i, i + perPage))
   }
@@ -307,15 +378,15 @@ const goToPage = (page: number) => {
 }
 
 // Reset page when filter changes and force recalculation
-watch(selectedFilter, (newFilter) => {
-  currentPage.value = 0
+// watch(selectedFilter, newFilter => {
+//   currentPage.value = 0
 
-  // Força o Vue a recalcular e depois anima os novos cards
-  nextTick(() => {
-    // Re-animar os cards após a mudança de filtro
-    animateProjectCards()
-  })
-})
+//   // Força o Vue a recalcular e depois anima os novos cards
+//   nextTick(() => {
+//     // Re-animar os cards após a mudança de filtro
+//     animateProjectCards()
+//   })
+// })
 
 // Reset page when itemsPerPage changes (ex: resize)
 // watch(itemsPerPage, (newValue) => {
@@ -341,7 +412,7 @@ if (typeof window !== 'undefined') {
 // Methods
 const setFilter = (value: string) => {
   selectedFilter.value = value
-  filterVersion.value++  // Força recálculo das computeds
+  _filterVersion.value++ // Força recálculo das computeds
 }
 
 // const scrollToContact = () => {
@@ -447,7 +518,7 @@ onUnmounted(() => {
   place-items: center;
 }
 
-.carousel-grid>* {
+.carousel-grid > * {
   min-width: 0;
   width: 100%;
   max-width: 400px;
@@ -497,7 +568,6 @@ onUnmounted(() => {
 
 /* === ANIMATIONS === */
 @keyframes pulse {
-
   0%,
   100% {
     box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
@@ -509,7 +579,6 @@ onUnmounted(() => {
 }
 
 @keyframes indicatorPulse {
-
   0%,
   100% {
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
@@ -537,19 +606,25 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-.project-card-wrapper[data-animate="fade-up"] {
+.project-card-wrapper[data-animate='fade-up'] {
   transform: translateY(50px);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-card-wrapper[data-animate="zoom-in"] {
+.project-card-wrapper[data-animate='zoom-in'] {
   transform: scale(0.85);
-  transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.project-card-wrapper[data-animate="slide-in-up"] {
+.project-card-wrapper[data-animate='slide-in-up'] {
   transform: translateY(60px) scale(0.95);
-  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .project-card-wrapper[data-animate].is-visible {
@@ -564,7 +639,7 @@ onUnmounted(() => {
     gap: 16px;
   }
 
-  .carousel-grid>* {
+  .carousel-grid > * {
     max-width: 500px;
   }
 

@@ -4,7 +4,7 @@
  * Usado em: Header, Footer, Hero, Portfolio
  */
 
-import { SCROLL_CONFIG } from "~/constants";
+import { SCROLL_CONFIG } from '~/constants'
 
 export const useNavigation = () => {
   /**
@@ -13,26 +13,25 @@ export const useNavigation = () => {
    */
   const scrollToSection = (id: string) => {
     // Caso especial: home/topo
-    if (id === "home") {
+    if (id === 'home') {
       window.scrollTo({
         top: 0,
-        behavior: "smooth",
-      });
-      return;
+        behavior: 'smooth',
+      })
+      return
     }
 
-    const element = document.getElementById(id);
+    const element = document.getElementById(id)
     if (element) {
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition =
-        elementPosition + window.pageYOffset - SCROLL_CONFIG.HEADER_OFFSET;
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - SCROLL_CONFIG.HEADER_OFFSET
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth",
-      });
+        behavior: 'smooth',
+      })
     }
-  };
+  }
 
   /**
    * Scroll para o topo da página
@@ -40,49 +39,47 @@ export const useNavigation = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
-    });
-  };
+      behavior: 'smooth',
+    })
+  }
 
   /**
    * Verifica se a página foi scrollada além do threshold
    */
-  const isPageScrolled = (
-    threshold: number = SCROLL_CONFIG.SCROLL_THRESHOLD
-  ) => {
-    return window.scrollY > threshold;
-  };
+  const isPageScrolled = (threshold: number = SCROLL_CONFIG.SCROLL_THRESHOLD) => {
+    return window.scrollY > threshold
+  }
 
   /**
    * Verifica se deve mostrar o botão de scroll to top
    */
   const shouldShowScrollTop = () => {
-    return window.scrollY > SCROLL_CONFIG.SHOW_SCROLL_TOP_THRESHOLD;
-  };
+    return window.scrollY > SCROLL_CONFIG.SHOW_SCROLL_TOP_THRESHOLD
+  }
 
   /**
    * Obtém a seção ativa baseada na posição do scroll
    * @param sections - Array de IDs das seções
    */
   const getActiveSection = (sections: string[]) => {
-    let activeSection = "home";
+    let activeSection = 'home'
 
     for (const sectionId of sections) {
-      const element = document.getElementById(sectionId);
+      const element = document.getElementById(sectionId)
       if (element) {
-        const rect = element.getBoundingClientRect();
+        const rect = element.getBoundingClientRect()
         // Seção está visível na viewport (com offset do header)
         if (
           rect.top <= SCROLL_CONFIG.HEADER_OFFSET + 100 &&
           rect.bottom >= SCROLL_CONFIG.HEADER_OFFSET + 100
         ) {
-          activeSection = sectionId;
+          activeSection = sectionId
         }
       }
     }
 
-    return activeSection;
-  };
+    return activeSection
+  }
 
   return {
     scrollToSection,
@@ -90,5 +87,5 @@ export const useNavigation = () => {
     isPageScrolled,
     shouldShowScrollTop,
     getActiveSection,
-  };
-};
+  }
+}

@@ -69,7 +69,7 @@ withDefaults(defineProps<Props>(), {
   description: '',
   icon: 'mdi-certificate',
   color: 'primary',
-  showHeader: true
+  showHeader: true,
 })
 </script>
 
