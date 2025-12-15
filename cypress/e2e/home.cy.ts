@@ -16,7 +16,7 @@ describe('Homepage', () => {
   })
 
   it('deve carregar em menos de 3 segundos', () => {
-    cy.window().then((win) => {
+    cy.window().then(win => {
       const perfData = win.performance.timing
       const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart
       expect(pageLoadTime).to.be.lessThan(3000)

@@ -2,7 +2,7 @@ describe('Responsividade', () => {
   const viewports = [
     { device: 'Mobile', width: 375, height: 667 },
     { device: 'Tablet', width: 768, height: 1024 },
-    { device: 'Desktop', width: 1920, height: 1080 }
+    { device: 'Desktop', width: 1920, height: 1080 },
   ]
 
   viewports.forEach(({ device, width, height }) => {
