@@ -9,6 +9,10 @@ node_modules
 dist
 .vercel
 
+# Cypress cache
+.cypress-cache
+**/.cypress-cache
+
 # Misc
 .DS_Store
 *.log
