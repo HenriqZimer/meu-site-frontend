@@ -1,15 +1,25 @@
 <template>
-  <section :id="id" :class="['modern-section', sectionClass, themeClass]" :style="{ background: backgroundColor }">
-
+  <section
+    :id="id"
+    :class="['modern-section', sectionClass, themeClass]"
+    :style="{ background: backgroundColor }"
+  >
     <!-- Decorative top border -->
     <div class="section-border-top" />
 
     <v-container :class="containerClass">
       <!-- Section Header -->
       <div v-if="!noHeader" :class="headerCentered ? 'text-center' : 'text-left'">
-        <SectionHeader v-if="badge || titlePrefix || titleHighlight || description" :badge="badge" :icon="badgeIcon"
-          :badge-color="badgeColor" :title-prefix="titlePrefix" :title-highlight="titleHighlight"
-          :description="description" :centered="headerCentered" />
+        <SectionHeader
+          v-if="badge || titlePrefix || titleHighlight || description"
+          :badge="badge"
+          :icon="badgeIcon"
+          :badge-color="badgeColor"
+          :title-prefix="titlePrefix"
+          :title-highlight="titleHighlight"
+          :description="description"
+          :centered="headerCentered"
+        />
       </div>
 
       <!-- Section Content -->
@@ -25,20 +35,20 @@
 
 <script setup lang="ts">
 interface Props {
-  id: string;
-  badge?: string;
-  badgeIcon?: string;
-  badgeColor?: string;
-  titlePrefix?: string;
-  titleHighlight?: string;
-  description?: string;
-  sectionClass?: string;
-  containerClass?: string;
-  headerCentered?: boolean;
-  noHeader?: boolean;
-  theme?: 'default' | 'primary' | 'dark' | 'gradient';
-  backgroundColor?: string;
-  decorative?: boolean;
+  id: string
+  badge?: string
+  badgeIcon?: string
+  badgeColor?: string
+  titlePrefix?: string
+  titleHighlight?: string
+  description?: string
+  sectionClass?: string
+  containerClass?: string
+  headerCentered?: boolean
+  noHeader?: boolean
+  theme?: 'default' | 'primary' | 'dark' | 'gradient'
+  backgroundColor?: string
+  decorative?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -55,20 +65,20 @@ const props = withDefaults(defineProps<Props>(), {
   theme: 'default',
   backgroundColor: '',
   decorative: true,
-});
+})
 
 const themeClass = computed(() => {
   switch (props.theme) {
     case 'primary':
-      return 'section-theme-primary';
+      return 'section-theme-primary'
     case 'dark':
-      return 'section-theme-dark';
+      return 'section-theme-dark'
     case 'gradient':
-      return 'section-theme-gradient';
+      return 'section-theme-gradient'
     default:
-      return '';
+      return ''
   }
-});
+})
 </script>
 
 <style scoped>
@@ -107,10 +117,12 @@ const themeClass = computed(() => {
 }
 
 .section-theme-gradient {
-  background: linear-gradient(135deg,
-      rgb(15, 23, 42) 0%,
-      rgb(30, 41, 59) 50%,
-      rgb(15, 23, 42) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(15, 23, 42) 0%,
+    rgb(30, 41, 59) 50%,
+    rgb(15, 23, 42) 100%
+  );
 }
 
 /* ===================================
@@ -132,7 +144,6 @@ const themeClass = computed(() => {
    ANIMATIONS
    =================================== */
 @keyframes floatingBackground {
-
   0%,
   100% {
     transform: translate(0, 0) scale(1);

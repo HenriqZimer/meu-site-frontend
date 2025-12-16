@@ -59,11 +59,11 @@
     <!-- Projects Table -->
     <v-card class="table-card">
       <v-card-title class="d-flex justify-space-between align-center">
-        <div class="d-flex align-center" style="gap: 12px;">
+        <div class="d-flex align-center" style="gap: 12px">
           <v-icon icon="mdi-folder-multiple" size="28" color="primary" />
           <span class="table-title">Gerenciar Projetos</span>
         </div>
-        <v-btn color="primary" @click="openCreateDialog" class="action-btn">
+        <v-btn color="primary" class="action-btn" @click="openCreateDialog">
           <v-icon start>mdi-plus</v-icon>
           Novo Projeto
         </v-btn>
@@ -92,12 +92,12 @@
           <template #[`item.active`]="{ item }">
             <v-switch
               :model-value="item.active"
-              @update:model-value="toggleActive(item)"
               color="success"
               hide-details
               density="compact"
               inset
               :loading="toggleLoading === item._id"
+              @update:model-value="toggleActive(item)"
             />
           </template>
 
@@ -105,14 +105,30 @@
             <div class="action-buttons">
               <v-tooltip text="Editar" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="primary" @click="editItem(item)" class="action-btn-icon">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="primary"
+                    class="action-btn-icon"
+                    @click="editItem(item)"
+                  >
                     <v-icon size="18">mdi-pencil</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip text="Excluir" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="error" @click="deleteItem(item)" class="action-btn-icon">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="error"
+                    class="action-btn-icon"
+                    @click="deleteItem(item)"
+                  >
                     <v-icon size="18">mdi-delete</v-icon>
                   </v-btn>
                 </template>
@@ -199,19 +215,15 @@
               class="mb-4"
             />
 
-            <v-switch
-              v-model="editedItem.active"
-              label="Ativo"
-              color="primary"
-            />
+            <v-switch v-model="editedItem.active" label="Ativo" color="primary" />
           </v-form>
         </v-card-text>
 
         <v-divider />
 
         <v-card-actions class="dialog-actions">
-          <v-btn @click="closeDialog" variant="text" size="large">Cancelar</v-btn>
-          <v-btn color="primary" @click="saveItem" :loading="saving" variant="flat" size="large">
+          <v-btn variant="text" size="large" @click="closeDialog">Cancelar</v-btn>
+          <v-btn color="primary" :loading="saving" variant="flat" size="large" @click="saveItem">
             Salvar
           </v-btn>
         </v-card-actions>
@@ -225,19 +237,25 @@
           <v-icon icon="mdi-alert" color="error" class="mr-2" />
           Confirmar Exclusão
         </v-card-title>
-        
+
         <v-divider />
-        
+
         <v-card-text class="dialog-content text-center py-6">
-          Tem certeza que deseja excluir este projeto?<br>
+          Tem certeza que deseja excluir este projeto?<br />
           Esta ação não pode ser desfeita.
         </v-card-text>
-        
+
         <v-divider />
-        
+
         <v-card-actions class="dialog-actions">
-          <v-btn @click="deleteDialog = false" variant="text" size="large">Cancelar</v-btn>
-          <v-btn color="error" @click="confirmDelete" :loading="deleting" variant="flat" size="large">
+          <v-btn variant="text" size="large" @click="deleteDialog = false">Cancelar</v-btn>
+          <v-btn
+            color="error"
+            :loading="deleting"
+            variant="flat"
+            size="large"
+            @click="confirmDelete"
+          >
             Excluir
           </v-btn>
         </v-card-actions>
@@ -264,7 +282,7 @@ const headers = [
   { title: 'Tecnologias', key: 'technologies', sortable: false },
   { title: 'Status', key: 'active' },
   { title: 'Ordem', key: 'order' },
-  { title: 'Ações', key: 'actions', sortable: false }
+  { title: 'Ações', key: 'actions', sortable: false },
 ]
 
 const categories = [
@@ -273,7 +291,7 @@ const categories = [
   'automation',
   'cloud',
   'frontend',
-  'backend'
+  'backend',
 ]
 
 const dialog = ref(false)
@@ -297,14 +315,14 @@ const defaultItem: Project = {
   demoUrl: '',
   githubUrl: '',
   order: 1,
-  active: true
+  active: true,
 }
 
 const editedItem = ref<Project>({ ...defaultItem })
 const editedIndex = ref(-1)
 
 const rules = {
-  required: (v: any) => !!v || 'Campo obrigatório'
+  required: (v: any) => !!v || 'Campo obrigatório',
 }
 
 // Computed from store
@@ -318,7 +336,7 @@ const categoriesCount = computed(() => projectsStore.categoriesCount)
 const fetchProjects = async () => {
   try {
     await projectsStore.fetchProjects()
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao carregar projetos', 'error')
   }
 }
@@ -349,7 +367,7 @@ const saveItem = async () => {
   saving.value = true
   try {
     const { _id, createdAt, updatedAt, __v, ...projectData } = editedItem.value as any
-    
+
     if (isEditing.value && _id) {
       console.log('Atualizando projeto:', _id)
       await projectsStore.updateProject(_id, editedItem.value)
@@ -374,7 +392,7 @@ const toggleActive = async (item: Project) => {
   try {
     await projectsStore.toggleActive(item)
     showSnackbar(`Projeto ${!item.active ? 'ativado' : 'desativado'} com sucesso`)
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao alterar status do projeto', 'error')
   } finally {
     toggleLoading.value = null
@@ -393,7 +411,7 @@ const confirmDelete = async () => {
     await projectsStore.deleteProject(editedItem.value._id!)
     showSnackbar('Projeto excluído com sucesso')
     deleteDialog.value = false
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao excluir projeto', 'error')
   } finally {
     deleting.value = false
@@ -607,20 +625,20 @@ onMounted(() => {
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .stat-icon-wrapper :deep(.v-icon) {
     font-size: 24px !important;
   }
-  
+
   .dialog-content {
     max-height: calc(85vh - 160px);
   }

@@ -5,17 +5,17 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
   state: () => ({
     skills: [] as Skill[],
     loading: false,
-    error: null as string | null
+    error: null as string | null,
   }),
 
   getters: {
-    allSkills: (state) => state.skills,
-    activeCount: (state) => state.skills.filter(s => s.active).length,
-    inactiveCount: (state) => state.skills.filter(s => !s.active).length,
-    categoriesCount: (state) => {
+    allSkills: state => state.skills,
+    activeCount: state => state.skills.filter(s => s.active).length,
+    inactiveCount: state => state.skills.filter(s => !s.active).length,
+    categoriesCount: state => {
       const uniqueCategories = new Set(state.skills.map(s => s.category))
       return uniqueCategories.size
-    }
+    },
   },
 
   actions: {
@@ -42,7 +42,7 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
         const config = useRuntimeConfig()
         const newSkill = await $fetch<Skill>(`${config.public.apiUrl}/skills`, {
           method: 'POST',
-          body: skillData
+          body: skillData,
         })
         await this.fetchSkills()
         return newSkill
@@ -57,12 +57,12 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
       try {
         const config = useRuntimeConfig()
         const { _id, createdAt, updatedAt, __v, ...cleanData } = skillData as any
-        
+
         const updatedSkill = await $fetch<Skill>(`${config.public.apiUrl}/skills/${id}`, {
           method: 'PUT',
-          body: cleanData
+          body: cleanData,
         })
-        
+
         await this.fetchSkills()
         return updatedSkill
       } catch (error: any) {
@@ -87,13 +87,13 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
       try {
         const config = useRuntimeConfig()
         await $fetch(`${config.public.apiUrl}/skills/${id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
         })
         await this.fetchSkills()
       } catch (error: any) {
         console.error('Erro ao excluir skill:', error)
         throw error
       }
-    }
-  }
+    },
+  },
 })

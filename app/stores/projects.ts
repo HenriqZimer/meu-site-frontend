@@ -23,25 +23,25 @@ export const useProjectsStore = defineStore('projects', {
     loading: false,
     error: null as string | null,
     lastFetch: null as number | null,
-    lastStatsFetch: null as number | null
+    lastStatsFetch: null as number | null,
   }),
 
   getters: {
-    allProjects: (state) => state.projects,
-    projectsByCategory: (state) => (category: string) => 
+    allProjects: state => state.projects,
+    projectsByCategory: state => (category: string) =>
       state.projects.filter(p => p.category === category),
-    projectsCount: (state) => state.stats?.total || state.projects.length,
-    isLoaded: (state) => state.projects.length > 0,
-    needsRefresh: (state) => {
+    projectsCount: state => state.stats?.total || state.projects.length,
+    isLoaded: state => state.projects.length > 0,
+    needsRefresh: state => {
       if (!state.lastFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastFetch > fiveMinutes
     },
-    statsNeedRefresh: (state) => {
+    statsNeedRefresh: state => {
       if (!state.lastStatsFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastStatsFetch > fiveMinutes
-    }
+    },
   },
 
   actions: {
@@ -60,14 +60,14 @@ export const useProjectsStore = defineStore('projects', {
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/projects`
         // console.log('[Projects Store] Fetching from:', fullUrl)
-        
+
         const data = await $fetch<Project[]>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         // console.log('[Projects Store] Dados recebidos:', data.length, 'items')
         this.projects = data
         this.lastFetch = Date.now()
@@ -92,14 +92,14 @@ export const useProjectsStore = defineStore('projects', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/projects/stats`
-        
+
         const data = await $fetch<ProjectStats>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         this.stats = data
         this.lastStatsFetch = Date.now()
         return data
@@ -114,6 +114,6 @@ export const useProjectsStore = defineStore('projects', {
       this.stats = null
       this.lastFetch = null
       this.lastStatsFetch = null
-    }
-  }
+    },
+  },
 })

@@ -5,17 +5,17 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
   state: () => ({
     projects: [] as Project[],
     loading: false,
-    error: null as string | null
+    error: null as string | null,
   }),
 
   getters: {
-    allProjects: (state) => state.projects,
-    activeCount: (state) => state.projects.filter(p => p.active).length,
-    inactiveCount: (state) => state.projects.filter(p => !p.active).length,
-    categoriesCount: (state) => {
+    allProjects: state => state.projects,
+    activeCount: state => state.projects.filter(p => p.active).length,
+    inactiveCount: state => state.projects.filter(p => !p.active).length,
+    categoriesCount: state => {
       const uniqueCategories = new Set(state.projects.map(p => p.category))
       return uniqueCategories.size
-    }
+    },
   },
 
   actions: {
@@ -42,7 +42,7 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
         const config = useRuntimeConfig()
         const newProject = await $fetch<Project>(`${config.public.apiUrl}/projects`, {
           method: 'POST',
-          body: projectData
+          body: projectData,
         })
         await this.fetchProjects()
         return newProject
@@ -57,12 +57,12 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
       try {
         const config = useRuntimeConfig()
         const { _id, createdAt, updatedAt, __v, ...cleanData } = projectData as any
-        
+
         const updatedProject = await $fetch<Project>(`${config.public.apiUrl}/projects/${id}`, {
           method: 'PUT',
-          body: cleanData
+          body: cleanData,
         })
-        
+
         await this.fetchProjects()
         return updatedProject
       } catch (error: any) {
@@ -87,13 +87,13 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
       try {
         const config = useRuntimeConfig()
         await $fetch(`${config.public.apiUrl}/projects/${id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
         })
         await this.fetchProjects()
       } catch (error: any) {
         console.error('Erro ao excluir projeto:', error)
         throw error
       }
-    }
-  }
+    },
+  },
 })

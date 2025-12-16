@@ -20,16 +20,16 @@
 const route = useRoute()
 
 // Verificar se está na rota admin
-const isAdminRoute = computed(() => route.path.startsWith('/admin'))
+const _isAdminRoute = computed(() => route.path.startsWith('/admin'))
 
 // Configuração de SEO global
 useHead({
-  htmlAttrs: { lang: "pt-BR" },
+  htmlAttrs: { lang: 'pt-BR' },
   meta: [
-    { charset: "utf-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
-});
+})
 </script>
 
 <style>

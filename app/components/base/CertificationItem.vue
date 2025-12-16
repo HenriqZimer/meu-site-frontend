@@ -4,8 +4,12 @@
       <!-- Avatar/Icon -->
       <div class="certification-avatar">
         <v-avatar v-if="certification.image" :size="avatarSize" class="certification-avatar-img">
-          <v-img :src="certification.image" :alt="`Logo da certificação ${certification.name}`"
-            :loading="index > 2 ? 'lazy' : 'eager'" transition="fade-transition">
+          <v-img
+            :src="certification.image"
+            :alt="`Logo da certificação ${certification.name}`"
+            :loading="index > 2 ? 'lazy' : 'eager'"
+            transition="fade-transition"
+          >
             <template #placeholder>
               <div class="d-flex align-center justify-center fill-height">
                 <v-icon :color="certification.color || 'primary'" size="large">
@@ -18,7 +22,7 @@
 
         <div v-else class="certification-icon-wrapper">
           <v-icon :color="certification.color || 'primary'" :size="iconSize">
-            {{ certification.icon || "mdi-certificate" }}
+            {{ certification.icon || 'mdi-certificate' }}
           </v-icon>
         </div>
       </div>
@@ -36,9 +40,18 @@
 
       <!-- Action Button -->
       <div class="certification-action">
-        <v-btn :href="certification.link" target="_blank" :icon="actionIcon" :size="buttonSize" variant="outlined"
-          color="primary" class="certification-action-btn" :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'
-            } ${certification.name} em nova aba`" />
+        <v-btn
+          :href="certification.link"
+          target="_blank"
+          :icon="actionIcon"
+          :size="buttonSize"
+          variant="outlined"
+          color="primary"
+          class="certification-action-btn"
+          :aria-label="`Abrir ${
+            type === 'obtained' ? 'certificação' : 'informações da certificação'
+          } ${certification.name} em nova aba`"
+        />
       </div>
 
       <!-- Decorative Element -->
@@ -48,66 +61,65 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
 // Types
 interface Certification {
-  name: string;
-  issuer: string;
-  icon?: string;
-  color?: string;
-  image?: string;
-  link: string;
+  name: string
+  issuer: string
+  icon?: string
+  color?: string
+  image?: string
+  link: string
 }
 
 // Props
 interface Props {
-  certification: Certification;
-  index: number;
-  animationDelay: number;
-  type: "obtained" | "planned";
+  certification: Certification
+  index: number
+  animationDelay: number
+  type: 'obtained' | 'planned'
 }
 
-const props = defineProps<Props>();
+const props = defineProps<Props>()
 
 // Composables
-const { isMobile, isTablet, getResponsiveValue } = useResponsive();
+const { isMobile, isTablet, getResponsiveValue } = useResponsive()
 
 // Computed properties
 const itemClasses = computed(() => [
-  "modern-certification-item",
+  'modern-certification-item',
   {
-    "certification-item--mobile": isMobile.value,
-    "certification-item--tablet": isTablet.value,
-    "certification-item--obtained": props.type === "obtained",
-    "certification-item--planned": props.type === "planned",
+    'certification-item--mobile': isMobile.value,
+    'certification-item--tablet': isTablet.value,
+    'certification-item--obtained': props.type === 'obtained',
+    'certification-item--planned': props.type === 'planned',
   },
-]);
+])
 
 const itemStyles = computed(() => ({
-  "--animation-delay": `${props.animationDelay}ms`,
-  "--item-color": `var(--v-theme-${props.type === "obtained" ? "primary" : "primary"
-    })`,
-}));
+  '--animation-delay': `${props.animationDelay}ms`,
+  '--item-color': `var(--v-theme-${props.type === 'obtained' ? 'primary' : 'primary'})`,
+}))
 
-const titleClasses = computed(() => [
-  "font-weight-bold",
-  "mb-2",
-  getResponsiveValue({
-    mobile: "text-body-1",
-    tablet: "text-h6",
-    desktop: "text-h6",
-  }),
-]);
+// const titleClasses = computed(() => [
+//   "font-weight-bold",
+//   "mb-2",
+//   getResponsiveValue({
+//     mobile: "text-body-1",
+//     tablet: "text-h6",
+//     desktop: "text-h6",
+//   }),
+// ]);
 
-const subtitleClasses = computed(() => [
-  "font-weight-medium",
-  getResponsiveValue({
-    mobile: "text-body-2",
-    tablet: "text-body-1",
-    desktop: "text-body-1",
-  }),
-]);
+// const subtitleClasses = computed(() => [
+//   "font-weight-medium",
+//   getResponsiveValue({
+//     mobile: "text-body-2",
+//     tablet: "text-body-1",
+//     desktop: "text-body-1",
+//   }),
+// ]);
 
 const avatarSize = computed(() =>
   getResponsiveValue({
@@ -115,27 +127,27 @@ const avatarSize = computed(() =>
     tablet: 56,
     desktop: 56,
   })
-);
+)
 
 const iconSize = computed(() =>
   getResponsiveValue({
-    mobile: "large",
-    tablet: "x-large",
-    desktop: "x-large",
+    mobile: 'large',
+    tablet: 'x-large',
+    desktop: 'x-large',
   })
-);
+)
 
 const buttonSize = computed(() =>
   getResponsiveValue({
-    mobile: "small",
-    tablet: "default",
-    desktop: "default",
+    mobile: 'small',
+    tablet: 'default',
+    desktop: 'default',
   })
-);
+)
 
 const actionIcon = computed(() =>
-  props.type === "obtained" ? "mdi-open-in-new" : "mdi-information-outline"
-);
+  props.type === 'obtained' ? 'mdi-open-in-new' : 'mdi-information-outline'
+)
 </script>
 
 <style scoped>
@@ -269,9 +281,11 @@ const actionIcon = computed(() =>
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg,
-      rgba(var(--item-color), 0.8) 0%,
-      rgba(var(--item-color), 0.4) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--item-color), 0.8) 0%,
+    rgba(var(--item-color), 0.4) 100%
+  );
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.3s ease;
@@ -284,9 +298,7 @@ const actionIcon = computed(() =>
 /* Decoração sempre azul */
 .certification-item--obtained .certification-decoration,
 .certification-item--planned .certification-decoration {
-  background: linear-gradient(180deg,
-      rgba(59, 130, 246, 0.8) 0%,
-      rgba(59, 130, 246, 0.4) 100%);
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.8) 0%, rgba(59, 130, 246, 0.4) 100%);
 }
 
 /* fadeInUp animation available in /assets/css/components.css */
@@ -318,7 +330,6 @@ const actionIcon = computed(() =>
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-
   .modern-certification-item,
   .certification-avatar,
   .certification-action-btn,

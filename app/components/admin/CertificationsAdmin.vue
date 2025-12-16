@@ -59,11 +59,11 @@
     <!-- Certifications Table -->
     <v-card class="table-card">
       <v-card-title class="d-flex justify-space-between align-center">
-        <div class="d-flex align-center" style="gap: 12px;">
+        <div class="d-flex align-center" style="gap: 12px">
           <v-icon icon="mdi-certificate" size="28" color="primary" />
           <span class="table-title">Gerenciar Certificações</span>
         </div>
-        <v-btn color="primary" @click="openCreateDialog" class="action-btn">
+        <v-btn color="primary" class="action-btn" @click="openCreateDialog">
           <v-icon start>mdi-plus</v-icon>
           Nova Certificação
         </v-btn>
@@ -84,12 +84,12 @@
           <template #[`item.active`]="{ item }">
             <v-switch
               :model-value="item.active"
-              @update:model-value="toggleActive(item)"
               color="success"
               hide-details
               density="compact"
               inset
               :loading="toggleLoading === item._id"
+              @update:model-value="toggleActive(item)"
             />
           </template>
 
@@ -97,14 +97,30 @@
             <div class="action-buttons">
               <v-tooltip text="Editar" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="primary" @click="editItem(item)" class="action-btn-icon">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="primary"
+                    class="action-btn-icon"
+                    @click="editItem(item)"
+                  >
                     <v-icon size="18">mdi-pencil</v-icon>
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip text="Excluir" location="top">
                 <template #activator="{ props }">
-                  <v-btn v-bind="props" icon size="small" variant="tonal" color="error" @click="deleteItem(item)" class="action-btn-icon">
+                  <v-btn
+                    v-bind="props"
+                    icon
+                    size="small"
+                    variant="tonal"
+                    color="error"
+                    class="action-btn-icon"
+                    @click="deleteItem(item)"
+                  >
                     <v-icon size="18">mdi-delete</v-icon>
                   </v-btn>
                 </template>
@@ -181,19 +197,15 @@
               class="mb-4"
             />
 
-            <v-switch
-              v-model="editedItem.active"
-              label="Ativo"
-              color="primary"
-            />
+            <v-switch v-model="editedItem.active" label="Ativo" color="primary" />
           </v-form>
         </v-card-text>
 
         <v-divider />
 
         <v-card-actions class="dialog-actions">
-          <v-btn @click="closeDialog" variant="text" size="large">Cancelar</v-btn>
-          <v-btn color="primary" @click="saveItem" :loading="saving" variant="flat" size="large">
+          <v-btn variant="text" size="large" @click="closeDialog">Cancelar</v-btn>
+          <v-btn color="primary" :loading="saving" variant="flat" size="large" @click="saveItem">
             Salvar
           </v-btn>
         </v-card-actions>
@@ -207,19 +219,25 @@
           <v-icon icon="mdi-alert" color="error" class="mr-2" />
           Confirmar Exclusão
         </v-card-title>
-        
+
         <v-divider />
-        
+
         <v-card-text class="dialog-content text-center py-6">
-          Tem certeza que deseja excluir esta certificação?<br>
+          Tem certeza que deseja excluir esta certificação?<br />
           Esta ação não pode ser desfeita.
         </v-card-text>
-        
+
         <v-divider />
-        
+
         <v-card-actions class="dialog-actions">
-          <v-btn @click="deleteDialog = false" variant="text" size="large">Cancelar</v-btn>
-          <v-btn color="error" @click="confirmDelete" :loading="deleting" variant="flat" size="large">
+          <v-btn variant="text" size="large" @click="deleteDialog = false">Cancelar</v-btn>
+          <v-btn
+            color="error"
+            :loading="deleting"
+            variant="flat"
+            size="large"
+            @click="confirmDelete"
+          >
             Excluir
           </v-btn>
         </v-card-actions>
@@ -245,7 +263,7 @@ const headers = [
   { title: 'Data', key: 'date' },
   { title: 'Skills', key: 'skills' },
   { title: 'Status', key: 'active' },
-  { title: 'Ações', key: 'actions', sortable: false }
+  { title: 'Ações', key: 'actions', sortable: false },
 ]
 
 // Use computed from store
@@ -275,20 +293,20 @@ const defaultItem = {
   date: '',
   skills: 0,
   order: 1,
-  active: true
+  active: true,
 }
 
 const editedItem = ref({ ...defaultItem })
 const editedIndex = ref(-1)
 
 const rules = {
-  required: (v: any) => !!v || 'Campo obrigatório'
+  required: (v: any) => !!v || 'Campo obrigatório',
 }
 
 const fetchCertifications = async () => {
   try {
     await certificationsStore.fetchCertifications()
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao carregar certificações', 'error')
   }
 }
@@ -317,7 +335,7 @@ const saveItem = async () => {
   saving.value = true
   try {
     const { _id, createdAt, updatedAt, __v, ...certificationData } = editedItem.value as any
-    
+
     if (isEditing.value && _id) {
       console.log('Atualizando certificação:', _id)
       await certificationsStore.updateCertification(_id, certificationData)
@@ -343,7 +361,7 @@ const toggleActive = async (item: Certification) => {
   try {
     await certificationsStore.toggleActive(item)
     showSnackbar(`Certificação ${!item.active ? 'ativada' : 'desativada'} com sucesso`)
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao alterar status da certificação', 'error')
   } finally {
     toggleLoading.value = null
@@ -362,7 +380,7 @@ const confirmDelete = async () => {
     await certificationsStore.deleteCertification((editedItem.value as any)._id)
     showSnackbar('Certificação excluída com sucesso')
     deleteDialog.value = false
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao excluir certificação', 'error')
   } finally {
     deleting.value = false
@@ -568,20 +586,20 @@ onMounted(() => {
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .stat-icon-wrapper :deep(.v-icon) {
     font-size: 24px !important;
   }
-  
+
   .dialog-content {
     max-height: calc(85vh - 160px);
   }

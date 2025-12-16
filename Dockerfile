@@ -1,5 +1,5 @@
 # Build stage
-FROM node:lts-alpine3.22 AS builder
+FROM node:lts-trixie-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including dev dependencies for build)
-RUN npm ci && npm cache clean --force
+RUN npm ci --prefer-offline --no-audit --progress=false --loglevel=error
 
 # Copy source code
 COPY . .
@@ -21,7 +21,7 @@ ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 RUN npm run generate
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:mainline-alpine3.23
 
 # Copy static files from builder stage
 COPY --from=builder /app/.output/public /usr/share/nginx/html

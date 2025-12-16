@@ -15,13 +15,23 @@
               </div>
             </div>
             <p class="footer-description">
-              Automatizando infraestruturas e otimizando processos de desenvolvimento com soluções modernas e
-              escaláveis.
+              Automatizando infraestruturas e otimizando processos de desenvolvimento com soluções
+              modernas e escaláveis.
             </p>
             <div class="social-links-wrapper mt-4">
-              <v-btn v-for="social in socialLinks" :key="social.name" :href="social.href" :icon="social.icon"
-                size="small" variant="tonal" color="primary" target="_blank" class="social-btn" width="48"
-                :aria-label="social.label" />
+              <v-btn
+                v-for="social in socialLinks"
+                :key="social.name"
+                :href="social.href"
+                :icon="social.icon"
+                size="small"
+                variant="tonal"
+                color="primary"
+                target="_blank"
+                class="social-btn"
+                width="48"
+                :aria-label="social.label"
+              />
             </div>
           </div>
         </v-col>
@@ -32,7 +42,11 @@
             <h3 class="footer-title">Navegação</h3>
             <ul class="footer-links">
               <li v-for="link in quickLinks" :key="link.label">
-                <a :href="link.href" @click.prevent="scrollToSection(link.href)" class="footer-link">
+                <a
+                  :href="link.href"
+                  class="footer-link"
+                  @click.prevent="scrollToSection(link.href)"
+                >
                   {{ link.label }}
                 </a>
               </li>
@@ -46,7 +60,11 @@
             <h3 class="footer-title">Contato</h3>
             <ul class="footer-links">
               <li>
-                <a :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`" target="_blank" class="footer-link">
+                <a
+                  :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`"
+                  target="_blank"
+                  class="footer-link"
+                >
                   <v-icon size="16" class="mr-2">mdi-phone</v-icon>
                   {{ phoneNumber }}
                 </a>
@@ -71,11 +89,15 @@
         <v-col cols="12" sm="4" md="3" lg="3">
           <div class="footer-section">
             <h3 class="footer-title">Vamos conversar?</h3>
-            <p class="footer-cta-text mb-4">
-              Tem um projeto em mente? Entre em contato!
-            </p>
-            <v-btn color="primary" variant="flat" block size="large" @click="scrollToSection('contact')"
-              class="cta-btn">
+            <p class="footer-cta-text mb-4">Tem um projeto em mente? Entre em contato!</p>
+            <v-btn
+              color="primary"
+              variant="flat"
+              block
+              size="large"
+              class="cta-btn"
+              @click="scrollToSection('contact')"
+            >
               <v-icon start>mdi-email-fast</v-icon>
               Enviar Mensagem
             </v-btn>
@@ -104,44 +126,52 @@
     </v-container>
 
     <!-- Scroll to Top Button -->
-    <v-btn v-show="showScrollTop" @click="scrollToTop" icon="mdi-arrow-up" color="primary" size="large" position="fixed"
-      location="bottom end" class="scroll-top-btn" />
+    <v-btn
+      v-show="showScrollTop"
+      icon="mdi-arrow-up"
+      color="primary"
+      size="large"
+      position="fixed"
+      location="bottom end"
+      class="scroll-top-btn"
+      @click="scrollToTop"
+    />
   </v-footer>
 </template>
 
 <script setup lang="ts">
-import { QUICK_LINKS, IMAGE_URLS } from "~/constants";
-import { useNavigation } from "~/composables/useNavigation";
-import { useSocialLinks } from "~/composables/useSocialLinks";
+import { QUICK_LINKS, IMAGE_URLS } from '~/constants'
+import { useNavigation } from '~/composables/useNavigation'
+import { useSocialLinks } from '~/composables/useSocialLinks'
 
-const currentYear = computed(() => new Date().getFullYear());
-const showScrollTop = ref(false);
+const currentYear = computed(() => new Date().getFullYear())
+const showScrollTop = ref(false)
 
-const { scrollToSection, scrollToTop, shouldShowScrollTop } = useNavigation();
-const { footerSocialLinks, contactInfo } = useSocialLinks();
+const { scrollToSection, scrollToTop, shouldShowScrollTop } = useNavigation()
+const { footerSocialLinks, contactInfo } = useSocialLinks()
 
-const socialLinks = footerSocialLinks;
-const quickLinks = QUICK_LINKS;
-const email = contactInfo.email;
-const phoneNumber = contactInfo.phone;
+const socialLinks = footerSocialLinks
+const quickLinks = QUICK_LINKS
+const email = contactInfo.email
+const phoneNumber = contactInfo.phone
 
 const handleScroll = () => {
-  if (process.client) {
-    showScrollTop.value = shouldShowScrollTop();
+  if (import.meta.client) {
+    showScrollTop.value = shouldShowScrollTop()
   }
-};
+}
 
 onMounted(() => {
-  if (process.client) {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+  if (import.meta.client) {
+    window.addEventListener('scroll', handleScroll, { passive: true })
   }
-});
+})
 
 onUnmounted(() => {
-  if (process.client) {
-    window.removeEventListener("scroll", handleScroll);
+  if (import.meta.client) {
+    window.removeEventListener('scroll', handleScroll)
   }
-});
+})
 </script>
 
 <style scoped>
@@ -164,8 +194,13 @@ onUnmounted(() => {
 }
 
 @keyframes shimmer {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Brand Section */
@@ -319,7 +354,7 @@ onUnmounted(() => {
     max-width: 100%;
     margin-bottom: 2rem;
   }
-  
+
   .footer-section {
     margin-bottom: 2rem;
   }
@@ -330,21 +365,21 @@ onUnmounted(() => {
     width: 48px;
     height: 48px;
   }
-  
+
   .brand-name {
     font-size: 1rem;
   }
-  
+
   .footer-title {
     font-size: 0.8125rem;
   }
-  
+
   .footer-link,
   .footer-description,
   .footer-cta-text {
     font-size: 0.875rem;
   }
-  
+
   .scroll-top-btn {
     margin: 1rem !important;
   }

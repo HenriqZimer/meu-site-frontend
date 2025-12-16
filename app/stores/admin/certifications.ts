@@ -5,14 +5,14 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
   state: () => ({
     certifications: [] as Certification[],
     loading: false,
-    error: null as string | null
+    error: null as string | null,
   }),
 
   getters: {
-    allCertifications: (state) => state.certifications,
-    activeCount: (state) => state.certifications.filter(c => c.active).length,
-    inactiveCount: (state) => state.certifications.filter(c => !c.active).length,
-    totalSkills: (state) => state.certifications.reduce((sum, cert) => sum + (cert.skills || 0), 0)
+    allCertifications: state => state.certifications,
+    activeCount: state => state.certifications.filter(c => c.active).length,
+    inactiveCount: state => state.certifications.filter(c => !c.active).length,
+    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills || 0), 0),
   },
 
   actions: {
@@ -22,7 +22,9 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
 
       try {
         const config = useRuntimeConfig()
-        const data = await $fetch<Certification[]>(`${config.public.apiUrl}/certifications/admin/all`)
+        const data = await $fetch<Certification[]>(
+          `${config.public.apiUrl}/certifications/admin/all`
+        )
         this.certifications = data.sort((a, b) => (a.order || 0) - (b.order || 0))
         return data
       } catch (error: any) {
@@ -39,7 +41,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         const config = useRuntimeConfig()
         const newCert = await $fetch<Certification>(`${config.public.apiUrl}/certifications`, {
           method: 'POST',
-          body: certData
+          body: certData,
         })
         await this.fetchCertifications()
         return newCert
@@ -54,12 +56,15 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
       try {
         const config = useRuntimeConfig()
         const { _id, createdAt, updatedAt, __v, ...cleanData } = certData as any
-        
-        const updatedCert = await $fetch<Certification>(`${config.public.apiUrl}/certifications/${id}`, {
-          method: 'PUT',
-          body: cleanData
-        })
-        
+
+        const updatedCert = await $fetch<Certification>(
+          `${config.public.apiUrl}/certifications/${id}`,
+          {
+            method: 'PUT',
+            body: cleanData,
+          }
+        )
+
         await this.fetchCertifications()
         return updatedCert
       } catch (error: any) {
@@ -84,13 +89,13 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
       try {
         const config = useRuntimeConfig()
         await $fetch(`${config.public.apiUrl}/certifications/${id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
         })
         await this.fetchCertifications()
       } catch (error: any) {
         console.error('Erro ao excluir certificação:', error)
         throw error
       }
-    }
-  }
+    },
+  },
 })

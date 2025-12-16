@@ -21,23 +21,23 @@ export const useCertificationsStore = defineStore('certifications', {
     loading: false,
     error: null as string | null,
     lastFetch: null as number | null,
-    lastStatsFetch: null as number | null
+    lastStatsFetch: null as number | null,
   }),
 
   getters: {
-    allCertifications: (state) => state.certifications,
-    certificationsCount: (state) => state.stats?.total || state.certifications.length,
-    isLoaded: (state) => state.certifications.length > 0,
-    needsRefresh: (state) => {
+    allCertifications: state => state.certifications,
+    certificationsCount: state => state.stats?.total || state.certifications.length,
+    isLoaded: state => state.certifications.length > 0,
+    needsRefresh: state => {
       if (!state.lastFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastFetch > fiveMinutes
     },
-    statsNeedRefresh: (state) => {
+    statsNeedRefresh: state => {
       if (!state.lastStatsFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastStatsFetch > fiveMinutes
-    }
+    },
   },
 
   actions: {
@@ -56,14 +56,14 @@ export const useCertificationsStore = defineStore('certifications', {
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/certifications`
         // console.log('[Certifications Store] Fetching from:', fullUrl)
-        
+
         const data = await $fetch<Certification[]>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         // console.log('[Certifications Store] Dados recebidos:', data.length, 'items')
         this.certifications = data
         this.lastFetch = Date.now()
@@ -88,14 +88,14 @@ export const useCertificationsStore = defineStore('certifications', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/certifications/stats`
-        
+
         const data = await $fetch<CertificationStats>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         this.stats = data
         this.lastStatsFetch = Date.now()
         return data
@@ -110,6 +110,6 @@ export const useCertificationsStore = defineStore('certifications', {
       this.stats = null
       this.lastFetch = null
       this.lastStatsFetch = null
-    }
-  }
+    },
+  },
 })

@@ -2,9 +2,16 @@
   <div :class="containerClasses">
     <p v-if="label" class="social-label">{{ label }}</p>
     <div class="social-links">
-      <a v-for="social in links" :key="social.name" :href="social.url || social.href"
-        :aria-label="social.label || `Visitar ${social.name}`" class="social-link" :class="linkClass" target="_blank"
-        rel="noopener noreferrer">
+      <a
+        v-for="social in links"
+        :key="social.name"
+        :href="social.url || social.href"
+        :aria-label="social.label || `Visitar ${social.name}`"
+        class="social-link"
+        :class="linkClass"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <v-icon :icon="social.icon" :size="iconSize" :class="iconClass" />
       </a>
     </div>
@@ -12,45 +19,41 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
 interface SocialLink {
-  name: string;
-  icon: string;
-  url?: string;
-  href?: string;
-  label?: string;
+  name: string
+  icon: string
+  url?: string
+  href?: string
+  label?: string
 }
 
 interface Props {
-  links?: SocialLink[];
-  label?: string;
-  variant?: "default" | "footer";
-  iconSize?: string | number;
-  customClass?: string;
+  links?: SocialLink[]
+  label?: string
+  variant?: 'default' | 'footer'
+  iconSize?: string | number
+  customClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   links: () => [],
-  label: "",
-  variant: "default",
+  label: '',
+  variant: 'default',
   iconSize: 20,
-  customClass: "",
-});
+  customClass: '',
+})
 
 const containerClasses = computed(() => [
-  "social-links-container",
+  'social-links-container',
   `social-links--${props.variant}`,
   props.customClass,
-]);
+])
 
-const linkClass = computed(() =>
-  props.variant === "footer" ? "social-link--footer" : ""
-);
+const linkClass = computed(() => (props.variant === 'footer' ? 'social-link--footer' : ''))
 
-const iconClass = computed(() =>
-  props.variant === "footer" ? "social-icons" : ""
-);
+const iconClass = computed(() => (props.variant === 'footer' ? 'social-icons' : ''))
 </script>
 
 <style scoped>

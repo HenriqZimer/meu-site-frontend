@@ -13,18 +13,18 @@ export const useSkillsStore = defineStore('skills', {
     skills: [] as Technology[],
     loading: false,
     error: null as string | null,
-    lastFetch: null as number | null
+    lastFetch: null as number | null,
   }),
 
   getters: {
-    allSkills: (state) => state.skills,
-    skillsCount: (state) => state.skills.length,
-    isLoaded: (state) => state.skills.length > 0,
-    needsRefresh: (state) => {
+    allSkills: state => state.skills,
+    skillsCount: state => state.skills.length,
+    isLoaded: state => state.skills.length > 0,
+    needsRefresh: state => {
       if (!state.lastFetch) return true
       const fiveMinutes = 5 * 60 * 1000
       return Date.now() - state.lastFetch > fiveMinutes
-    }
+    },
   },
 
   actions: {
@@ -43,14 +43,14 @@ export const useSkillsStore = defineStore('skills', {
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/skills`
         // console.log('[Skills Store] Fetching from:', fullUrl)
-        
+
         const data = await $fetch<Technology[]>(fullUrl, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-        
+
         // console.log('[Skills Store] Dados recebidos:', data.length, 'items')
         this.skills = data
         this.lastFetch = Date.now()
@@ -67,6 +67,6 @@ export const useSkillsStore = defineStore('skills', {
     clearCache() {
       this.skills = []
       this.lastFetch = null
-    }
-  }
+    },
+  },
 })

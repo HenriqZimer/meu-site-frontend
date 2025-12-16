@@ -59,7 +59,7 @@
     <!-- Contacts Table -->
     <v-card class="contacts-table-card">
       <v-card-title class="d-flex justify-space-between align-center">
-        <div class="d-flex align-center" style="gap: 12px;">
+        <div class="d-flex align-center" style="gap: 12px">
           <v-icon icon="mdi-email-multiple" size="28" color="primary" />
           <span class="table-title">Mensagens de Contato</span>
         </div>
@@ -67,9 +67,9 @@
           color="error"
           variant="outlined"
           size="small"
-          @click="deleteAllRead"
           :disabled="readCount === 0"
           :loading="deletingAll"
+          @click="deleteAllRead"
         >
           <v-icon start>mdi-delete-sweep</v-icon>
           Limpar Lidos
@@ -85,11 +85,7 @@
           class="contacts-table"
         >
           <template #[`item.read`]="{ item }">
-            <v-chip
-              :color="item.read ? 'success' : 'warning'"
-              size="small"
-              variant="flat"
-            >
+            <v-chip :color="item.read ? 'success' : 'warning'" size="small" variant="flat">
               <v-icon start size="small">
                 {{ item.read ? 'mdi-email-check' : 'mdi-email-alert' }}
               </v-icon>
@@ -106,13 +102,7 @@
 
           <template #[`item.subject`]="{ item }">
             <div class="subject-cell">
-              <v-icon
-                v-if="!item.read"
-                icon="mdi-circle"
-                size="8"
-                color="warning"
-                class="mr-2"
-              />
+              <v-icon v-if="!item.read" icon="mdi-circle" size="8" color="warning" class="mr-2" />
               {{ item.subject }}
             </div>
           </template>
@@ -121,13 +111,7 @@
             <div class="action-buttons">
               <v-tooltip text="Ver Detalhes" location="top">
                 <template #activator="{ props }">
-                  <v-btn
-                    v-bind="props"
-                    icon
-                    size="small"
-                    variant="text"
-                    @click="viewItem(item)"
-                  >
+                  <v-btn v-bind="props" icon size="small" variant="text" @click="viewItem(item)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
                 </template>
@@ -138,13 +122,7 @@
                 location="top"
               >
                 <template #activator="{ props }">
-                  <v-btn
-                    v-bind="props"
-                    icon
-                    size="small"
-                    variant="text"
-                    @click="toggleRead(item)"
-                  >
+                  <v-btn v-bind="props" icon size="small" variant="text" @click="toggleRead(item)">
                     <v-icon>
                       {{ item.read ? 'mdi-email-open' : 'mdi-email-check' }}
                     </v-icon>
@@ -247,9 +225,9 @@
         <v-card-actions class="dialog-actions">
           <v-btn
             :prepend-icon="viewedItem.read ? 'mdi-email-open' : 'mdi-email-check'"
-            @click="toggleRead(viewedItem)"
             variant="outlined"
             size="large"
+            @click="toggleRead(viewedItem)"
           >
             {{ viewedItem.read ? 'Marcar como não lido' : 'Marcar como lido' }}
           </v-btn>
@@ -274,26 +252,24 @@
           <v-icon icon="mdi-alert" color="error" class="mr-2" />
           Confirmar Exclusão
         </v-card-title>
-        
+
         <v-divider />
-        
+
         <v-card-text class="dialog-content text-center py-6">
-          Tem certeza que deseja excluir esta mensagem?<br>
+          Tem certeza que deseja excluir esta mensagem?<br />
           Esta ação não pode ser desfeita.
         </v-card-text>
-        
+
         <v-divider />
-        
+
         <v-card-actions class="dialog-actions">
-          <v-btn @click="deleteDialog = false" variant="text" size="large">
-            Cancelar
-          </v-btn>
+          <v-btn variant="text" size="large" @click="deleteDialog = false"> Cancelar </v-btn>
           <v-btn
             color="error"
-            @click="confirmDelete"
             :loading="deleting"
             variant="flat"
             size="large"
+            @click="confirmDelete"
           >
             Excluir
           </v-btn>
@@ -302,12 +278,7 @@
     </v-dialog>
 
     <!-- Snackbar -->
-    <v-snackbar
-      v-model="snackbar"
-      :color="snackbarColor"
-      :timeout="3000"
-      location="top"
-    >
+    <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="3000" location="top">
       {{ snackbarText }}
       <template #actions>
         <v-btn icon="mdi-close" size="small" @click="snackbar = false" />
@@ -328,7 +299,7 @@ const headers = [
   { title: 'E-mail', key: 'email' },
   { title: 'Assunto', key: 'subject' },
   { title: 'Data', key: 'createdAt', width: '150px' },
-  { title: 'Ações', key: 'actions', sortable: false, width: '150px', align: 'center' as const }
+  { title: 'Ações', key: 'actions', sortable: false, width: '150px', align: 'center' as const },
 ]
 
 // State
@@ -347,7 +318,7 @@ const viewedItem = ref<Contact>({
   name: '',
   email: '',
   subject: '',
-  message: ''
+  message: '',
 })
 
 const itemToDelete = ref<Contact | null>(null)
@@ -361,7 +332,7 @@ const todayCount = computed(() => contactsStore.todayCount)
 const fetchContacts = async () => {
   try {
     await contactsStore.fetchContacts()
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao carregar contatos', 'error')
   }
 }
@@ -369,7 +340,7 @@ const fetchContacts = async () => {
 const viewItem = async (item: Contact) => {
   viewedItem.value = { ...item }
   viewDialog.value = true
-  
+
   // Mark as read when viewing
   if (!item.read) {
     await toggleRead(item)
@@ -379,17 +350,14 @@ const viewItem = async (item: Contact) => {
 const toggleRead = async (item: Contact) => {
   try {
     await contactsStore.toggleRead(item._id!)
-    
+
     // Update viewedItem if it's the same
     if (viewedItem.value._id === item._id) {
       viewedItem.value.read = !viewedItem.value.read
     }
-    
-    showSnackbar(
-      item.read ? 'Marcado como não lido' : 'Marcado como lido',
-      'success'
-    )
-  } catch (error) {
+
+    showSnackbar(item.read ? 'Marcado como não lido' : 'Marcado como lido', 'success')
+  } catch {
     showSnackbar('Erro ao atualizar status', 'error')
   }
 }
@@ -401,15 +369,15 @@ const deleteItem = (item: Contact) => {
 
 const confirmDelete = async () => {
   if (!itemToDelete.value) return
-  
+
   deleting.value = true
   try {
     await contactsStore.deleteContact(itemToDelete.value._id!)
-    
+
     showSnackbar('Contato excluído com sucesso', 'success')
     deleteDialog.value = false
     viewDialog.value = false
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao excluir contato', 'error')
   } finally {
     deleting.value = false
@@ -419,15 +387,15 @@ const confirmDelete = async () => {
 
 const deleteAllRead = async () => {
   if (readCount.value === 0) return
-  
+
   const confirmed = confirm(`Tem certeza que deseja excluir ${readCount.value} contato(s) lido(s)?`)
   if (!confirmed) return
-  
+
   deletingAll.value = true
   try {
     await contactsStore.deleteAllRead()
     showSnackbar('Contatos lidos excluídos com sucesso', 'success')
-  } catch (error) {
+  } catch {
     showSnackbar('Erro ao excluir contatos', 'error')
   } finally {
     deletingAll.value = false
@@ -439,7 +407,7 @@ const formatDate = (date?: string) => {
   return new Date(date).toLocaleDateString('pt-BR', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
   })
 }
 
@@ -447,7 +415,7 @@ const formatTime = (date?: string) => {
   if (!date) return ''
   return new Date(date).toLocaleTimeString('pt-BR', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   })
 }
 
@@ -459,7 +427,7 @@ const formatFullDate = (date?: string) => {
     month: 'long',
     year: 'numeric',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   })
 }
 
@@ -704,16 +672,16 @@ onMounted(() => {
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .stat-icon-wrapper :deep(.v-icon) {
     font-size: 24px !important;
   }

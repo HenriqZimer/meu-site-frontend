@@ -5,17 +5,17 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
   state: () => ({
     courses: [] as Course[],
     loading: false,
-    error: null as string | null
+    error: null as string | null,
   }),
 
   getters: {
-    allCourses: (state) => state.courses,
-    activeCount: (state) => state.courses.filter(c => c.active).length,
-    inactiveCount: (state) => state.courses.filter(c => !c.active).length,
-    uniqueYears: (state) => {
+    allCourses: state => state.courses,
+    activeCount: state => state.courses.filter(c => c.active).length,
+    inactiveCount: state => state.courses.filter(c => !c.active).length,
+    uniqueYears: state => {
       const years = new Set(state.courses.map(c => c.year))
       return years.size
-    }
+    },
   },
 
   actions: {
@@ -42,7 +42,7 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
         const config = useRuntimeConfig()
         const newCourse = await $fetch<Course>(`${config.public.apiUrl}/courses`, {
           method: 'POST',
-          body: courseData
+          body: courseData,
         })
         await this.fetchCourses()
         return newCourse
@@ -57,12 +57,12 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
       try {
         const config = useRuntimeConfig()
         const { _id, createdAt, updatedAt, __v, ...cleanData } = courseData as any
-        
+
         const updatedCourse = await $fetch<Course>(`${config.public.apiUrl}/courses/${id}`, {
           method: 'PUT',
-          body: cleanData
+          body: cleanData,
         })
-        
+
         await this.fetchCourses()
         return updatedCourse
       } catch (error: any) {
@@ -87,13 +87,13 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
       try {
         const config = useRuntimeConfig()
         await $fetch(`${config.public.apiUrl}/courses/${id}`, {
-          method: 'DELETE'
+          method: 'DELETE',
         })
         await this.fetchCourses()
       } catch (error: any) {
         console.error('Erro ao excluir curso:', error)
         throw error
       }
-    }
-  }
+    },
+  },
 })

@@ -14,13 +14,15 @@
 
 @font-face {
   font-family: 'Material Design Icons';
-  src: url('https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-.mdi::before, .v-icon::before {
+.mdi::before,
+.v-icon::before {
   font-family: 'Material Design Icons';
   font-weight: normal;
   font-style: normal;
@@ -64,18 +66,39 @@
 }
 
 /* === CRITICAL RESPONSIVE GRID === */
-.v-col-12 { flex: 0 0 100%; max-width: 100%; }
+.v-col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
 
 @media (min-width: 960px) {
-  .v-col-md-6 { flex: 0 0 50%; max-width: 50%; }
-  .v-col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-  .v-col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+  .v-col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .v-col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  .v-col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
 
 @media (max-width: 959px) {
-  .v-col-md-6 { flex: 0 0 100%; max-width: 100%; }
-  .v-col-lg-4 { flex: 0 0 100%; max-width: 100%; }
-  .v-col-lg-6 { flex: 0 0 100%; max-width: 100%; }
+  .v-col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .v-col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .v-col-lg-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 }
 
 /* === CRITICAL COMPONENTS === */
@@ -159,13 +182,27 @@
 }
 
 /* === CRITICAL UTILITIES === */
-.d-flex { display: flex !important; }
-.d-block { display: block !important; }
-.d-none { display: none !important; }
-.text-center { text-align: center !important; }
-.justify-center { justify-content: center !important; }
-.align-center { align-items: center !important; }
-.fill-height { height: 100% !important; }
+.d-flex {
+  display: flex !important;
+}
+.d-block {
+  display: block !important;
+}
+.d-none {
+  display: none !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.justify-center {
+  justify-content: center !important;
+}
+.align-center {
+  align-items: center !important;
+}
+.fill-height {
+  height: 100% !important;
+}
 
 /* === THEME COLORS === */
 .v-theme--light {

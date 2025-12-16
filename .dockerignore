@@ -1,27 +1,61 @@
 # Dependencies
 node_modules
 npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
 
-# Build outputs
-.output
+# Build outputs (keep for production build)
 .nuxt
-dist
+.cache
+.nitro
+.data
 
 # Environment files
 .env
-.env.local
-.env.production
-
-# Development files
-.vscode
-.idea
+.env.*
+!.env.example
 
 # Git
 .git
 .gitignore
+.github
+
+# Testing
+coverage
+.nyc_output
+cypress
+cypress.config.mjs
+*.spec.ts
+*.test.ts
+vitest.config.ts
+
+# IDE
+.vscode
+.idea
+.fleet
+*.swp
+*.swo
+*~
 
 # CI/CD
-.github
+Jenkinsfile
+jenkinsPod.yaml
+sonar-project.properties
+.gitlab-ci.yml
+.travis.yml
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+!nuxt.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+Makefile
 
 # Logs
 logs
@@ -33,10 +67,12 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage
+# Cache
+.npm
+.cache
+.eslintcache
 
-# OS generated files
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -44,13 +80,12 @@ coverage
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Development
 ./scripts
-Makefile
-Dockerfile
-docker-compose.yml
-.dockerignore
-README.md
-LICENSE
-docker-compose-dev.yml
-docker-compose-swarm.yml
-dockercd -compose-teste.yml
+/data
+/tmp
+/temp
+
+# NPM
+.npmrc

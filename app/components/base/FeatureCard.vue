@@ -1,6 +1,9 @@
 <template>
-  <v-card class="feature-card elevation-8 h-100" :class="[`card-${variant}`, customClass]"
-    :style="{ animationDelay: `${animationDelay}s` }">
+  <v-card
+    class="feature-card elevation-8 h-100"
+    :class="[`card-${variant}`, customClass]"
+    :style="{ animationDelay: `${animationDelay}s` }"
+  >
     <v-card-text class="pa-8">
       <!-- Icon with glow -->
       <div class="feature-icon-wrapper mb-6">
@@ -9,10 +12,10 @@
       </div>
 
       <!-- Content -->
-      <h3 class="text-h5 font-weight-bold mb-4" style="color: rgb(241, 245, 249);">
+      <h3 class="text-h5 font-weight-bold mb-4" style="color: rgb(241, 245, 249)">
         {{ title }}
       </h3>
-      <p class="text-body-1" style="color: rgb(203, 213, 225); line-height: 1.7;">
+      <p class="text-body-1" style="color: rgb(203, 213, 225); line-height: 1.7">
         {{ description }}
       </p>
 
@@ -24,15 +27,15 @@
 
 <script setup lang="ts">
 interface Props {
-  icon: string;
-  title: string;
-  description: string;
-  color: string;
-  variant?: string;
-  gradient?: string;
-  iconSize?: number;
-  animationDelay?: number;
-  customClass?: string;
+  icon: string
+  title: string
+  description: string
+  color: string
+  variant?: string
+  gradient?: string
+  iconSize?: number
+  animationDelay?: number
+  customClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -41,14 +44,14 @@ const props = withDefaults(defineProps<Props>(), {
   iconSize: 48,
   animationDelay: 0,
   customClass: '',
-});
+})
 
 const gradientStyle = computed(() => {
   if (props.gradient) {
-    return { background: props.gradient };
+    return { background: props.gradient }
   }
-  return {};
-});
+  return {}
+})
 </script>
 
 <style scoped>
@@ -71,7 +74,11 @@ const gradientStyle = computed(() => {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.15), transparent 50%);
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(59, 130, 246, 0.15),
+    transparent 50%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -80,7 +87,9 @@ const gradientStyle = computed(() => {
 .feature-card:hover {
   transform: translateY(-12px) scale(1.02);
   border-color: rgba(59, 130, 246, 0.6);
-  box-shadow: 0 24px 64px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(59, 130, 246, 0.2) !important;
+  box-shadow:
+    0 24px 64px rgba(59, 130, 246, 0.35),
+    0 0 0 1px rgba(59, 130, 246, 0.2) !important;
   background: rgba(30, 41, 59, 0.8) !important;
 }
 
@@ -150,7 +159,6 @@ const gradientStyle = computed(() => {
 }
 
 @keyframes iconFloat {
-
   0%,
   100% {
     transform: translateY(0px);
@@ -209,7 +217,6 @@ const gradientStyle = computed(() => {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 0.2;

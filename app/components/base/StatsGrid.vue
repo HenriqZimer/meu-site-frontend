@@ -1,15 +1,29 @@
 <template>
   <div :class="containerClasses" data-animate="fade-up" :data-delay="baseDelay">
     <div :class="gridClasses">
-      <div v-for="(item, index) in items" :key="index" :class="itemClasses" data-animate="fade-up"
-        :data-delay="index * delayIncrement">
+      <div
+        v-for="(item, index) in items"
+        :key="index"
+        :class="itemClasses"
+        data-animate="fade-up"
+        :data-delay="index * delayIncrement"
+      >
         <div :class="cardClasses" :style="getCardStyle(item)">
           <div :class="iconWrapperClasses">
-            <v-icon :icon="item.icon" :color="item.color || 'primary'" :size="iconSize" class="stat-icon" />
+            <v-icon
+              :icon="item.icon"
+              :color="item.color || 'primary'"
+              :size="iconSize"
+              class="stat-icon"
+            />
           </div>
           <div class="stat-content">
             <div v-if="item.title" class="stat-title">{{ item.title }}</div>
-            <div v-if="item.value !== undefined" class="stat-value" :class="item.color ? `text-${item.color}` : ''">
+            <div
+              v-if="item.value !== undefined"
+              class="stat-value"
+              :class="item.color ? `text-${item.color}` : ''"
+            >
               {{ item.value }}
             </div>
             <div class="stat-label">{{ item.label || item.description }}</div>
@@ -21,29 +35,29 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { GRID_LAYOUTS, ANIMATION_DELAYS } from "~/constants";
+import { computed } from 'vue'
+import { GRID_LAYOUTS, ANIMATION_DELAYS } from '~/constants'
 
 export interface Stat {
-  icon: string;
-  value?: string | number;
-  label?: string;
-  title?: string;
-  description?: string;
-  color?: string;
-  variant?: 'past' | 'present' | 'future';
+  icon: string
+  value?: string | number
+  label?: string
+  title?: string
+  description?: string
+  color?: string
+  variant?: 'past' | 'present' | 'future'
 }
 
 interface Props {
-  items: Stat[];
-  stats?: Stat[]; // Backward compatibility
-  layout?: { cols: number; sm: number; md?: number; lg?: number };
-  iconSize?: string | number;
-  baseDelay?: number;
-  delayIncrement?: number;
-  customClass?: string;
-  variant?: 'stats' | 'cards' | 'story';
-  columns?: { xs?: number; sm?: number; md?: number; lg?: number };
+  items: Stat[]
+  // stats?: Stat[]
+  layout?: { cols: number; sm: number; md?: number; lg?: number }
+  iconSize?: string | number
+  baseDelay?: number
+  delayIncrement?: number
+  customClass?: string
+  variant?: 'stats' | 'cards' | 'story'
+  columns?: { xs?: number; sm?: number; md?: number; lg?: number }
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,65 +65,65 @@ const props = withDefaults(defineProps<Props>(), {
   iconSize: 32,
   baseDelay: ANIMATION_DELAYS.CONTENT,
   delayIncrement: 100,
-  customClass: "",
+  customClass: '',
   variant: 'stats',
   columns: () => ({ xs: 1, sm: 2, md: 3, lg: 4 }),
-});
+})
 
 // Backward compatibility: use stats if items not provided
-const items = computed(() => props.items || props.stats || []);
+const items = computed(() => props.items || props.stats || [])
 
 const containerClasses = computed(() => [
-  "stats-overview",
+  'stats-overview',
   `stats-overview--${props.variant}`,
   props.customClass,
-]);
+])
 
 const gridClasses = computed(() => {
-  const classes = ['stats-grid'];
+  const classes = ['stats-grid']
   if (props.variant === 'story') {
-    classes.push('stats-grid--story');
+    classes.push('stats-grid--story')
   }
-  return classes;
-});
+  return classes
+})
 
 const itemClasses = computed(() => {
-  const classes = ['stat-item'];
+  const classes = ['stat-item']
   if (props.variant === 'story') {
-    classes.push('stat-item--story');
+    classes.push('stat-item--story')
   }
-  return classes;
-});
+  return classes
+})
 
 const cardClasses = computed(() => {
-  const classes = ['stat-card'];
+  const classes = ['stat-card']
   if (props.variant === 'story') {
-    classes.push('stat-card--story');
+    classes.push('stat-card--story')
   }
-  return classes;
-});
+  return classes
+})
 
 const iconWrapperClasses = computed(() => {
-  const classes = ['stat-icon-wrapper'];
+  const classes = ['stat-icon-wrapper']
   if (props.variant === 'story') {
-    classes.push('stat-icon-wrapper--story');
+    classes.push('stat-icon-wrapper--story')
   }
-  return classes;
-});
+  return classes
+})
 
 const getCardStyle = (item: Stat) => {
   if (props.variant === 'story' && item.variant) {
     const colorMap = {
       past: 'rgba(139, 92, 246, 0.1)',
       present: 'rgba(59, 130, 246, 0.1)',
-      future: 'rgba(34, 211, 238, 0.1)'
-    };
+      future: 'rgba(34, 211, 238, 0.1)',
+    }
     return {
-      '--variant-color': colorMap[item.variant] || ''
-    };
+      '--variant-color': colorMap[item.variant] || '',
+    }
   }
-  return {};
-};
+  return {}
+}
 </script>
 
 <style scoped>
@@ -174,7 +188,7 @@ const getCardStyle = (item: Stat) => {
 }
 
 .stat-card--story::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -234,27 +248,27 @@ const getCardStyle = (item: Stat) => {
 }
 
 /* Icon colors for story variants */
-.stat-card--story[style*="past"] .stat-icon-wrapper {
+.stat-card--story[style*='past'] .stat-icon-wrapper {
   border-color: rgb(139, 92, 246);
 }
 
-.stat-card--story[style*="past"] .stat-icon {
+.stat-card--story[style*='past'] .stat-icon {
   color: rgb(139, 92, 246) !important;
 }
 
-.stat-card--story[style*="present"] .stat-icon-wrapper {
+.stat-card--story[style*='present'] .stat-icon-wrapper {
   border-color: rgb(59, 130, 246);
 }
 
-.stat-card--story[style*="present"] .stat-icon {
+.stat-card--story[style*='present'] .stat-icon {
   color: rgb(59, 130, 246) !important;
 }
 
-.stat-card--story[style*="future"] .stat-icon-wrapper {
+.stat-card--story[style*='future'] .stat-icon-wrapper {
   border-color: rgb(34, 211, 238);
 }
 
-.stat-card--story[style*="future"] .stat-icon {
+.stat-card--story[style*='future'] .stat-icon {
   color: rgb(34, 211, 238) !important;
 }
 

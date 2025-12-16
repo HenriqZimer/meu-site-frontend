@@ -12,17 +12,46 @@ node_modules
 # Logs
 logs
 *.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Misc
+# Testing
+coverage
+.nyc_output
+cypress/screenshots
+cypress/videos
+cypress/downloads
+.vitest
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 .DS_Store
 .fleet
 .idea
+*.swp
+*.swo
+*~
 
 # Local env files
 .env
 .env.*
 !.env.example
 !.env.production
+.env.local
 
-.output
-.dist
+# Build
+*.tsbuildinfo
+
+# Cache
+.npm
+.eslintcache
+.cache
+
+# OS
+Thumbs.db

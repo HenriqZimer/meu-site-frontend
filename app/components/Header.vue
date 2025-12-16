@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar 
-    :elevation="scrolled ? 8 : 0" 
-    :color="scrolled ? 'rgba(15, 23, 42, 0.98)' : 'transparent'" 
+  <v-app-bar
+    :elevation="scrolled ? 8 : 0"
+    :color="scrolled ? 'rgba(15, 23, 42, 0.98)' : 'transparent'"
     app
     :height="mdAndUp ? 80 : 64"
     class="header-bar"
@@ -24,9 +24,9 @@
 
       <!-- Desktop Menu -->
       <nav v-show="mdAndUp" class="nav-menu">
-        <v-btn 
-          v-for="item in menuItems" 
-          :key="item.id" 
+        <v-btn
+          v-for="item in menuItems"
+          :key="item.id"
           variant="text"
           :class="['nav-item', { 'nav-item-active': activeSection === item.id }]"
           @click="scrollToSection(item.id)"
@@ -37,10 +37,10 @@
       </nav>
 
       <!-- CTA Button -->
-      <v-btn 
-        v-show="mdAndUp" 
-        color="primary" 
-        variant="flat" 
+      <v-btn
+        v-show="mdAndUp"
+        color="primary"
+        variant="flat"
         class="cta-button ml-4"
         size="large"
         @click="scrollToSection('contact')"
@@ -51,8 +51,8 @@
       </v-btn>
 
       <!-- Mobile Menu Button -->
-      <v-btn 
-        v-show="!mdAndUp" 
+      <v-btn
+        v-show="!mdAndUp"
         icon
         variant="text"
         class="mobile-menu-btn"
@@ -64,10 +64,10 @@
   </v-app-bar>
 
   <!-- Mobile Navigation Drawer -->
-  <v-navigation-drawer 
-    v-model="drawer" 
-    temporary 
-    location="right" 
+  <v-navigation-drawer
+    v-model="drawer"
+    temporary
+    location="right"
     width="280"
     class="mobile-drawer"
   >
@@ -86,25 +86,25 @@
     <v-divider />
 
     <v-list nav class="drawer-list">
-      <v-list-item 
-        v-for="item in menuItems" 
-        :key="item.id" 
-        :prepend-icon="item.icon" 
+      <v-list-item
+        v-for="item in menuItems"
+        :key="item.id"
+        :prepend-icon="item.icon"
         :title="item.label"
         :active="activeSection === item.id"
-        @click="handleDrawerItemClick(item.id)"
         class="drawer-item"
+        @click="handleDrawerItemClick(item.id)"
       />
     </v-list>
 
     <div class="drawer-footer pa-4">
-      <v-btn 
-        color="primary" 
-        variant="flat" 
+      <v-btn
+        color="primary"
+        variant="flat"
         block
         size="x-large"
-        @click="handleDrawerItemClick('contact')"
         class="mobile-cta-button"
+        @click="handleDrawerItemClick('contact')"
       >
         <v-icon start size="22">mdi-email-fast-outline</v-icon>
         Fale Comigo
@@ -115,37 +115,37 @@
 </template>
 
 <script setup lang="ts">
-import { MENU_ITEMS, SCROLL_CONFIG, IMAGE_URLS } from "~/constants";
-import { useNavigation } from "~/composables/useNavigation";
-import { useDisplay } from 'vuetify';
+import { MENU_ITEMS, SCROLL_CONFIG, IMAGE_URLS } from '~/constants'
+import { useNavigation } from '~/composables/useNavigation'
+import { useDisplay } from 'vuetify'
 
-const { scrollToSection, getActiveSection } = useNavigation();
-const { mdAndUp } = useDisplay();
+const { scrollToSection, getActiveSection } = useNavigation()
+const { mdAndUp } = useDisplay()
 
-const scrolled = ref(false);
-const drawer = ref(false);
-const activeSection = ref("home");
-const menuItems = MENU_ITEMS;
+const scrolled = ref(false)
+const drawer = ref(false)
+const activeSection = ref('home')
+const menuItems = MENU_ITEMS
 
 const handleDrawerItemClick = (id: string) => {
-  scrollToSection(id);
-  drawer.value = false;
-};
+  scrollToSection(id)
+  drawer.value = false
+}
 
 const handleScroll = () => {
-  scrolled.value = window.scrollY > SCROLL_CONFIG.SCROLL_THRESHOLD;
-  const sections = ["home", ...menuItems.map((item) => item.id)];
-  activeSection.value = getActiveSection(sections);
-};
+  scrolled.value = window.scrollY > SCROLL_CONFIG.SCROLL_THRESHOLD
+  const sections = ['home', ...menuItems.map(item => item.id)]
+  activeSection.value = getActiveSection(sections)
+}
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
-  handleScroll();
-});
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  handleScroll()
+})
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
@@ -270,7 +270,9 @@ onUnmounted(() => {
   padding: 0 1.75rem !important;
   letter-spacing: 0.25px !important;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%) !important;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+  box-shadow:
+    0 4px 16px rgba(59, 130, 246, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
@@ -293,7 +295,9 @@ onUnmounted(() => {
 
 .cta-button:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 28px rgba(59, 130, 246, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
+  box-shadow:
+    0 8px 28px rgba(59, 130, 246, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%) !important;
 }
 
@@ -364,7 +368,9 @@ onUnmounted(() => {
   padding: 1.25rem 1.5rem !important;
   height: 56px !important;
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%) !important;
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+  box-shadow:
+    0 6px 20px rgba(59, 130, 246, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
@@ -387,7 +393,9 @@ onUnmounted(() => {
 
 .mobile-cta-button:active {
   transform: scale(0.97);
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
+  box-shadow:
+    0 4px 16px rgba(59, 130, 246, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
 }
 
 .mobile-arrow-icon {

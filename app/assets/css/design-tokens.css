@@ -16,7 +16,7 @@
   --color-primary-700: #1d4ed8;
   --color-primary-800: #1e40af;
   --color-primary-900: #1e3a8a;
-  
+
   --color-secondary: #06b6d4;
   --color-secondary-50: #ecfeff;
   --color-secondary-100: #cffafe;
@@ -28,7 +28,7 @@
   --color-secondary-700: #0e7490;
   --color-secondary-800: #155e75;
   --color-secondary-900: #164e63;
-  
+
   /* === CORES NEUTRAS === */
   --color-white: #ffffff;
   --color-black: #000000;
@@ -42,7 +42,7 @@
   --color-gray-700: #334155;
   --color-gray-800: #1e293b;
   --color-gray-900: #0f172a;
-  
+
   /* === CORES COM ALPHA === */
   --color-primary-alpha-10: rgba(59, 130, 246, 0.1);
   --color-primary-alpha-20: rgba(59, 130, 246, 0.2);
@@ -71,7 +71,7 @@
   /* === TIPOGRAFIA === */
   --font-family-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-family-mono: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  
+
   --font-weight-thin: 100;
   --font-weight-light: 300;
   --font-weight-normal: 400;
@@ -80,7 +80,7 @@
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
   --font-weight-black: 900;
-  
+
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -91,7 +91,7 @@
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
   --text-6xl: 3.75rem;
-  
+
   --line-height-none: 1;
   --line-height-tight: 1.25;
   --line-height-snug: 1.375;
@@ -147,7 +147,7 @@
   --button-icon-size: 48px;
   --border-radius-card: 8px;
   --border-radius-button: 6px;
-  
+
   /* === TYPOGRAPHY UTILITIES === */
   --text-h1: clamp(3rem, 8vw, 6rem);
   --text-h2: clamp(2.5rem, 6vw, 3.75rem);
@@ -159,18 +159,18 @@
 
   /* === BRAND COLORS === */
   --color-github: #333333;
-  --color-linkedin: #0077B5;
-  --color-whatsapp: #25D366;
-  --color-credly: #FF6B35;
+  --color-linkedin: #0077b5;
+  --color-whatsapp: #25d366;
+  --color-credly: #ff6b35;
   --color-notion: #000000;
-  
+
   /* === HERO SPECIFIC === */
   --text-hero-title: clamp(2rem, 5vw, 3.5rem);
   --text-hero-title-lg: clamp(2.5rem, 6vw, 4rem);
   --text-hero-subtitle: clamp(1.25rem, 3vw, 1.75rem);
   --text-hero-subtitle-lg: clamp(1.5rem, 4vw, 2.25rem);
   --spacing-hero-vertical: clamp(2rem, 8vh, 6rem);
-  
+
   /* === SHADOWS === */
   --shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.15);
   --shadow-glow-primary: 0 20px 40px var(--color-primary-alpha-30);
