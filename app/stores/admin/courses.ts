@@ -26,10 +26,10 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Course[]>(`${config.public.apiUrl}/courses/admin/all`)
-        this.courses = data.sort((a, b) => Number(b.year || 0) - Number(a.year || 0))
+        this.courses = data.sort((a, b) => Number(b.year ?? 0) - Number(a.year ?? 0))
         return data
       } catch (error: any) {
-        this.error = error?.message || 'Erro ao carregar cursos'
+        this.error = error?.message ?? 'Erro ao carregar cursos'
         console.error('Erro ao carregar cursos:', error)
         throw error
       } finally {
@@ -47,7 +47,7 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
         await this.fetchCourses()
         return newCourse
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao criar curso'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar curso'
         console.error('Erro ao criar curso:', error)
         throw new Error(errorMsg)
       }
@@ -66,7 +66,7 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
         await this.fetchCourses()
         return updatedCourse
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao atualizar curso'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar curso'
         console.error('Erro ao atualizar curso:', error)
         throw new Error(errorMsg)
       }

@@ -12,7 +12,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
     allCertifications: state => state.certifications,
     activeCount: state => state.certifications.filter(c => c.active).length,
     inactiveCount: state => state.certifications.filter(c => !c.active).length,
-    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills || 0), 0),
+    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills ?? 0), 0),
   },
 
   actions: {
@@ -25,7 +25,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         const data = await $fetch<Certification[]>(
           `${config.public.apiUrl}/certifications/admin/all`
         )
-        this.certifications = data.sort((a, b) => (a.order || 0) - (b.order || 0))
+        this.certifications = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         return data
       } catch (error: any) {
         this.error = error?.message || 'Erro ao carregar certificações'
@@ -46,7 +46,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         await this.fetchCertifications()
         return newCert
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao criar certificação'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar certificação'
         console.error('Erro ao criar certificação:', error)
         throw new Error(errorMsg)
       }
@@ -68,7 +68,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         await this.fetchCertifications()
         return updatedCert
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao atualizar certificação'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar certificação'
         console.error('Erro ao atualizar certificação:', error)
         throw new Error(errorMsg)
       }

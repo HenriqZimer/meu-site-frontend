@@ -26,10 +26,10 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Project[]>(`${config.public.apiUrl}/projects/admin/all`)
-        this.projects = data.sort((a, b) => (a.order || 0) - (b.order || 0))
+        this.projects = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         return data
       } catch (error: any) {
-        this.error = error?.message || 'Erro ao carregar projetos'
+        this.error = error?.message ?? 'Erro ao carregar projetos'
         console.error('Erro ao carregar projetos:', error)
         throw error
       } finally {
@@ -47,7 +47,7 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
         await this.fetchProjects()
         return newProject
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao criar projeto'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar projeto'
         console.error('Erro ao criar projeto:', error)
         throw new Error(errorMsg)
       }
@@ -66,7 +66,7 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
         await this.fetchProjects()
         return updatedProject
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao atualizar projeto'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar projeto'
         console.error('Erro ao atualizar projeto:', error)
         throw new Error(errorMsg)
       }
