@@ -163,4 +163,19 @@ describe('useAdminCoursesStore', () => {
       'Erro ao atualizar curso'
     )
   })
+
+  it('should handle toggleActive error', async () => {
+    const course = { _id: '1', name: 'Test', active: true } as any
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Toggle failed'))
+
+    const store = useAdminCoursesStore()
+    await expect(store.toggleActive(course)).rejects.toThrow('Toggle failed')
+  })
+
+  it('should handle delete error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Delete failed'))
+
+    const store = useAdminCoursesStore()
+    await expect(store.deleteCourse('1')).rejects.toThrow('Delete failed')
+  })
 })

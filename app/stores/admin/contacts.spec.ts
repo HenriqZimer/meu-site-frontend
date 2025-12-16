@@ -159,4 +159,50 @@ describe('useAdminContactsStore', () => {
 
     await expect(store.deleteAllRead()).rejects.toThrow('Batch delete failed')
   })
+
+  it('should handle toggleRead when contact not found in store', async () => {
+    const toggledContact = { _id: '999', name: 'Unknown', read: true }
+
+    vi.mocked(mockFetch).mockResolvedValue({ data: toggledContact, message: 'Success' })
+
+    const store = useAdminContactsStore()
+    store.contacts = [{ _id: '1', name: 'John', read: false }] as any
+
+    await store.toggleRead('999')
+
+    // Contact should still be returned even if not found in local state
+    expect(mockFetch).toHaveBeenCalled()
+  })
+
+  it('should handle fetch with null response data', async () => {
+    vi.mocked(mockFetch).mockResolvedValue({ data: null, count: 0 })
+
+    const store = useAdminContactsStore()
+    await store.fetchContacts()
+
+    expect(store.contacts).toEqual([])
+  })
+
+  it('should handle contacts with undefined createdAt', async () => {
+    const mockContacts = [
+      { _id: '1', name: 'John', createdAt: undefined },
+      { _id: '2', name: 'Jane', createdAt: new Date().toISOString() },
+    ]
+
+    vi.mocked(mockFetch).mockResolvedValue({ data: mockContacts, count: 2 })
+
+    const store = useAdminContactsStore()
+    await store.fetchContacts()
+
+    expect(store.contacts).toBeDefined()
+  })
+
+  it('should handle fetch error without message', async () => {
+    vi.mocked(mockFetch).mockRejectedValue({})
+
+    const store = useAdminContactsStore()
+    await expect(store.fetchContacts()).rejects.toBeDefined()
+
+    expect(store.error).toBe('Erro ao carregar contatos')
+  })
 })

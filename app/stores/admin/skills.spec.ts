@@ -163,4 +163,19 @@ describe('useAdminSkillsStore', () => {
       'Erro ao atualizar skill'
     )
   })
+
+  it('should handle toggleActive error', async () => {
+    const skill = { _id: '1', name: 'Test', active: true } as any
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Toggle failed'))
+
+    const store = useAdminSkillsStore()
+    await expect(store.toggleActive(skill)).rejects.toThrow('Toggle failed')
+  })
+
+  it('should handle delete error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Delete failed'))
+
+    const store = useAdminSkillsStore()
+    await expect(store.deleteSkill('1')).rejects.toThrow('Delete failed')
+  })
 })

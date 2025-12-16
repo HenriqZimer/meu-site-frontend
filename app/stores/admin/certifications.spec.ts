@@ -162,4 +162,19 @@ describe('useAdminCertificationsStore', () => {
       'Erro ao atualizar certificação'
     )
   })
+
+  it('should handle toggleActive error', async () => {
+    const cert = { _id: '1', name: 'Test', active: true } as any
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Toggle failed'))
+
+    const store = useAdminCertificationsStore()
+    await expect(store.toggleActive(cert)).rejects.toThrow('Toggle failed')
+  })
+
+  it('should handle delete error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Delete failed'))
+
+    const store = useAdminCertificationsStore()
+    await expect(store.deleteCertification('1')).rejects.toThrow('Delete failed')
+  })
 })

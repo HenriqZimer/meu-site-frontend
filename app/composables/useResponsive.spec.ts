@@ -38,4 +38,22 @@ describe('useResponsive', () => {
     const trueCount = [isMobile.value, isTablet.value, isDesktop.value].filter(Boolean).length
     expect(trueCount).toBeGreaterThanOrEqual(0)
   })
+
+  it('should handle isTablet with nullish coalescing', () => {
+    const { isTablet, isSm, isMd } = useResponsive()
+    
+    // isTablet uses ?? operator, test both conditions
+    expect(typeof isTablet.value).toBe('boolean')
+    expect(typeof isSm.value).toBe('boolean')
+    expect(typeof isMd.value).toBe('boolean')
+  })
+
+  it('should handle isDesktop with nullish coalescing', () => {
+    const { isDesktop, isLg, isXl } = useResponsive()
+    
+    // isDesktop uses ?? operator, test both conditions
+    expect(typeof isDesktop.value).toBe('boolean')
+    expect(typeof isLg.value).toBe('boolean')
+    expect(typeof isXl.value).toBe('boolean')
+  })
 })

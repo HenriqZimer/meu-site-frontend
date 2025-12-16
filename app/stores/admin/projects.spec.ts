@@ -165,4 +165,19 @@ describe('useAdminProjectsStore', () => {
       'Erro ao atualizar projeto'
     )
   })
+
+  it('should handle toggleActive error', async () => {
+    const project = { _id: '1', name: 'Test', active: true } as any
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Toggle failed'))
+
+    const store = useAdminProjectsStore()
+    await expect(store.toggleActive(project)).rejects.toThrow('Toggle failed')
+  })
+
+  it('should handle delete error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Delete failed'))
+
+    const store = useAdminProjectsStore()
+    await expect(store.deleteProject('1')).rejects.toThrow('Delete failed')
+  })
 })
