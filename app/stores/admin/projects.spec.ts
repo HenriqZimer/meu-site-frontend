@@ -1,0 +1,122 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { setActivePinia, createPinia } from 'pinia'
+import { useAdminProjectsStore } from './projects'
+
+// Mock $fetch
+vi.mock('#app', () => ({
+  useRuntimeConfig: () => ({
+    public: {
+      apiUrl: 'http://localhost:3000/api',
+    },
+  }),
+}))
+
+global.$fetch = vi.fn()
+
+describe('useAdminProjectsStore', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    vi.clearAllMocks()
+  })
+
+  it('should initialize with empty state', () => {
+    const store = useAdminProjectsStore()
+
+    expect(store.projects).toEqual([])
+    expect(store.loading).toBe(false)
+    expect(store.error).toBeNull()
+  })
+
+  it('should fetch projects successfully', async () => {
+    const mockProjects = [
+      { _id: '1', name: 'Project 1', active: true, order: 1, category: 'web' },
+      { _id: '2', name: 'Project 2', active: false, order: 2, category: 'mobile' },
+    ]
+
+    vi.mocked(global.$fetch).mockResolvedValue(mockProjects)
+
+    const store = useAdminProjectsStore()
+    await store.fetchProjects()
+
+    expect(store.projects).toEqual(mockProjects)
+    expect(store.loading).toBe(false)
+    expect(store.error).toBeNull()
+  })
+
+  it('should handle fetch error', async () => {
+    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+
+    const store = useAdminProjectsStore()
+    await expect(store.fetchProjects()).rejects.toThrow('Network error')
+
+    expect(store.loading).toBe(false)
+    expect(store.error).toBe('Network error')
+  })
+
+  it('should calculate active count correctly', () => {
+    const store = useAdminProjectsStore()
+    store.projects = [
+      { _id: '1', name: 'Project 1', active: true },
+      { _id: '2', name: 'Project 2', active: false },
+      { _id: '3', name: 'Project 3', active: true },
+    ] as any
+
+    expect(store.activeCount).toBe(2)
+    expect(store.inactiveCount).toBe(1)
+  })
+
+  it('should calculate categories count correctly', () => {
+    const store = useAdminProjectsStore()
+    store.projects = [
+      { _id: '1', name: 'Project 1', category: 'web' },
+      { _id: '2', name: 'Project 2', category: 'mobile' },
+      { _id: '3', name: 'Project 3', category: 'web' },
+    ] as any
+
+    expect(store.categoriesCount).toBe(2)
+  })
+
+  it('should create project', async () => {
+    const newProject = { name: 'New Project', active: true, order: 1 }
+    const createdProject = { _id: '1', ...newProject }
+
+    vi.mocked(global.$fetch).mockResolvedValueOnce(createdProject).mockResolvedValueOnce([createdProject])
+
+    const store = useAdminProjectsStore()
+    await store.createProject(newProject as any)
+
+    expect(global.$fetch).toHaveBeenCalledTimes(2)
+  })
+
+  it('should update project', async () => {
+    const updatedProject = { _id: '1', name: 'Updated', active: true }
+
+    vi.mocked(global.$fetch).mockResolvedValueOnce(updatedProject).mockResolvedValueOnce([updatedProject])
+
+    const store = useAdminProjectsStore()
+    await store.updateProject('1', updatedProject as any)
+
+    expect(global.$fetch).toHaveBeenCalledTimes(2)
+  })
+
+  it('should toggle active status', async () => {
+    const project = { _id: '1', name: 'Project', active: true } as any
+    const toggledProject = { ...project, active: false }
+
+    vi.mocked(global.$fetch).mockResolvedValueOnce(toggledProject).mockResolvedValueOnce([toggledProject])
+
+    const store = useAdminProjectsStore()
+    await store.toggleActive(project)
+
+    expect(global.$fetch).toHaveBeenCalledTimes(2)
+  })
+
+  it('should delete project', async () => {
+    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
+
+    const store = useAdminProjectsStore()
+    await store.deleteProject('1')
+
+    expect(global.$fetch).toHaveBeenCalledTimes(2)
+  })
+})
