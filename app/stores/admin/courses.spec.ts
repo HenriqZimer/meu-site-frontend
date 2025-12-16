@@ -22,6 +22,7 @@ describe('useAdminCoursesStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     vi.clearAllMocks()
+    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   it('should initialize with empty state', () => {
@@ -129,5 +130,37 @@ describe('useAdminCoursesStore', () => {
     await store.deleteCourse('1')
 
     expect(mockFetch).toHaveBeenCalledTimes(2)
+  })
+
+  it('should handle create error with error.data.message', async () => {
+    const errorWithData = { data: { message: 'Validation error' } }
+    vi.mocked(mockFetch).mockRejectedValue(errorWithData)
+
+    const store = useAdminCoursesStore()
+    await expect(store.createCourse({ name: 'Test' } as any)).rejects.toThrow('Validation error')
+  })
+
+  it('should handle create error without message', async () => {
+    vi.mocked(mockFetch).mockRejectedValue({})
+
+    const store = useAdminCoursesStore()
+    await expect(store.createCourse({ name: 'Test' } as any)).rejects.toThrow('Erro ao criar curso')
+  })
+
+  it('should handle update error with error.data.message', async () => {
+    const errorWithData = { data: { message: 'Not found' } }
+    vi.mocked(mockFetch).mockRejectedValue(errorWithData)
+
+    const store = useAdminCoursesStore()
+    await expect(store.updateCourse('1', { name: 'Test' } as any)).rejects.toThrow('Not found')
+  })
+
+  it('should handle update error without message', async () => {
+    vi.mocked(mockFetch).mockRejectedValue({})
+
+    const store = useAdminCoursesStore()
+    await expect(store.updateCourse('1', { name: 'Test' } as any)).rejects.toThrow(
+      'Erro ao atualizar curso'
+    )
   })
 })

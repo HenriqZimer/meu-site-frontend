@@ -22,6 +22,7 @@ describe('useAdminContactsStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     vi.clearAllMocks()
+    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   it('should initialize with empty state', () => {
@@ -134,5 +135,28 @@ describe('useAdminContactsStore', () => {
     await store.deleteAllRead()
 
     expect(mockFetch).toHaveBeenCalled()
+  })
+
+  it('should handle toggle read error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Server error'))
+
+    const store = useAdminContactsStore()
+    await expect(store.toggleRead('1')).rejects.toThrow('Server error')
+  })
+
+  it('should handle delete error', async () => {
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Delete failed'))
+
+    const store = useAdminContactsStore()
+    await expect(store.deleteContact('1')).rejects.toThrow('Delete failed')
+  })
+
+  it('should handle delete all read error', async () => {
+    const store = useAdminContactsStore()
+    store.contacts = [{ _id: '1', name: 'John', read: true }] as any
+
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Batch delete failed'))
+
+    await expect(store.deleteAllRead()).rejects.toThrow('Batch delete failed')
   })
 })

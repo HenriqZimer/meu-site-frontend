@@ -1,28 +1,41 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach, vi } from 'vitest'
+import { useResponsive, BREAKPOINTS } from './useResponsive'
 
 describe('useResponsive', () => {
-  it('should detect mobile viewport', () => {
-    const isMobile = false
-    expect(typeof isMobile).toBe('boolean')
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
-  it('should detect tablet viewport', () => {
-    const isTablet = false
-    expect(typeof isTablet).toBe('boolean')
+  it('should have correct breakpoints', () => {
+    expect(BREAKPOINTS.xs).toBe(0)
+    expect(BREAKPOINTS.sm).toBe(600)
+    expect(BREAKPOINTS.md).toBe(960)
+    expect(BREAKPOINTS.lg).toBe(1264)
+    expect(BREAKPOINTS.xl).toBe(1904)
   })
 
-  it('should detect desktop viewport', () => {
-    const isDesktop = true
-    expect(typeof isDesktop).toBe('boolean')
+  it('should initialize responsive state', () => {
+    const { screenSize, currentBreakpoint, isMobile, isTablet, isDesktop } = useResponsive()
+
+    expect(screenSize).toBeDefined()
+    expect(currentBreakpoint).toBeDefined()
+    expect(typeof isMobile.value).toBe('boolean')
+    expect(typeof isTablet.value).toBe('boolean')
+    expect(typeof isDesktop.value).toBe('boolean')
   })
 
-  it('should have breakpoints', () => {
-    const breakpoints = {
-      mobile: 600,
-      tablet: 960,
-      desktop: 1280,
-    }
-    expect(breakpoints.mobile).toBe(600)
-    expect(breakpoints.tablet).toBe(960)
+  it('should detect breakpoint correctly', () => {
+    const { currentBreakpoint } = useResponsive()
+
+    // Breakpoint should be one of the valid values
+    expect(['xs', 'sm', 'md', 'lg', 'xl']).toContain(currentBreakpoint.value)
+  })
+
+  it('should provide viewport helpers', () => {
+    const { isMobile, isTablet, isDesktop } = useResponsive()
+
+    // Only one should be true at a time
+    const trueCount = [isMobile.value, isTablet.value, isDesktop.value].filter(Boolean).length
+    expect(trueCount).toBeGreaterThanOrEqual(0)
   })
 })

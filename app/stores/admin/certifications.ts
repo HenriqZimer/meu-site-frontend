@@ -12,7 +12,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
     allCertifications: state => state.certifications,
     activeCount: state => state.certifications.filter(c => c.active).length,
     inactiveCount: state => state.certifications.filter(c => !c.active).length,
-    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills || 0), 0),
+    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills ?? 0), 0),
   },
 
   actions: {
