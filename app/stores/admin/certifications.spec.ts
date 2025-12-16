@@ -3,19 +3,20 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useAdminCertificationsStore } from './certifications'
 
 // Mock $fetch
-vi.mock('#app', () => ({
-  useRuntimeConfig: () => ({
-    public: {
-      apiUrl: 'http://localhost:3000/api',
-    },
-  }),
-}))
-
 const mockFetch = Object.assign(vi.fn(), {
   raw: vi.fn(),
   create: vi.fn(),
 })
-global.$fetch = mockFetch as any
+
+// Mock useRuntimeConfig
+const mockUseRuntimeConfig = vi.fn(() => ({
+  public: {
+    apiUrl: 'http://localhost:3000/api',
+  },
+}))
+
+vi.stubGlobal('$fetch', mockFetch)
+vi.stubGlobal('useRuntimeConfig', mockUseRuntimeConfig)
 
 describe('useAdminCertificationsStore', () => {
   beforeEach(() => {
