@@ -20,10 +20,10 @@ describe('Contact Component', () => {
     expect(validateRequired('')).toBe(false)
   })
 
-  it('should have submit functionality', () => {
+  it('should have submit functionality', async () => {
     const submitForm = async (data: any) => data
     const formData = { name: 'Test', email: 'test@test.com', message: 'Hello' }
-    expect(submitForm(formData)).resolves.toEqual(formData)
+    await expect(submitForm(formData)).resolves.toEqual(formData)
   })
 
   it('should have social links', () => {
