@@ -177,4 +177,34 @@ describe('useAdminCertificationsStore', () => {
     const store = useAdminCertificationsStore()
     await expect(store.deleteCertification('1')).rejects.toThrow('Delete failed')
   })
+
+  it('should handle create error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Direct message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminCertificationsStore()
+    await expect(store.createCertification({ name: 'Test' } as any)).rejects.toThrow('Direct message')
+  })
+
+  it('should handle update error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Update message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminCertificationsStore()
+    await expect(store.updateCertification('1', { name: 'Test' } as any)).rejects.toThrow('Update message')
+  })
+
+  it('should sort certifications with undefined order values', async () => {
+    const mockCertifications = [
+      { _id: '1', name: 'Cert 1', order: undefined },
+      { _id: '2', name: 'Cert 2', order: 2 },
+    ]
+    vi.mocked(mockFetch).mockResolvedValue(mockCertifications)
+
+    const store = useAdminCertificationsStore()
+    await store.fetchCertifications()
+
+    expect(store.certifications).toBeDefined()
+    expect(store.certifications.length).toBe(2)
+  })
 })

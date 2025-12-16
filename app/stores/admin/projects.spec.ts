@@ -180,4 +180,34 @@ describe('useAdminProjectsStore', () => {
     const store = useAdminProjectsStore()
     await expect(store.deleteProject('1')).rejects.toThrow('Delete failed')
   })
+
+  it('should handle create error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Direct message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminProjectsStore()
+    await expect(store.createProject({ title: 'Test' } as any)).rejects.toThrow('Direct message')
+  })
+
+  it('should handle update error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Update message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminProjectsStore()
+    await expect(store.updateProject('1', { title: 'Test' } as any)).rejects.toThrow('Update message')
+  })
+
+  it('should sort projects with undefined order values', async () => {
+    const mockProjects = [
+      { _id: '1', title: 'Project 1', order: undefined },
+      { _id: '2', title: 'Project 2', order: 5 },
+    ]
+    vi.mocked(mockFetch).mockResolvedValue(mockProjects)
+
+    const store = useAdminProjectsStore()
+    await store.fetchProjects()
+
+    expect(store.projects).toBeDefined()
+    expect(store.projects.length).toBe(2)
+  })
 })

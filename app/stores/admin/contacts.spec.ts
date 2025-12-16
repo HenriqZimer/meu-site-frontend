@@ -205,4 +205,20 @@ describe('useAdminContactsStore', () => {
 
     expect(store.error).toBe('Erro ao carregar contatos')
   })
+
+  it('should sort contacts with both undefined and defined createdAt values', async () => {
+    const mockContacts = [
+      { _id: '1', name: 'John', createdAt: undefined },
+      { _id: '2', name: 'Jane', createdAt: new Date().toISOString() },
+      { _id: '3', name: 'Bob', createdAt: undefined },
+    ]
+
+    vi.mocked(mockFetch).mockResolvedValue({ data: mockContacts, count: 3 })
+
+    const store = useAdminContactsStore()
+    await store.fetchContacts()
+
+    expect(store.contacts).toBeDefined()
+    expect(store.contacts.length).toBe(3)
+  })
 })

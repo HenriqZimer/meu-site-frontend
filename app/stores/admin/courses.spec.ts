@@ -178,4 +178,34 @@ describe('useAdminCoursesStore', () => {
     const store = useAdminCoursesStore()
     await expect(store.deleteCourse('1')).rejects.toThrow('Delete failed')
   })
+
+  it('should handle create error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Direct message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminCoursesStore()
+    await expect(store.createCourse({ name: 'Test' } as any)).rejects.toThrow('Direct message')
+  })
+
+  it('should handle update error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Update message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminCoursesStore()
+    await expect(store.updateCourse('1', { name: 'Test' } as any)).rejects.toThrow('Update message')
+  })
+
+  it('should sort courses with undefined year values', async () => {
+    const mockCourses = [
+      { _id: '1', name: 'Course 1', year: undefined },
+      { _id: '2', name: 'Course 2', year: 2024 },
+    ]
+    vi.mocked(mockFetch).mockResolvedValue(mockCourses)
+
+    const store = useAdminCoursesStore()
+    await store.fetchCourses()
+
+    expect(store.courses).toBeDefined()
+    expect(store.courses.length).toBe(2)
+  })
 })

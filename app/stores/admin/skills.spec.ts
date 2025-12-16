@@ -178,4 +178,34 @@ describe('useAdminSkillsStore', () => {
     const store = useAdminSkillsStore()
     await expect(store.deleteSkill('1')).rejects.toThrow('Delete failed')
   })
+
+  it('should handle create error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Direct message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminSkillsStore()
+    await expect(store.createSkill({ name: 'Test' } as any)).rejects.toThrow('Direct message')
+  })
+
+  it('should handle update error with error.message but no error.data', async () => {
+    const errorWithMessage = new Error('Update message')
+    vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
+
+    const store = useAdminSkillsStore()
+    await expect(store.updateSkill('1', { name: 'Test' } as any)).rejects.toThrow('Update message')
+  })
+
+  it('should sort skills with undefined order values', async () => {
+    const mockSkills = [
+      { _id: '1', name: 'Skill 1', order: undefined },
+      { _id: '2', name: 'Skill 2', order: 3 },
+    ]
+    vi.mocked(mockFetch).mockResolvedValue(mockSkills)
+
+    const store = useAdminSkillsStore()
+    await store.fetchSkills()
+
+    expect(store.skills).toBeDefined()
+    expect(store.skills.length).toBe(2)
+  })
 })

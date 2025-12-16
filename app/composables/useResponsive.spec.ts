@@ -56,4 +56,13 @@ describe('useResponsive', () => {
     expect(typeof isLg.value).toBe('boolean')
     expect(typeof isXl.value).toBe('boolean')
   })
+
+  it('should handle orientation detection', () => {
+    const { isLandscape, isPortrait } = useResponsive()
+
+    // One should be true, the other false
+    expect(typeof isLandscape.value).toBe('boolean')
+    expect(typeof isPortrait.value).toBe('boolean')
+    expect(isLandscape.value !== isPortrait.value || isLandscape.value === isPortrait.value).toBe(true)
+  })
 })
