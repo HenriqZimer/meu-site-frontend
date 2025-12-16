@@ -6,7 +6,7 @@ vi.mock('vue', async () => {
   const actual = await vi.importActual('vue')
   return {
     ...actual,
-    onMounted: vi.fn((fn) => fn()),
+    onMounted: vi.fn(fn => fn()),
     onUnmounted: vi.fn(),
   }
 })
