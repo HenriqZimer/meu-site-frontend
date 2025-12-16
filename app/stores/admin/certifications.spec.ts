@@ -11,7 +11,11 @@ vi.mock('#app', () => ({
   }),
 }))
 
-global.$fetch = vi.fn()
+const mockFetch = Object.assign(vi.fn(), {
+  raw: vi.fn(),
+  create: vi.fn(),
+})
+global.$fetch = mockFetch as any
 
 describe('useAdminCertificationsStore', () => {
   beforeEach(() => {
@@ -33,7 +37,7 @@ describe('useAdminCertificationsStore', () => {
       { _id: '2', name: 'Cert 2', active: false, order: 2, skills: 3 },
     ]
 
-    vi.mocked(global.$fetch).mockResolvedValue(mockCertifications)
+    vi.mocked(mockFetch).mockResolvedValue(mockCertifications)
 
     const store = useAdminCertificationsStore()
     await store.fetchCertifications()
@@ -44,7 +48,7 @@ describe('useAdminCertificationsStore', () => {
   })
 
   it('should handle fetch error', async () => {
-    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Network error'))
 
     const store = useAdminCertificationsStore()
     await expect(store.fetchCertifications()).rejects.toThrow('Network error')
@@ -79,43 +83,43 @@ describe('useAdminCertificationsStore', () => {
     const newCert = { name: 'New Cert', active: true, order: 1 }
     const createdCert = { _id: '1', ...newCert }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(createdCert).mockResolvedValueOnce([createdCert])
+    vi.mocked(mockFetch).mockResolvedValueOnce(createdCert).mockResolvedValueOnce([createdCert])
 
     const store = useAdminCertificationsStore()
     await store.createCertification(newCert as any)
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 
   it('should update certification', async () => {
     const updatedCert = { _id: '1', name: 'Updated', active: true }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(updatedCert).mockResolvedValueOnce([updatedCert])
+    vi.mocked(mockFetch).mockResolvedValueOnce(updatedCert).mockResolvedValueOnce([updatedCert])
 
     const store = useAdminCertificationsStore()
     await store.updateCertification('1', updatedCert as any)
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 
   it('should toggle active status', async () => {
     const cert = { _id: '1', name: 'Cert', active: true } as any
     const toggledCert = { ...cert, active: false }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(toggledCert).mockResolvedValueOnce([toggledCert])
+    vi.mocked(mockFetch).mockResolvedValueOnce(toggledCert).mockResolvedValueOnce([toggledCert])
 
     const store = useAdminCertificationsStore()
     await store.toggleActive(cert)
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 
   it('should delete certification', async () => {
-    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
+    vi.mocked(mockFetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
 
     const store = useAdminCertificationsStore()
     await store.deleteCertification('1')
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 })

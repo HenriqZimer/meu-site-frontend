@@ -11,7 +11,11 @@ vi.mock('#app', () => ({
   }),
 }))
 
-global.$fetch = vi.fn()
+const mockFetch = Object.assign(vi.fn(), {
+  raw: vi.fn(),
+  create: vi.fn(),
+})
+global.$fetch = mockFetch as any
 
 describe('useAdminCoursesStore', () => {
   beforeEach(() => {
@@ -33,7 +37,7 @@ describe('useAdminCoursesStore', () => {
       { _id: '2', name: 'Course 2', active: false, year: '2023' },
     ]
 
-    vi.mocked(global.$fetch).mockResolvedValue(mockCourses)
+    vi.mocked(mockFetch).mockResolvedValue(mockCourses)
 
     const store = useAdminCoursesStore()
     await store.fetchCourses()
@@ -44,7 +48,7 @@ describe('useAdminCoursesStore', () => {
   })
 
   it('should handle fetch error', async () => {
-    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Network error'))
 
     const store = useAdminCoursesStore()
     await expect(store.fetchCourses()).rejects.toThrow('Network error')
@@ -80,7 +84,9 @@ describe('useAdminCoursesStore', () => {
     const newCourse = { name: 'New Course', active: true, year: '2024' }
     const createdCourse = { _id: '1', ...newCourse }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(createdCourse).mockResolvedValueOnce([createdCourse])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(createdCourse)
+      .mockResolvedValueOnce([createdCourse])
 
     const store = useAdminCoursesStore()
     await store.createCourse(newCourse as any)
@@ -91,7 +97,9 @@ describe('useAdminCoursesStore', () => {
   it('should update course', async () => {
     const updatedCourse = { _id: '1', name: 'Updated', active: true }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(updatedCourse).mockResolvedValueOnce([updatedCourse])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(updatedCourse)
+      .mockResolvedValueOnce([updatedCourse])
 
     const store = useAdminCoursesStore()
     await store.updateCourse('1', updatedCourse as any)
@@ -103,7 +111,9 @@ describe('useAdminCoursesStore', () => {
     const course = { _id: '1', name: 'Course', active: true } as any
     const toggledCourse = { ...course, active: false }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(toggledCourse).mockResolvedValueOnce([toggledCourse])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(toggledCourse)
+      .mockResolvedValueOnce([toggledCourse])
 
     const store = useAdminCoursesStore()
     await store.toggleActive(course)
@@ -112,11 +122,11 @@ describe('useAdminCoursesStore', () => {
   })
 
   it('should delete course', async () => {
-    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
+    vi.mocked(mockFetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
 
     const store = useAdminCoursesStore()
     await store.deleteCourse('1')
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 })

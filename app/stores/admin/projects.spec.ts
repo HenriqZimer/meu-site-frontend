@@ -11,7 +11,11 @@ vi.mock('#app', () => ({
   }),
 }))
 
-global.$fetch = vi.fn()
+const mockFetch = Object.assign(vi.fn(), {
+  raw: vi.fn(),
+  create: vi.fn(),
+})
+global.$fetch = mockFetch as any
 
 describe('useAdminProjectsStore', () => {
   beforeEach(() => {
@@ -33,7 +37,7 @@ describe('useAdminProjectsStore', () => {
       { _id: '2', name: 'Project 2', active: false, order: 2, category: 'mobile' },
     ]
 
-    vi.mocked(global.$fetch).mockResolvedValue(mockProjects)
+    vi.mocked(mockFetch).mockResolvedValue(mockProjects)
 
     const store = useAdminProjectsStore()
     await store.fetchProjects()
@@ -44,7 +48,7 @@ describe('useAdminProjectsStore', () => {
   })
 
   it('should handle fetch error', async () => {
-    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Network error'))
 
     const store = useAdminProjectsStore()
     await expect(store.fetchProjects()).rejects.toThrow('Network error')
@@ -80,7 +84,9 @@ describe('useAdminProjectsStore', () => {
     const newProject = { name: 'New Project', active: true, order: 1 }
     const createdProject = { _id: '1', ...newProject }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(createdProject).mockResolvedValueOnce([createdProject])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(createdProject)
+      .mockResolvedValueOnce([createdProject])
 
     const store = useAdminProjectsStore()
     await store.createProject(newProject as any)
@@ -91,7 +97,9 @@ describe('useAdminProjectsStore', () => {
   it('should update project', async () => {
     const updatedProject = { _id: '1', name: 'Updated', active: true }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(updatedProject).mockResolvedValueOnce([updatedProject])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(updatedProject)
+      .mockResolvedValueOnce([updatedProject])
 
     const store = useAdminProjectsStore()
     await store.updateProject('1', updatedProject as any)
@@ -103,7 +111,9 @@ describe('useAdminProjectsStore', () => {
     const project = { _id: '1', name: 'Project', active: true } as any
     const toggledProject = { ...project, active: false }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(toggledProject).mockResolvedValueOnce([toggledProject])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(toggledProject)
+      .mockResolvedValueOnce([toggledProject])
 
     const store = useAdminProjectsStore()
     await store.toggleActive(project)
@@ -112,11 +122,11 @@ describe('useAdminProjectsStore', () => {
   })
 
   it('should delete project', async () => {
-    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
+    vi.mocked(mockFetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
 
     const store = useAdminProjectsStore()
     await store.deleteProject('1')
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 })

@@ -11,7 +11,11 @@ vi.mock('#app', () => ({
   }),
 }))
 
-global.$fetch = vi.fn()
+const mockFetch = Object.assign(vi.fn(), {
+  raw: vi.fn(),
+  create: vi.fn(),
+})
+global.$fetch = mockFetch as any
 
 describe('useAdminSkillsStore', () => {
   beforeEach(() => {
@@ -33,7 +37,7 @@ describe('useAdminSkillsStore', () => {
       { _id: '2', name: 'Python', active: false, order: 2, category: 'backend' },
     ]
 
-    vi.mocked(global.$fetch).mockResolvedValue(mockSkills)
+    vi.mocked(mockFetch).mockResolvedValue(mockSkills)
 
     const store = useAdminSkillsStore()
     await store.fetchSkills()
@@ -44,7 +48,7 @@ describe('useAdminSkillsStore', () => {
   })
 
   it('should handle fetch error', async () => {
-    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Network error'))
 
     const store = useAdminSkillsStore()
     await expect(store.fetchSkills()).rejects.toThrow('Network error')
@@ -80,7 +84,9 @@ describe('useAdminSkillsStore', () => {
     const newSkill = { name: 'New Skill', active: true, order: 1 }
     const createdSkill = { _id: '1', ...newSkill }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(createdSkill).mockResolvedValueOnce([createdSkill])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(createdSkill)
+      .mockResolvedValueOnce([createdSkill])
 
     const store = useAdminSkillsStore()
     await store.createSkill(newSkill as any)
@@ -91,7 +97,9 @@ describe('useAdminSkillsStore', () => {
   it('should update skill', async () => {
     const updatedSkill = { _id: '1', name: 'Updated', active: true }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(updatedSkill).mockResolvedValueOnce([updatedSkill])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(updatedSkill)
+      .mockResolvedValueOnce([updatedSkill])
 
     const store = useAdminSkillsStore()
     await store.updateSkill('1', updatedSkill as any)
@@ -103,7 +111,9 @@ describe('useAdminSkillsStore', () => {
     const skill = { _id: '1', name: 'Skill', active: true } as any
     const toggledSkill = { ...skill, active: false }
 
-    vi.mocked(global.$fetch).mockResolvedValueOnce(toggledSkill).mockResolvedValueOnce([toggledSkill])
+    vi.mocked(global.$fetch)
+      .mockResolvedValueOnce(toggledSkill)
+      .mockResolvedValueOnce([toggledSkill])
 
     const store = useAdminSkillsStore()
     await store.toggleActive(skill)
@@ -112,11 +122,11 @@ describe('useAdminSkillsStore', () => {
   })
 
   it('should delete skill', async () => {
-    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
+    vi.mocked(mockFetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce([])
 
     const store = useAdminSkillsStore()
     await store.deleteSkill('1')
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 })

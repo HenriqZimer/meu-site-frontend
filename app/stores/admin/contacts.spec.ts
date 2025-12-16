@@ -11,7 +11,11 @@ vi.mock('#app', () => ({
   }),
 }))
 
-global.$fetch = vi.fn()
+const mockFetch = Object.assign(vi.fn(), {
+  raw: vi.fn(),
+  create: vi.fn(),
+})
+global.$fetch = mockFetch as any
 
 describe('useAdminContactsStore', () => {
   beforeEach(() => {
@@ -29,11 +33,23 @@ describe('useAdminContactsStore', () => {
 
   it('should fetch contacts successfully', async () => {
     const mockContacts = [
-      { _id: '1', name: 'John', email: 'john@test.com', read: false, createdAt: new Date().toISOString() },
-      { _id: '2', name: 'Jane', email: 'jane@test.com', read: true, createdAt: new Date().toISOString() },
+      {
+        _id: '1',
+        name: 'John',
+        email: 'john@test.com',
+        read: false,
+        createdAt: new Date().toISOString(),
+      },
+      {
+        _id: '2',
+        name: 'Jane',
+        email: 'jane@test.com',
+        read: true,
+        createdAt: new Date().toISOString(),
+      },
     ]
 
-    vi.mocked(global.$fetch).mockResolvedValue({ data: mockContacts, count: 2 })
+    vi.mocked(mockFetch).mockResolvedValue({ data: mockContacts, count: 2 })
 
     const store = useAdminContactsStore()
     await store.fetchContacts()
@@ -44,7 +60,7 @@ describe('useAdminContactsStore', () => {
   })
 
   it('should handle fetch error', async () => {
-    vi.mocked(global.$fetch).mockRejectedValue(new Error('Network error'))
+    vi.mocked(mockFetch).mockRejectedValue(new Error('Network error'))
 
     const store = useAdminContactsStore()
     await expect(store.fetchContacts()).rejects.toThrow('Network error')
@@ -83,23 +99,25 @@ describe('useAdminContactsStore', () => {
     const contact = { _id: '1', name: 'John', read: false }
     const toggledContact = { ...contact, read: true }
 
-    vi.mocked(global.$fetch).mockResolvedValue({ data: toggledContact, message: 'Success' })
+    vi.mocked(mockFetch).mockResolvedValue({ data: toggledContact, message: 'Success' })
 
     const store = useAdminContactsStore()
     store.contacts = [contact] as any
 
     await store.toggleRead('1')
 
-    expect(store.contacts[0].read).toBe(true)
+    expect(store.contacts[0]?.read).toBe(true)
   })
 
   it('should delete contact', async () => {
-    vi.mocked(global.$fetch).mockResolvedValueOnce(undefined).mockResolvedValueOnce({ data: [], count: 0 })
+    vi.mocked(mockFetch)
+      .mockResolvedValueOnce(undefined)
+      .mockResolvedValueOnce({ data: [], count: 0 })
 
     const store = useAdminContactsStore()
     await store.deleteContact('1')
 
-    expect(global.$fetch).toHaveBeenCalledTimes(2)
+    expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 
   it('should delete all read contacts', async () => {
@@ -110,10 +128,10 @@ describe('useAdminContactsStore', () => {
       { _id: '3', name: 'Bob', read: true },
     ] as any
 
-    vi.mocked(global.$fetch).mockResolvedValue({ data: [], count: 0 })
+    vi.mocked(mockFetch).mockResolvedValue({ data: [], count: 0 })
 
     await store.deleteAllRead()
 
-    expect(global.$fetch).toHaveBeenCalled()
+    expect(mockFetch).toHaveBeenCalled()
   })
 })
