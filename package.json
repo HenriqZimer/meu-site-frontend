@@ -50,9 +50,8 @@
     "test:component:headed": "cypress open --component",
     "test:build": "npm run build",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "lint:check": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "security": "npm audit --audit-level=moderate"
