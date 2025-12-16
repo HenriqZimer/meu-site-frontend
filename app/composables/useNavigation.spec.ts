@@ -13,7 +13,7 @@ describe('useNavigation', () => {
 
   it('should navigate to sections', () => {
     const sections = ['home', 'about', 'skills', 'portfolio', 'certifications', 'contact']
-    sections.forEach((section) => {
+    sections.forEach(section => {
       expect(section).toBeTruthy()
     })
   })
