@@ -26,10 +26,10 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Skill[]>(`${config.public.apiUrl}/skills/admin/all`)
-        this.skills = data.sort((a, b) => (a.order || 0) - (b.order || 0))
+        this.skills = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
         return data
       } catch (error: any) {
-        this.error = error?.message || 'Erro ao carregar skills'
+        this.error = error?.message ?? 'Erro ao carregar skills'
         console.error('Erro ao carregar skills:', error)
         throw error
       } finally {
@@ -47,7 +47,7 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
         await this.fetchSkills()
         return newSkill
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao criar skill'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar skill'
         console.error('Erro ao criar skill:', error)
         throw new Error(errorMsg)
       }
@@ -66,7 +66,7 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
         await this.fetchSkills()
         return updatedSkill
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao atualizar skill'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar skill'
         console.error('Erro ao atualizar skill:', error)
         throw new Error(errorMsg)
       }

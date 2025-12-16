@@ -15,7 +15,7 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
     todayCount: state => {
       const today = new Date().toDateString()
       return state.contacts.filter(c => {
-        const contactDate = new Date(c.createdAt || '').toDateString()
+        const contactDate = new Date(c.createdAt ?? '').toDateString()
         return contactDate === today
       }).length
     },
@@ -31,15 +31,15 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
         const response = await $fetch<{ data: Contact[]; count: number }>(
           `${config.public.apiUrl}/contacts`
         )
-        const contacts = response.data || []
+        const contacts = response.data ?? []
         this.contacts = contacts.sort((a, b) => {
-          const dateA = new Date(a.createdAt || 0).getTime()
-          const dateB = new Date(b.createdAt || 0).getTime()
+          const dateA = new Date(a.createdAt ?? 0).getTime()
+          const dateB = new Date(b.createdAt ?? 0).getTime()
           return dateB - dateA
         })
         return contacts
       } catch (error: any) {
-        this.error = error?.message || 'Erro ao carregar contatos'
+        this.error = error?.message ?? 'Erro ao carregar contatos'
         console.error('Erro ao carregar contatos:', error)
         throw error
       } finally {
