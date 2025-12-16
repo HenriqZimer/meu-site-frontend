@@ -1,7 +1,22 @@
-import { describe, it, expect, afterEach, vi } from 'vitest'
+import { describe, it, expect, afterEach, vi, beforeEach } from 'vitest'
 import { useResponsive, BREAKPOINTS } from './useResponsive'
 
+// Mock Vue lifecycle hooks to avoid warnings
+vi.mock('vue', async () => {
+  const actual = await vi.importActual('vue')
+  return {
+    ...actual,
+    onMounted: vi.fn((fn) => fn()),
+    onUnmounted: vi.fn(),
+  }
+})
+
 describe('useResponsive', () => {
+  beforeEach(() => {
+    // Suppress console warnings for cleaner test output
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+  })
+
   afterEach(() => {
     vi.clearAllMocks()
   })
