@@ -83,8 +83,8 @@ export const useAdminContactsStore = defineStore('admin-contacts', {
 
     async deleteAllRead() {
       try {
-        const readContacts = this.contacts.filter(c => c.read)
-        await Promise.all(readContacts.map(contact => this.deleteContact(contact._id!)))
+        const readContacts = this.contacts.filter(c => c.read && c._id)
+        await Promise.all(readContacts.map(contact => this.deleteContact(contact._id as string)))
         await this.fetchContacts()
       } catch (error: any) {
         console.error('Erro ao excluir contatos lidos:', error)
