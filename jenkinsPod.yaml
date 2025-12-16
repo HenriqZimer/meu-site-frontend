@@ -13,6 +13,13 @@ spec:
           value: /tmp/.npm
         - name: NODE_OPTIONS
           value: '--max-old-space-size=1536'
+      volumeMounts:
+        - name: jenkins-artifacts
+          mountPath: /tmp/.npm
+          subPath: frontend-npm-cache
+        - name: jenkins-artifacts
+          mountPath: /app/node_modules
+          subPath: frontend-node_modules
       # resources:
       #   requests:
       #     memory: '1Gi'
