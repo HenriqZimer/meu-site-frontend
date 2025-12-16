@@ -194,7 +194,9 @@ describe('useAdminProjectsStore', () => {
     vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
 
     const store = useAdminProjectsStore()
-    await expect(store.updateProject('1', { title: 'Test' } as any)).rejects.toThrow('Update message')
+    await expect(store.updateProject('1', { title: 'Test' } as any)).rejects.toThrow(
+      'Update message'
+    )
   })
 
   it('should sort projects with undefined order values', async () => {

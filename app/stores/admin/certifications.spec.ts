@@ -183,7 +183,9 @@ describe('useAdminCertificationsStore', () => {
     vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
 
     const store = useAdminCertificationsStore()
-    await expect(store.createCertification({ name: 'Test' } as any)).rejects.toThrow('Direct message')
+    await expect(store.createCertification({ name: 'Test' } as any)).rejects.toThrow(
+      'Direct message'
+    )
   })
 
   it('should handle update error with error.message but no error.data', async () => {
@@ -191,7 +193,9 @@ describe('useAdminCertificationsStore', () => {
     vi.mocked(mockFetch).mockRejectedValue(errorWithMessage)
 
     const store = useAdminCertificationsStore()
-    await expect(store.updateCertification('1', { name: 'Test' } as any)).rejects.toThrow('Update message')
+    await expect(store.updateCertification('1', { name: 'Test' } as any)).rejects.toThrow(
+      'Update message'
+    )
   })
 
   it('should sort certifications with undefined order values', async () => {

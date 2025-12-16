@@ -63,6 +63,8 @@ describe('useResponsive', () => {
     // One should be true, the other false
     expect(typeof isLandscape.value).toBe('boolean')
     expect(typeof isPortrait.value).toBe('boolean')
-    expect(isLandscape.value !== isPortrait.value || isLandscape.value === isPortrait.value).toBe(true)
+    expect(isLandscape.value !== isPortrait.value || isLandscape.value === isPortrait.value).toBe(
+      true
+    )
   })
 })
