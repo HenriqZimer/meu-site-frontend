@@ -366,7 +366,7 @@ const saveItem = async () => {
 
   saving.value = true
   try {
-    const { _id, createdAt, updatedAt, __v, ...projectData } = editedItem.value as any
+    const { _id, _createdAt, _updatedAt, __v, ...projectData } = editedItem.value as any
 
     if (isEditing.value && _id) {
       console.log('Atualizando projeto:', _id)

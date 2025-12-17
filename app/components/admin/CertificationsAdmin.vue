@@ -334,7 +334,7 @@ const closeDialog = () => {
 const saveItem = async () => {
   saving.value = true
   try {
-    const { _id, createdAt, updatedAt, __v, ...certificationData } = editedItem.value as any
+    const { _id, _createdAt, _updatedAt, __v, ...certificationData } = editedItem.value as any
 
     if (isEditing.value && _id) {
       console.log('Atualizando certificação:', _id)

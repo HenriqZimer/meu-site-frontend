@@ -56,7 +56,7 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
     async updateCourse(id: string, courseData: Partial<Course>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, createdAt, updatedAt, __v, ...cleanData } = courseData as any
+        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = courseData as any
 
         const updatedCourse = await $fetch<Course>(`${config.public.apiUrl}/courses/${id}`, {
           method: 'PUT',

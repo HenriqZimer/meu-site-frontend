@@ -55,7 +55,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
     async updateCertification(id: string, certData: Partial<Certification>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, createdAt, updatedAt, __v, ...cleanData } = certData as any
+        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = certData as any
 
         const updatedCert = await $fetch<Certification>(
           `${config.public.apiUrl}/certifications/${id}`,

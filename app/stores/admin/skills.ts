@@ -56,7 +56,7 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
     async updateSkill(id: string, skillData: Partial<Skill>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, createdAt, updatedAt, __v, ...cleanData } = skillData as any
+        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = skillData as any
 
         const updatedSkill = await $fetch<Skill>(`${config.public.apiUrl}/skills/${id}`, {
           method: 'PUT',
