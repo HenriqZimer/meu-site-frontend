@@ -8,8 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instala dependências
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --prefer-offline --no-audit --progress=false --loglevel=error
+# RUN npm ci --no-audit
+RUN npm ci --production
 
 # Copia o código fonte
 COPY . .
@@ -22,7 +22,7 @@ ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 RUN npm run build:prod
 
 # --- Stage 2: Production ---
-FROM nginx:mainline-alpine3.23
+FROM nginx:mainline-alpine3.23-perl
 
 # Copia os arquivos estáticos do estágio builder
 COPY --from=builder /app/.output/public /usr/share/nginx/html
