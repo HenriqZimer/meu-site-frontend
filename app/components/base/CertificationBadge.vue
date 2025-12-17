@@ -66,10 +66,10 @@ interface Props {
   lazy?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const _props = withDefaults(defineProps<Props>(), {
   lazy: true,
   date: '',
-  skills: 0
+  skills: 0,
 })
 
 const cardRef = ref<HTMLElement | null>(null)
