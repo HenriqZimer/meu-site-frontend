@@ -1,31 +1,33 @@
 # --- Stage 1: Builder ---
 FROM node:lts-trixie-slim AS builder
 
-# Seleciona o diretório de trabalho
-WORKDIR /app
+# Cria o usuário 'node'
+USER node
+
+# Define o diretório de trabalho
+WORKDIR /usr/src/app
 
 # Copia os arquivos de dependências
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
-# Instala dependências
-# RUN npm ci --no-audit
+# Instala as dependências
 RUN npm ci --production
 
-# Copia o código fonte
-COPY . .
+# Copia o restante do código da aplicação
+COPY --chown=node:node . .
 
 # Define a URL da API para o build
 ARG FRONTEND_API_URL=/api
 ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 
-# Gera o site estático
+# Executa o comando de build que cria o bundle de produção
 RUN npm run build:prod
 
 # --- Stage 2: Production ---
-FROM nginx:mainline-alpine3.23-perl
+FROM nginx:mainline-alpine3.23-perl AS production
 
 # Copia os arquivos estáticos do estágio builder
-COPY --from=builder /app/.output/public /usr/share/nginx/html
+COPY --from=builder /usr/src/app/.output/public /usr/share/nginx/html
 
 # Expõe a porta
 EXPOSE 80
