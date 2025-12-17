@@ -1,36 +1,33 @@
-# Build stage
+# --- Stage 1: Builder ---
 FROM node:lts-trixie-slim AS builder
 
-# Set working directory
+# Seleciona o diretório de trabalho
 WORKDIR /app
 
-# Copy package files
+# Copia os arquivos de dependências
 COPY package*.json ./
 
-# OTIMIZAÇÃO AQUI:
-# Usamos o cache do Docker para guardar os módulos baixados em /root/.npm
-# Isso evita baixar a internet inteira se você mudar uma vírgula no código
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --prefer-offline --no-audit --progress=false --loglevel=error
+# Instala dependências
+RUN npm ci
 
-# Copy source code
+# Copia o código fonte
 COPY . .
 
-# Set API URL for build
+# Define a URL da API para o build
 ARG FRONTEND_API_URL=/api
 ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 
-# Generate static site
-RUN npm run generate
+# Gera o site estático
+RUN npm run build:prod
 
-# Production stage
+# --- Stage 2: Production ---
 FROM nginx:mainline-alpine3.23
 
-# Copy static files from builder stage
+# Copia os arquivos estáticos do estágio builder
 COPY --from=builder /app/.output/public /usr/share/nginx/html
 
-# Expose port
+# Expõe a porta
 EXPOSE 80
 
-# Start nginx
+# Inicia o nginx
 CMD ["nginx", "-g", "daemon off;"]

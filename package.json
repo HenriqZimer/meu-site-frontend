@@ -1,55 +1,21 @@
 {
-  "name": "meu-site",
+  "name": "meu-site-frontend",
   "version": "1.0.0",
-  "description": "Portfolio profissional responsivo com Vue 3, Nuxt 3 e Vuetify - Design minimalista focado em DevOps",
-  "author": "Henrique Pereira Zimermann <contato@henriqzimer.com.br>",
-  "license": "MIT",
-  "type": "module",
-  "private": true,
-  "homepage": "https://henriqzimer.com.br",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HenriqZimer/meu-site.git"
-  },
-  "bugs": {
-    "url": "https://github.com/HenriqZimer/meu-site/issues"
-  },
-  "keywords": [
-    "portfolio",
-    "vue3",
-    "nuxt3",
-    "vuetify",
-    "typescript",
-    "devops",
-    "responsive",
-    "landing-page"
-  ],
-  "engines": {
-    "node": ">=18.14.0 || >=20.0.0 || >=22.0.0 || >=24.0.0",
-    "npm": ">=8.0.0"
-  },
+  "description": "",
   "scripts": {
     "dev": "nuxt dev",
     "dev:prod": "nuxt preview",
     "build": "nuxt build",
     "build:prod": "NODE_ENV=production nuxt build",
     "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
     "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
+    "test:build": "npm run build",
     "test": "vitest run",
-    "test:unit": "vitest run",
-    "test:unit:watch": "vitest",
+    "test:unit": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "start-server-and-test dev http://localhost:3000 test:e2e:run",
-    "test:e2e:run": "cypress run --config video=false,screenshotOnRunFailure=false",
-    "test:e2e:quick": "start-server-and-test dev http://localhost:3000 test:e2e:quick:run",
-    "test:e2e:quick:run": "cypress run --spec 'cypress/e2e/config-test.cy.ts,cypress/e2e/seo.cy.ts' --config video=false,screenshotOnRunFailure=false",
-    "test:e2e:headed": "start-server-and-test dev http://localhost:3000 'cypress open'",
-    "test:component": "cypress run --component",
-    "test:component:headed": "cypress open --component",
-    "test:build": "npm run build",
-    "postinstall": "nuxt prepare",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "format": "prettier --write .",
@@ -92,5 +58,8 @@
   },
   "optionalDependencies": {
     "sharp": "^0.34.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

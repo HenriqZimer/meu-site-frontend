@@ -26,7 +26,6 @@ export default defineConfig({
         'app/app.vue',
       ],
       include: ['app/**/*.{ts,vue}'],
-      excludeNodeModules: true,
     },
   },
   resolve: {
