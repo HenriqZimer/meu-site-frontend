@@ -61,7 +61,6 @@ export const useCoursesStore = defineStore('courses', {
     async fetchCourses() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        console.log('[Courses Store] Usando cache')
         return this.courses
       }
 

@@ -25,7 +25,13 @@ export const useCertificationsStore = defineStore('certifications', {
   }),
 
   getters: {
-    allCertifications: state => state.certifications,
+    allCertifications: state => {
+      // Ordena as certificações pela data mais recente primeiro
+      return [...state.certifications].sort((a, b) => {
+        if (!a.date || !b.date) return 0
+        return b.date.localeCompare(a.date)
+      })
+    },
     certificationsCount: state => state.stats?.total || state.certifications.length,
     isLoaded: state => state.certifications.length > 0,
     needsRefresh: state => {
@@ -44,7 +50,6 @@ export const useCertificationsStore = defineStore('certifications', {
     async fetchCertifications() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        console.log('[Certifications Store] Usando cache')
         return this.certifications
       }
 
@@ -80,7 +85,6 @@ export const useCertificationsStore = defineStore('certifications', {
     async fetchStats() {
       // Evita requisições desnecessárias
       if (this.stats && !this.statsNeedRefresh) {
-        console.log('[Certifications Store] Usando cache de stats')
         return this.stats
       }
 

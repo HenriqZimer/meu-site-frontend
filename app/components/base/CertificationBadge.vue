@@ -34,10 +34,10 @@
         </p>
       </div>
 
-      <div v-if="date || skills" class="card-meta">
-        <span v-if="date" class="meta-item">
+      <div v-if="formattedDate || skills" class="card-meta">
+        <span v-if="formattedDate" class="meta-item">
           <v-icon icon="mdi-calendar-check" size="14" />
-          {{ date }}
+          {{ formattedDate }}
         </span>
         <span v-if="skills" class="meta-item">
           <v-icon icon="mdi-star-circle" size="14" />
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 interface Props {
   name: string
@@ -66,10 +66,32 @@ interface Props {
   lazy?: boolean
 }
 
-const _props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   lazy: true,
   date: '',
   skills: 0,
+})
+
+// Formatar data YYYY-MM para Mes/Ano
+const formattedDate = computed(() => {
+  if (!props.date) return ''
+  const [year, month] = props.date.split('-')
+  if (!year || !month) return props.date
+  const monthNames = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez',
+  ]
+  return `${monthNames[parseInt(month) - 1]}/${year}`
 })
 
 const cardRef = ref<HTMLElement | null>(null)

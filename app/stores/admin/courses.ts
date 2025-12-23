@@ -13,7 +13,9 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
     activeCount: state => state.courses.filter(c => c.active).length,
     inactiveCount: state => state.courses.filter(c => !c.active).length,
     uniqueYears: state => {
-      const years = new Set(state.courses.map(c => c.year))
+      const years = new Set(
+        state.courses.filter(c => c.date).map(c => new Date(c.date).getFullYear())
+      )
       return years.size
     },
   },
@@ -26,7 +28,11 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Course[]>(`${config.public.apiUrl}/courses/admin/all`)
-        this.courses = data.sort((a, b) => Number(b.year ?? 0) - Number(a.year ?? 0))
+        this.courses = data.sort((a, b) => {
+          if (!a.date) return 1
+          if (!b.date) return -1
+          return new Date(b.date).getTime() - new Date(a.date).getTime()
+        })
         return data
       } catch (error: any) {
         this.error = error?.message ?? 'Erro ao carregar cursos'
@@ -56,7 +62,16 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
     async updateCourse(id: string, courseData: Partial<Course>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = courseData as any
+        const {
+          _id,
+          createdAt: _createdAt,
+          updatedAt: _updatedAt,
+          year: _year,
+          month: _month,
+          order: _order,
+          __v,
+          ...cleanData
+        } = courseData as any
 
         const updatedCourse = await $fetch<Course>(`${config.public.apiUrl}/courses/${id}`, {
           method: 'PUT',

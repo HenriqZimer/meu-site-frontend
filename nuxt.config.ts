@@ -20,7 +20,11 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt'],
+  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt', '@nuxt/icon'],
+
+  icon: {
+    serverBundle: 'remote',
+  },
 
   vuetify: {
     vuetifyOptions: {
@@ -62,7 +66,7 @@ export default defineNuxtConfig({
 
   components: {
     global: true,
-    dirs: ['~/components', '~/components/base'],
+    dirs: ['~/components', '~/components/base', '~/components/admin/base'],
   },
 
   nitro: {

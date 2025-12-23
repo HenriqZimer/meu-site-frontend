@@ -25,7 +25,11 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         const data = await $fetch<Certification[]>(
           `${config.public.apiUrl}/certifications/admin/all`
         )
-        this.certifications = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        this.certifications = data.sort((a, b) => {
+          const yearDiff = Number(b.year ?? 0) - Number(a.year ?? 0)
+          if (yearDiff !== 0) return yearDiff
+          return Number(b.month ?? 0) - Number(a.month ?? 0)
+        })
         return data
       } catch (error: any) {
         this.error = error?.message || 'Erro ao carregar certificações'
@@ -55,7 +59,16 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
     async updateCertification(id: string, certData: Partial<Certification>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = certData as any
+        const {
+          _id,
+          createdAt: _createdAt,
+          updatedAt: _updatedAt,
+          year: _year,
+          month: _month,
+          order: _order,
+          __v,
+          ...cleanData
+        } = certData as any
 
         const updatedCert = await $fetch<Certification>(
           `${config.public.apiUrl}/certifications/${id}`,

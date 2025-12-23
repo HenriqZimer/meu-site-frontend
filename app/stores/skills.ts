@@ -31,7 +31,6 @@ export const useSkillsStore = defineStore('skills', {
     async fetchSkills() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        console.log('[Skills Store] Usando cache')
         return this.skills
       }
 

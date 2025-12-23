@@ -56,7 +56,14 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
     async updateProject(id: string, projectData: Partial<Project>) {
       try {
         const config = useRuntimeConfig()
-        const { _id, _createdAt, _updatedAt, __v, ...cleanData } = projectData as any
+        const {
+          _id,
+          createdAt: _createdAt,
+          updatedAt: _updatedAt,
+          __v,
+          order: _order,
+          ...cleanData
+        } = projectData as any
 
         const updatedProject = await $fetch<Project>(`${config.public.apiUrl}/projects/${id}`, {
           method: 'PUT',
