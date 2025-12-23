@@ -106,10 +106,7 @@ describe('useScrollAnimation', () => {
 
     it('should work with NodeList', async () => {
       // Create a mock NodeList
-      const mockElements = [
-        document.createElement('div'),
-        document.createElement('div'),
-      ]
+      const mockElements = [document.createElement('div'), document.createElement('div')]
 
       Object.defineProperty(mockElements, 'length', {
         value: 2,
@@ -125,10 +122,7 @@ describe('useScrollAnimation', () => {
     })
 
     it('should apply custom animation type to all elements', async () => {
-      const mockElements = [
-        document.createElement('div'),
-        document.createElement('div'),
-      ]
+      const mockElements = [document.createElement('div'), document.createElement('div')]
 
       const { animateSequence } = useScrollAnimation()
       animateSequence(mockElements, 'slideLeft', 50)
@@ -140,10 +134,7 @@ describe('useScrollAnimation', () => {
     })
 
     it('should use default stagger delay of 100ms', async () => {
-      const mockElements = [
-        document.createElement('div'),
-        document.createElement('div'),
-      ]
+      const mockElements = [document.createElement('div'), document.createElement('div')]
 
       const { animateSequence } = useScrollAnimation()
       animateSequence(mockElements, 'fadeUp')
@@ -160,7 +151,7 @@ describe('useScrollAnimation', () => {
       const mockElements: HTMLElement[] = []
 
       const { animateSequence } = useScrollAnimation()
-      
+
       expect(() => {
         animateSequence(mockElements, 'fadeUp', 100)
       }).not.toThrow()
@@ -170,13 +161,13 @@ describe('useScrollAnimation', () => {
   describe('observeElements', () => {
     it('should return a function', () => {
       const { observeElements } = useScrollAnimation()
-      
+
       expect(typeof observeElements).toBe('function')
     })
 
     it('should accept optional configuration', () => {
       const { observeElements } = useScrollAnimation()
-      
+
       expect(() => {
         observeElements({ threshold: 0.5, rootMargin: '10px' })
       }).not.toThrow()
@@ -184,7 +175,7 @@ describe('useScrollAnimation', () => {
 
     it('should accept no arguments', () => {
       const { observeElements } = useScrollAnimation()
-      
+
       expect(() => {
         observeElements()
       }).not.toThrow()
@@ -194,13 +185,13 @@ describe('useScrollAnimation', () => {
   describe('resetAnimations', () => {
     it('should return a function', () => {
       const { resetAnimations } = useScrollAnimation()
-      
+
       expect(typeof resetAnimations).toBe('function')
     })
 
     it('should accept selector parameter', () => {
       const { resetAnimations } = useScrollAnimation()
-      
+
       expect(() => {
         resetAnimations('.some-selector')
       }).not.toThrow()
@@ -208,7 +199,7 @@ describe('useScrollAnimation', () => {
 
     it('should work with no parameters', () => {
       const { resetAnimations } = useScrollAnimation()
-      
+
       expect(() => {
         resetAnimations()
       }).not.toThrow()
@@ -218,7 +209,7 @@ describe('useScrollAnimation', () => {
   describe('composable structure', () => {
     it('should return all expected methods', () => {
       const composable = useScrollAnimation()
-      
+
       expect(composable).toHaveProperty('observeElements')
       expect(composable).toHaveProperty('animateElement')
       expect(composable).toHaveProperty('animateSequence')
@@ -226,13 +217,9 @@ describe('useScrollAnimation', () => {
     })
 
     it('should return functions for all methods', () => {
-      const {
-        observeElements,
-        animateElement,
-        animateSequence,
-        resetAnimations,
-      } = useScrollAnimation()
-      
+      const { observeElements, animateElement, animateSequence, resetAnimations } =
+        useScrollAnimation()
+
       expect(typeof observeElements).toBe('function')
       expect(typeof animateElement).toBe('function')
       expect(typeof animateSequence).toBe('function')

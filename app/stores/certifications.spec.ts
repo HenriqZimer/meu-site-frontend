@@ -78,46 +78,44 @@ describe('useCertificationsStore', () => {
 
     it('isLoaded should return true when certifications exist', () => {
       const store = useCertificationsStore()
-      
+
       expect(store.isLoaded).toBe(false)
 
-      store.certifications = [
-        { name: 'Cert1', issuer: 'Issuer1', image: 'img1', link: 'link1' },
-      ]
+      store.certifications = [{ name: 'Cert1', issuer: 'Issuer1', image: 'img1', link: 'link1' }]
 
       expect(store.isLoaded).toBe(true)
     })
 
     it('needsRefresh should return true when lastFetch is null', () => {
       const store = useCertificationsStore()
-      
+
       expect(store.needsRefresh).toBe(true)
     })
 
     it('needsRefresh should return false when last fetch is recent', () => {
       const store = useCertificationsStore()
       store.lastFetch = Date.now()
-      
+
       expect(store.needsRefresh).toBe(false)
     })
 
     it('needsRefresh should return true when last fetch is older than 5 minutes', () => {
       const store = useCertificationsStore()
-      store.lastFetch = Date.now() - (6 * 60 * 1000)
-      
+      store.lastFetch = Date.now() - 6 * 60 * 1000
+
       expect(store.needsRefresh).toBe(true)
     })
 
     it('statsNeedRefresh should return true when lastStatsFetch is null', () => {
       const store = useCertificationsStore()
-      
+
       expect(store.statsNeedRefresh).toBe(true)
     })
 
     it('statsNeedRefresh should return false when last stats fetch is recent', () => {
       const store = useCertificationsStore()
       store.lastStatsFetch = Date.now()
-      
+
       expect(store.statsNeedRefresh).toBe(false)
     })
   })
@@ -150,9 +148,7 @@ describe('useCertificationsStore', () => {
 
       it('should skip fetch if data is already loaded and fresh', async () => {
         const store = useCertificationsStore()
-        store.certifications = [
-          { name: 'Cert', issuer: 'Issuer', image: 'img', link: 'link' },
-        ]
+        store.certifications = [{ name: 'Cert', issuer: 'Issuer', image: 'img', link: 'link' }]
         store.lastFetch = Date.now()
 
         const result = await store.fetchCertifications()
@@ -164,7 +160,7 @@ describe('useCertificationsStore', () => {
       it('should fetch if data needs refresh', async () => {
         const store = useCertificationsStore()
         store.certifications = [{ name: 'Old', issuer: 'Old', image: 'old', link: 'old' }]
-        store.lastFetch = Date.now() - (6 * 60 * 1000)
+        store.lastFetch = Date.now() - 6 * 60 * 1000
 
         const mockData = [{ name: 'New', issuer: 'New', image: 'new', link: 'new' }]
         mockFetch.mockResolvedValueOnce(mockData)

@@ -34,8 +34,20 @@ describe('useSkillsStore', () => {
     it('allSkills should return all skills', () => {
       const store = useSkillsStore()
       const mockSkills = [
-        { name: 'TypeScript', category: 'Languages', icon: 'typescript', color: '#3178C6', bgColor: '#3178C610' },
-        { name: 'Vue.js', category: 'Frameworks', icon: 'vue', color: '#42B883', bgColor: '#42B88310' },
+        {
+          name: 'TypeScript',
+          category: 'Languages',
+          icon: 'typescript',
+          color: '#3178C6',
+          bgColor: '#3178C610',
+        },
+        {
+          name: 'Vue.js',
+          category: 'Frameworks',
+          icon: 'vue',
+          color: '#42B883',
+          bgColor: '#42B88310',
+        },
       ]
       store.skills = mockSkills
 
@@ -44,7 +56,7 @@ describe('useSkillsStore', () => {
 
     it('skillsCount should return the number of skills', () => {
       const store = useSkillsStore()
-      
+
       expect(store.skillsCount).toBe(0)
 
       store.skills = [
@@ -57,7 +69,7 @@ describe('useSkillsStore', () => {
 
     it('isLoaded should return true when skills exist', () => {
       const store = useSkillsStore()
-      
+
       expect(store.isLoaded).toBe(false)
 
       store.skills = [
@@ -69,21 +81,21 @@ describe('useSkillsStore', () => {
 
     it('needsRefresh should return true when lastFetch is null', () => {
       const store = useSkillsStore()
-      
+
       expect(store.needsRefresh).toBe(true)
     })
 
     it('needsRefresh should return false when last fetch is recent', () => {
       const store = useSkillsStore()
       store.lastFetch = Date.now()
-      
+
       expect(store.needsRefresh).toBe(false)
     })
 
     it('needsRefresh should return true when last fetch is older than 5 minutes', () => {
       const store = useSkillsStore()
-      store.lastFetch = Date.now() - (6 * 60 * 1000) // 6 minutes ago
-      
+      store.lastFetch = Date.now() - 6 * 60 * 1000 // 6 minutes ago
+
       expect(store.needsRefresh).toBe(true)
     })
   })
@@ -145,14 +157,10 @@ describe('useSkillsStore', () => {
 
       it('should fetch if data needs refresh', async () => {
         const store = useSkillsStore()
-        store.skills = [
-          { name: 'Old Skill', category: 'Languages', icon: 'old', color: '#000' },
-        ]
-        store.lastFetch = Date.now() - (6 * 60 * 1000) // 6 minutes ago
+        store.skills = [{ name: 'Old Skill', category: 'Languages', icon: 'old', color: '#000' }]
+        store.lastFetch = Date.now() - 6 * 60 * 1000 // 6 minutes ago
 
-        const mockData = [
-          { name: 'New Skill', category: 'Languages', icon: 'new', color: '#FFF' },
-        ]
+        const mockData = [{ name: 'New Skill', category: 'Languages', icon: 'new', color: '#FFF' }]
         mockFetch.mockResolvedValueOnce(mockData)
 
         await store.fetchSkills()

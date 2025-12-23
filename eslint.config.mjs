@@ -27,5 +27,6 @@ export default createConfigForNuxt()
       'node_modules/**',
       '.cypress-cache/**',
       '**/cypress-cache/**',
+      '**/*.spec.ts',
     ],
   })

@@ -74,7 +74,7 @@ describe('useCoursesStore', () => {
       ]
 
       const grouped = store.coursesByYear
-      
+
       expect(grouped).toHaveLength(3)
       expect(grouped[0].year).toBe('2024')
       expect(grouped[0].courses).toHaveLength(2)
@@ -83,12 +83,10 @@ describe('useCoursesStore', () => {
 
     it('coursesByYear should handle courses without year', () => {
       const store = useCoursesStore()
-      store.courses = [
-        { name: 'Course1', platform: 'Udemy', link: 'link1' },
-      ]
+      store.courses = [{ name: 'Course1', platform: 'Udemy', link: 'link1' }]
 
       const grouped = store.coursesByYear
-      
+
       expect(grouped).toHaveLength(1)
       expect(grouped[0].year).toBe('Outros')
     })
@@ -106,16 +104,14 @@ describe('useCoursesStore', () => {
 
     it('totalHours should handle courses without duration', () => {
       const store = useCoursesStore()
-      store.courses = [
-        { name: 'Course1', platform: 'Udemy', link: 'link1', year: '2024' },
-      ]
+      store.courses = [{ name: 'Course1', platform: 'Udemy', link: 'link1', year: '2024' }]
 
       expect(store.totalHours).toBe(0)
     })
 
     it('coursesCount should return the number of courses', () => {
       const store = useCoursesStore()
-      
+
       expect(store.coursesCount).toBe(0)
 
       store.courses = [
@@ -128,26 +124,24 @@ describe('useCoursesStore', () => {
 
     it('isLoaded should return true when courses exist', () => {
       const store = useCoursesStore()
-      
+
       expect(store.isLoaded).toBe(false)
 
-      store.courses = [
-        { name: 'Course1', platform: 'Udemy', link: 'link1' },
-      ]
+      store.courses = [{ name: 'Course1', platform: 'Udemy', link: 'link1' }]
 
       expect(store.isLoaded).toBe(true)
     })
 
     it('needsRefresh should return true when lastFetch is null', () => {
       const store = useCoursesStore()
-      
+
       expect(store.needsRefresh).toBe(true)
     })
 
     it('needsRefresh should return false when last fetch is recent', () => {
       const store = useCoursesStore()
       store.lastFetch = Date.now()
-      
+
       expect(store.needsRefresh).toBe(false)
     })
   })
@@ -180,9 +174,7 @@ describe('useCoursesStore', () => {
 
       it('should skip fetch if data is already loaded and fresh', async () => {
         const store = useCoursesStore()
-        store.courses = [
-          { name: 'Course', platform: 'Udemy', link: 'link' },
-        ]
+        store.courses = [{ name: 'Course', platform: 'Udemy', link: 'link' }]
         store.lastFetch = Date.now()
 
         const result = await store.fetchCourses()
@@ -194,7 +186,7 @@ describe('useCoursesStore', () => {
       it('should fetch if data needs refresh', async () => {
         const store = useCoursesStore()
         store.courses = [{ name: 'Old', platform: 'Old', link: 'old' }]
-        store.lastFetch = Date.now() - (6 * 60 * 1000)
+        store.lastFetch = Date.now() - 6 * 60 * 1000
 
         const mockData = [{ name: 'New', platform: 'New', link: 'new' }]
         mockFetch.mockResolvedValueOnce(mockData)
@@ -232,9 +224,7 @@ describe('useCoursesStore', () => {
     describe('clearCache', () => {
       it('should clear all cached data', () => {
         const store = useCoursesStore()
-        store.courses = [
-          { name: 'Course', platform: 'Udemy', link: 'link' },
-        ]
+        store.courses = [{ name: 'Course', platform: 'Udemy', link: 'link' }]
         store.lastFetch = Date.now()
 
         store.clearCache()
