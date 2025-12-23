@@ -74,9 +74,9 @@ describe('useAdminCoursesStore', () => {
   it('should calculate unique years correctly', () => {
     const store = useAdminCoursesStore()
     store.courses = [
-      { _id: '1', name: 'Course 1', year: '2024' },
-      { _id: '2', name: 'Course 2', year: '2023' },
-      { _id: '3', name: 'Course 3', year: '2024' },
+      { _id: '1', name: 'Course 1', date: '2024-01' },
+      { _id: '2', name: 'Course 2', date: '2023-01' },
+      { _id: '3', name: 'Course 3', date: '2024-12' },
     ] as any
 
     expect(store.uniqueYears).toBe(2)
