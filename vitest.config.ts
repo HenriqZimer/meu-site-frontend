@@ -24,8 +24,20 @@ export default defineConfig({
         '**/cypress/**',
         '**/types/**',
         'app/app.vue',
+        'app/components/**/*.vue', // Components Vue não são bem contados pelo v8
+        'app/pages/**/*.vue', // Pages Vue não são bem contados pelo v8
       ],
-      include: ['app/**/*.{ts,vue}'],
+      include: [
+        'app/composables/**/*.ts',
+        'app/stores/**/*.ts',
+        'app/utils/**/*.ts',
+        'app/constants/**/*.ts',
+      ],
+      all: true,
+      lines: 80,
+      functions: 80,
+      branches: 80,
+      statements: 80,
     },
   },
   resolve: {

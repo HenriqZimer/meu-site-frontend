@@ -61,7 +61,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue' | 'change', value: string): void
+  'update:modelValue': (value: string) => void
+  change: (value: string) => void
 }>()
 
 function handleFilterClick(value: string) {

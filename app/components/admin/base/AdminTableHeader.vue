@@ -31,6 +31,6 @@ withDefaults(defineProps<Props>(), {
 })
 
 defineEmits<{
-  (e: 'add'): void
+  add: () => void
 }>()
 </script>

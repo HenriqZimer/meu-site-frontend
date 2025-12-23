@@ -24,7 +24,7 @@
           <slot :name="slot" v-bind="scope" />
         </template>
 
-        <!-- Active/Status column (comum a todos) -->
+        <!-- Active/Status column with toggle switch -->
         <template v-if="hasActiveColumn" #[`item.active`]="{ item }">
           <div class="d-flex justify-center">
             <v-switch
@@ -39,7 +39,7 @@
           </div>
         </template>
 
-        <!-- Actions column (comum a todos) -->
+        <!-- Action buttons column (Edit and Delete) -->
         <template #[`item.actions`]="{ item }">
           <div class="admin-action-buttons">
             <v-tooltip text="Editar" location="top">
