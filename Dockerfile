@@ -24,16 +24,16 @@ ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 RUN npm run build:prod
 
 # --- Stage 2: Production ---
-FROM cgr.dev/chainguard/nginx:latest AS production
+FROM nginx:stable-alpine3.23-perl AS production
 
 # Copia os arquivos estáticos do estágio builder
 COPY --from=builder /usr/src/app/.output/public /usr/share/nginx/html
 
 # Copia a configuração customizada do nginx
-COPY nginx.conf /etc/nginx/nginx.conf
+# COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expõe a porta
 EXPOSE 80
 
 # Inicia o nginx
-CMD ["-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
