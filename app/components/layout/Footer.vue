@@ -261,7 +261,6 @@ onUnmounted(() => {
 }
 
 .footer-title {
-  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 1.25rem;

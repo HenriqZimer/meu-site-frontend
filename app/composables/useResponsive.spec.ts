@@ -47,11 +47,17 @@ describe('useResponsive', () => {
   })
 
   it('should provide viewport helpers', () => {
-    const { isMobile, isTablet, isDesktop } = useResponsive()
+    const { isMobile, isTablet, isDesktop, isXs, isSm, isMd, isLg, isXl } = useResponsive()
 
-    // Only one should be true at a time
-    const trueCount = [isMobile.value, isTablet.value, isDesktop.value].filter(Boolean).length
-    expect(trueCount).toBeGreaterThanOrEqual(0)
+    // All should be boolean
+    expect(typeof isMobile.value).toBe('boolean')
+    expect(typeof isTablet.value).toBe('boolean')
+    expect(typeof isDesktop.value).toBe('boolean')
+    expect(typeof isXs.value).toBe('boolean')
+    expect(typeof isSm.value).toBe('boolean')
+    expect(typeof isMd.value).toBe('boolean')
+    expect(typeof isLg.value).toBe('boolean')
+    expect(typeof isXl.value).toBe('boolean')
   })
 
   it('should handle isTablet with nullish coalescing', () => {
@@ -61,6 +67,11 @@ describe('useResponsive', () => {
     expect(typeof isTablet.value).toBe('boolean')
     expect(typeof isSm.value).toBe('boolean')
     expect(typeof isMd.value).toBe('boolean')
+
+    // isTablet should be true if isSm OR isMd is true
+    if (isSm.value || isMd.value) {
+      expect(isTablet.value).toBe(true)
+    }
   })
 
   it('should handle isDesktop with nullish coalescing', () => {
@@ -70,16 +81,31 @@ describe('useResponsive', () => {
     expect(typeof isDesktop.value).toBe('boolean')
     expect(typeof isLg.value).toBe('boolean')
     expect(typeof isXl.value).toBe('boolean')
+
+    // isDesktop should be true if isLg OR isXl is true
+    if (isLg.value || isXl.value) {
+      expect(isDesktop.value).toBe(true)
+    }
   })
 
   it('should handle orientation detection', () => {
     const { isLandscape, isPortrait } = useResponsive()
 
-    // One should be true, the other false
+    // Both should be boolean
     expect(typeof isLandscape.value).toBe('boolean')
     expect(typeof isPortrait.value).toBe('boolean')
-    expect(isLandscape.value !== isPortrait.value || isLandscape.value === isPortrait.value).toBe(
-      true
-    )
+  })
+
+  it('should export BREAKPOINTS constant', () => {
+    expect(BREAKPOINTS).toBeDefined()
+    expect(typeof BREAKPOINTS).toBe('object')
+    expect(Object.keys(BREAKPOINTS)).toEqual(['xs', 'sm', 'md', 'lg', 'xl'])
+  })
+
+  it('should have ordered breakpoints', () => {
+    expect(BREAKPOINTS.xs).toBeLessThan(BREAKPOINTS.sm)
+    expect(BREAKPOINTS.sm).toBeLessThan(BREAKPOINTS.md)
+    expect(BREAKPOINTS.md).toBeLessThan(BREAKPOINTS.lg)
+    expect(BREAKPOINTS.lg).toBeLessThan(BREAKPOINTS.xl)
   })
 })

@@ -1,17 +1,11 @@
 <template>
   <v-app>
     <v-theme-provider>
-      <!-- Header - esconder em /admin -->
-      <!-- <Header v-if="!isAdminRoute" /> -->
-
       <!-- Main content -->
       <v-main>
         <NuxtRouteAnnouncer />
         <NuxtPage />
       </v-main>
-
-      <!-- Footer - esconder em /admin -->
-      <!-- <Footer v-if="!isAdminRoute" /> -->
     </v-theme-provider>
   </v-app>
 </template>
@@ -53,9 +47,6 @@ html {
 }
 
 /* Global transitions */
-* {
-  transition: all 0.3s ease;
-}
 
 /* Focus styles for accessibility */
 :focus {

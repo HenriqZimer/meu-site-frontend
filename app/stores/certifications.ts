@@ -32,7 +32,7 @@ export const useCertificationsStore = defineStore('certifications', {
         return b.date.localeCompare(a.date)
       })
     },
-    certificationsCount: state => state.stats?.total || state.certifications.length,
+    certificationsCount: state => state.stats?.total ?? state.certifications.length,
     isLoaded: state => state.certifications.length > 0,
     needsRefresh: state => {
       if (!state.lastFetch) return true

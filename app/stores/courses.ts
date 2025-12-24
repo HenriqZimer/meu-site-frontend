@@ -25,7 +25,7 @@ export const useCoursesStore = defineStore('courses', {
     coursesByYear: state => {
       const grouped: Record<string, Course[]> = {}
       state.courses.forEach(course => {
-        const year = course.year || 'Outros'
+        const year = course.year ?? 'Outros'
         grouped[year] ??= []
         grouped[year].push(course)
       })
@@ -42,7 +42,7 @@ export const useCoursesStore = defineStore('courses', {
       return state.courses
         .filter(c => c.year !== 'Planejados')
         .reduce((acc, course) => {
-          const hours = parseFloat(course.duration?.replace(/[^0-9.]/g, '') || '0')
+          const hours = parseFloat(course.duration?.replace(/[^0-9.]/g, '') ?? '0')
           return acc + hours
         }, 0)
     },

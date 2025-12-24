@@ -30,7 +30,7 @@ export const useProjectsStore = defineStore('projects', {
     allProjects: state => state.projects,
     projectsByCategory: state => (category: string) =>
       state.projects.filter(p => p.category === category),
-    projectsCount: state => state.stats?.total || state.projects.length,
+    projectsCount: state => state.stats?.total ?? state.projects.length,
     isLoaded: state => state.projects.length > 0,
     needsRefresh: state => {
       if (!state.lastFetch) return true

@@ -4,10 +4,12 @@ import { useScrollAnimation } from './useScrollAnimation'
 describe('useScrollAnimation', () => {
   beforeEach(() => {
     vi.useFakeTimers()
+    document.body.innerHTML = ''
   })
 
   afterEach(() => {
     vi.useRealTimers()
+    document.body.innerHTML = ''
   })
 
   describe('animateElement', () => {
@@ -183,25 +185,60 @@ describe('useScrollAnimation', () => {
   })
 
   describe('resetAnimations', () => {
-    it('should return a function', () => {
-      const { resetAnimations } = useScrollAnimation()
-
-      expect(typeof resetAnimations).toBe('function')
-    })
-
-    it('should accept selector parameter', () => {
+    it('should be callable without errors', () => {
       const { resetAnimations } = useScrollAnimation()
 
       expect(() => {
-        resetAnimations('.some-selector')
+        resetAnimations('.animate-visible')
       }).not.toThrow()
     })
 
-    it('should work with no parameters', () => {
+    it('should work with default selector', () => {
+      const element = document.createElement('div')
+      element.classList.add('animate-visible')
+      document.body.appendChild(element)
+
       const { resetAnimations } = useScrollAnimation()
 
       expect(() => {
         resetAnimations()
+      }).not.toThrow()
+    })
+
+    it('should handle elements with no animation classes', () => {
+      const element = document.createElement('div')
+      element.classList.add('animate-visible')
+      document.body.appendChild(element)
+
+      const { resetAnimations } = useScrollAnimation()
+
+      expect(() => {
+        resetAnimations('.animate-visible')
+      }).not.toThrow()
+    })
+  })
+
+  describe('observeElements', () => {
+    it('should return IntersectionObserver when on client', () => {
+      const { observeElements } = useScrollAnimation()
+      const result = observeElements()
+
+      if (import.meta.client) {
+        expect(result).toBeDefined()
+      }
+    })
+
+    it('should accept custom options', () => {
+      const { observeElements } = useScrollAnimation()
+
+      expect(() => {
+        observeElements({
+          threshold: 0.5,
+          rootMargin: '10px',
+          animationType: 'slideLeft',
+          delay: 200,
+          once: false,
+        })
       }).not.toThrow()
     })
   })
