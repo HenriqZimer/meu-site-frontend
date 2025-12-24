@@ -159,23 +159,6 @@ const props = withDefaults(defineProps<Props>(), {
   hasActiveColumn: true,
 })
 
-// Watch para debug
-watch(
-  () => props.items,
-  newItems => {
-    console.log('📊 [AdminCrudModule] Items changed:', newItems?.length, newItems)
-  },
-  { immediate: true, deep: true }
-)
-
-watch(
-  () => props.loading,
-  newLoading => {
-    console.log('⏳ [AdminCrudModule] Loading changed:', newLoading)
-  },
-  { immediate: true }
-)
-
 // State
 const dialog = ref(false)
 const deleteDialog = ref(false)
