@@ -86,7 +86,9 @@ export const useCoursesStore = defineStore('courses', {
         return data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Erro ao carregar cursos'
-        console.error('Erro ao carregar cursos:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar cursos:', error)
+        }
         throw error
       } finally {
         this.loading = false

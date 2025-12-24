@@ -56,7 +56,9 @@ export const useSkillsStore = defineStore('skills', {
         return data
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Erro ao carregar skills'
-        console.error('Erro ao carregar skills:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar skills:', error)
+        }
         throw error
       } finally {
         this.loading = false

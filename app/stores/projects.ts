@@ -105,7 +105,9 @@ export const useProjectsStore = defineStore('projects', {
         this.lastStatsFetch = Date.now()
         return data
       } catch (error) {
-        console.error('Erro ao carregar stats de projetos:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar stats de projetos:', error)
+        }
         throw error
       }
     },

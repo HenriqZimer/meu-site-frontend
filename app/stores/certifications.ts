@@ -105,7 +105,9 @@ export const useCertificationsStore = defineStore('certifications', {
         this.lastStatsFetch = Date.now()
         return data
       } catch (error) {
-        console.error('Erro ao carregar stats de certificações:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar stats de certificações:', error)
+        }
         throw error
       }
     },
