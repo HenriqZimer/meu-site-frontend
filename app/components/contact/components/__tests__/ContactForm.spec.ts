@@ -15,7 +15,7 @@ describe('ContactForm', () => {
 
   it('should validate email format correctly', () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    
+
     expect(emailRegex.test('test@example.com')).toBe(true)
     expect(emailRegex.test('user.name+tag@example.co.uk')).toBe(true)
     expect(emailRegex.test('invalid-email')).toBe(false)
@@ -57,7 +57,7 @@ describe('ContactForm', () => {
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    
+
     const isValid =
       formData.name.trim().length >= 3 &&
       emailRegex.test(formData.email) &&
@@ -69,14 +69,14 @@ describe('ContactForm', () => {
 
   it('should check if form is invalid with incomplete data', () => {
     const formData = {
-      name: 'Jo',  // Too short
+      name: 'Jo', // Too short
       email: 'invalid',
-      subject: 'Hi',  // Too short
+      subject: 'Hi', // Too short
       message: 'Short',
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    
+
     const isValid =
       formData.name.trim().length >= 3 &&
       emailRegex.test(formData.email) &&

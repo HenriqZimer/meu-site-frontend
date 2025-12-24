@@ -17,7 +17,10 @@ describe('Portfolio', () => {
   })
 
   it('should paginate projects correctly', () => {
-    const projects = Array.from({ length: 10 }, (_, i) => ({ id: i + 1, title: `Project ${i + 1}` }))
+    const projects = Array.from({ length: 10 }, (_, i) => ({
+      id: i + 1,
+      title: `Project ${i + 1}`,
+    }))
     const itemsPerPage = 3
 
     const paginate = (items: any[], page: number, perPage: number) => {
