@@ -36,7 +36,10 @@ onMounted(() => {
   certificationsStore.fetchStats()
   observeElements({ threshold: 0.15, once: true })
 
-  const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+  const handleIntersection = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const element = entry.target as HTMLElement
