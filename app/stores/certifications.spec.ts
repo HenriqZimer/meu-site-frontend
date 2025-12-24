@@ -193,6 +193,33 @@ describe('useCertificationsStore', () => {
         expect(store.error).toBe('Erro ao carregar certificações')
         expect(store.loading).toBe(false)
       })
+
+      it('should handle error with data.message', async () => {
+        const store = useCertificationsStore()
+        const errorWithData = {
+          data: { message: 'API error message' },
+          message: 'Generic error',
+        }
+
+        mockFetch.mockRejectedValueOnce(errorWithData)
+
+        await expect(store.fetchCertifications()).rejects.toEqual(errorWithData)
+
+        expect(store.error).toBe('API error message')
+        expect(store.loading).toBe(false)
+      })
+
+      it('should handle error with only message property', async () => {
+        const store = useCertificationsStore()
+        const errorWithMessage = { message: 'Error message only' }
+
+        mockFetch.mockRejectedValueOnce(errorWithMessage)
+
+        await expect(store.fetchCertifications()).rejects.toEqual(errorWithMessage)
+
+        expect(store.error).toBe('Error message only')
+        expect(store.loading).toBe(false)
+      })
     })
 
     describe('fetchStats', () => {

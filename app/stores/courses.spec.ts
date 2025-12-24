@@ -219,6 +219,35 @@ describe('useCoursesStore', () => {
         expect(store.error).toBe('Erro ao carregar cursos')
         expect(store.loading).toBe(false)
       })
+
+      it('should handle error with data.message', async () => {
+        const store = useCoursesStore()
+        const errorWithData = {
+          data: { message: 'API error message' },
+          message: 'Generic error',
+        }
+
+        mockFetch.mockRejectedValueOnce(errorWithData)
+
+        await expect(store.fetchCourses()).rejects.toEqual(errorWithData)
+
+        // Since it's not an Error instance, uses fallback
+        expect(store.error).toBe('Erro ao carregar cursos')
+        expect(store.loading).toBe(false)
+      })
+
+      it('should handle error with only message property', async () => {
+        const store = useCoursesStore()
+        const errorWithMessage = { message: 'Error message only' }
+
+        mockFetch.mockRejectedValueOnce(errorWithMessage)
+
+        await expect(store.fetchCourses()).rejects.toEqual(errorWithMessage)
+
+        // Since it's not an Error instance, uses fallback
+        expect(store.error).toBe('Erro ao carregar cursos')
+        expect(store.loading).toBe(false)
+      })
     })
 
     describe('clearCache', () => {

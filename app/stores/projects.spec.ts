@@ -309,6 +309,33 @@ describe('useProjectsStore', () => {
         expect(store.error).toBe('Erro ao carregar projetos')
         expect(store.loading).toBe(false)
       })
+
+      it('should handle error with data.message', async () => {
+        const store = useProjectsStore()
+        const errorWithData = {
+          data: { message: 'API error message' },
+          message: 'Generic error',
+        }
+
+        mockFetch.mockRejectedValueOnce(errorWithData)
+
+        await expect(store.fetchProjects()).rejects.toEqual(errorWithData)
+
+        expect(store.error).toBe('API error message')
+        expect(store.loading).toBe(false)
+      })
+
+      it('should handle error with only message property', async () => {
+        const store = useProjectsStore()
+        const errorWithMessage = { message: 'Error message only' }
+
+        mockFetch.mockRejectedValueOnce(errorWithMessage)
+
+        await expect(store.fetchProjects()).rejects.toEqual(errorWithMessage)
+
+        expect(store.error).toBe('Error message only')
+        expect(store.loading).toBe(false)
+      })
     })
 
     describe('fetchStats', () => {

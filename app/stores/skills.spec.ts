@@ -191,6 +191,19 @@ describe('useSkillsStore', () => {
         expect(store.error).toBe('Erro ao carregar skills')
         expect(store.loading).toBe(false)
       })
+
+      it('should handle error with message property', async () => {
+        const store = useSkillsStore()
+        const errorWithMessage = { message: 'Error message only' }
+
+        mockFetch.mockRejectedValueOnce(errorWithMessage)
+
+        await expect(store.fetchSkills()).rejects.toEqual(errorWithMessage)
+
+        // Since it's not an Error instance, uses fallback
+        expect(store.error).toBe('Erro ao carregar skills')
+        expect(store.loading).toBe(false)
+      })
     })
 
     describe('clearCache', () => {
