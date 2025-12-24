@@ -26,7 +26,7 @@ export const useCoursesStore = defineStore('courses', {
       const grouped: Record<string, Course[]> = {}
       state.courses.forEach(course => {
         const year = course.year || 'Outros'
-        grouped[year] ??= [];
+        grouped[year] ??= []
         grouped[year].push(course)
       })
 
