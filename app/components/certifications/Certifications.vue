@@ -9,9 +9,7 @@
     description="Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps"
     section-class="py-10 py-md-16"
     container-class="px-4 px-md-6"
-    :no-header="false"
   >
-    <!-- Badges -->
     <div class="certifications-content">
       <CertificationBadgeGrid :badges="certificationBadges" :show-header="false" />
     </div>
@@ -19,26 +17,33 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
+import CertificationBadgeGrid from './components/CertificationBadgeGrid.vue'
 
-// Store
 const certificationsStore = useCertificationsStore()
 
 onMounted(async () => {
-  // Carregar certificações da API
-  await certificationsStore.fetchCertifications()
+  // Garantir que está rodando no cliente
+  if (import.meta.client) {
+    try {
+      console.log('[Certifications Component] Iniciando fetch...')
+      await certificationsStore.fetchCertifications()
+      console.log(
+        '[Certifications Component] Fetch concluído. Total:',
+        certificationsStore.allCertifications.length
+      )
+    } catch (error) {
+      console.error('[Certifications Component] Erro ao buscar certificações:', error)
+    }
+  }
 })
 
-// Computed do store
 const certificationBadges = computed(() => certificationsStore.allCertifications)
 </script>
 
 <style scoped>
-/* === CERTIFICATIONS CONTENT === */
 .certifications-content {
   width: 100%;
   margin: 0 auto;
 }
-
-/* All other styles inherited from Section component and CertificationBadgeGrid */
 </style>

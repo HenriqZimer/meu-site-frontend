@@ -9,15 +9,10 @@
     <!-- Left Border Indicator -->
     <div class="card-border-indicator" />
 
-    <!-- Project Image -->
-    <div v-if="image || $slots.image" class="project-image-container">
-      <div class="project-image-wrapper">
-        <img
-          :src="image"
-          :alt="imageAlt"
-          :loading="lazy ? 'lazy' : 'eager'"
-          class="project-image"
-        />
+    <!-- Foto do Projeto -->
+    <div v-if="src || $slots.image" class="project-visual-container">
+      <div class="project-visual-wrapper">
+        <img :src="src" :alt="altText" :loading="lazy ? 'lazy' : 'eager'" class="project-visual" />
       </div>
 
       <!-- Status Badge Overlay -->
@@ -91,8 +86,8 @@ import { computed } from 'vue'
 interface Props {
   title?: string
   description?: string
-  image?: string
-  imageAlt?: string
+  src?: string
+  altText?: string
   technologies?: string[]
   demoUrl?: string
   githubUrl?: string
@@ -105,8 +100,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   title: '',
   description: '',
-  image: '',
-  imageAlt: '',
+  src: '',
+  altText: 'Demonstração do projeto',
   technologies: () => [],
   demoUrl: '',
   githubUrl: '',
@@ -117,33 +112,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 // Helper methods
-// const getStatusIcon = (status: string) => {
-//   const icons = {
-//     completed: "mdi-check-circle",
-//     "in-progress": "mdi-progress-clock",
-//     planning: "mdi-lightbulb-outline",
-//   };
-//   return icons[status as keyof typeof icons] || "mdi-help-circle";
-// };
-
-// const getStatusLabel = (status: string) => {
-//   const labels = {
-//     completed: "Concluído",
-//     "in-progress": "Em Andamento",
-//     planning: "Planejado",
-//   };
-//   return labels[status as keyof typeof labels] || "Desconhecido";
-// };
-
-// const getStatusColor = (status: string) => {
-//   const colors = {
-//     completed: "success",
-//     "in-progress": "primary",
-//     planning: "info",
-//   };
-//   return colors[status as keyof typeof colors] || "default";
-// };
-
 // Computed properties
 const cardStyles = computed(() => ({
   '--animation-delay': `${props.animationDelay}ms`,
@@ -198,8 +166,8 @@ const cardStyles = computed(() => ({
   transform: scaleY(1);
 }
 
-/* === IMAGE CONTAINER === */
-.project-image-container {
+/* === VISUAL CONTAINER === */
+.project-visual-container {
   position: relative;
   width: 100%;
   height: 200px;
@@ -211,7 +179,7 @@ const cardStyles = computed(() => ({
   );
 }
 
-.project-image-wrapper {
+.project-visual-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
@@ -220,7 +188,7 @@ const cardStyles = computed(() => ({
   padding: 16px;
 }
 
-.project-image {
+.project-visual {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -228,7 +196,7 @@ const cardStyles = computed(() => ({
   border-radius: 8px;
 }
 
-.project-card-modern:hover .project-image {
+.project-card-modern:hover .project-visual {
   transform: scale(1.05);
 }
 
@@ -379,7 +347,7 @@ const cardStyles = computed(() => ({
 
 /* === RESPONSIVE === */
 @media (max-width: 960px) {
-  .project-image-container {
+  .project-visual-container {
     height: 180px;
   }
 
@@ -398,7 +366,7 @@ const cardStyles = computed(() => ({
 }
 
 @media (max-width: 600px) {
-  .project-image-container {
+  .project-visual-container {
     height: 160px;
   }
 

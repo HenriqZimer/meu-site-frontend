@@ -1,5 +1,5 @@
 <template>
-  <article :class="itemClasses" :style="itemStyles" role="listitem">
+  <div :class="itemClasses" :style="itemStyles" class="certification-list-item">
     <div class="certification-item-inner">
       <!-- Avatar/Icon -->
       <div class="certification-avatar">
@@ -57,7 +57,7 @@
       <!-- Decorative Element -->
       <div class="certification-decoration" />
     </div>
-  </article>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -99,27 +99,8 @@ const itemClasses = computed(() => [
 
 const itemStyles = computed(() => ({
   '--animation-delay': `${props.animationDelay}ms`,
-  '--item-color': `var(--v-theme-${props.type === 'obtained' ? 'primary' : 'primary'})`,
+  '--item-color': 'var(--v-theme-primary)',
 }))
-
-// const titleClasses = computed(() => [
-//   "font-weight-bold",
-//   "mb-2",
-//   getResponsiveValue({
-//     mobile: "text-body-1",
-//     tablet: "text-h6",
-//     desktop: "text-h6",
-//   }),
-// ]);
-
-// const subtitleClasses = computed(() => [
-//   "font-weight-medium",
-//   getResponsiveValue({
-//     mobile: "text-body-2",
-//     tablet: "text-body-1",
-//     desktop: "text-body-1",
-//   }),
-// ]);
 
 const avatarSize = computed(() =>
   getResponsiveValue({

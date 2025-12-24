@@ -78,7 +78,7 @@
                   <ProjectCard
                     :title="project.title"
                     :description="project.description"
-                    :image="project.image"
+                    :src="project.image"
                     :technologies="project.technologies"
                     :demo-url="project.demoUrl"
                     :github-url="project.githubUrl"
@@ -138,6 +138,7 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import ProjectCard from './components/ProjectCard.vue'
 import { PROJECT_FILTERS } from '~/constants'
 
 // Scroll Animation
@@ -194,7 +195,16 @@ const animateProjectCards = () => {
 
 // Carregar projetos da API e inicializar animações
 onMounted(async () => {
-  await projectsStore.fetchProjects()
+  // Garantir que está rodando no cliente
+  if (import.meta.client) {
+    try {
+      console.log('[Portfolio Component] Iniciando fetch...')
+      await projectsStore.fetchProjects()
+      console.log('[Portfolio Component] Fetch concluído. Total:', projectsStore.allProjects.length)
+    } catch (error) {
+      console.error('[Portfolio Component] Erro ao buscar projetos:', error)
+    }
+  }
 
   // Atualizar itemsPerPage baseado na largura da tela
   updateItemsPerPage()
@@ -215,88 +225,44 @@ onMounted(async () => {
 
   // Adicionar efeito parallax 3D nos project cards
   nextTick(() => {
-    setTimeout(() => {
-      const projectCards = document.querySelectorAll('.project-card-modern')
-
-      projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e: Event) => {
-          const mouseEvent = e as MouseEvent
-          const element = card as HTMLElement
-          const rect = element.getBoundingClientRect()
-          const x = mouseEvent.clientX - rect.left
-          const y = mouseEvent.clientY - rect.top
-
-          const centerX = rect.width / 2
-          const centerY = rect.height / 2
-
-          const rotateXVal = ((y - centerY) / centerY) * -6
-          const rotateYVal = ((x - centerX) / centerX) * 6
-
-          element.style.transform =
-            'perspective(1000px) rotateX(' +
-            rotateXVal +
-            'deg) rotateY(' +
-            rotateYVal +
-            'deg) translateY(-8px) scale(1.02)'
-        })
-
-        card.addEventListener('mouseleave', () => {
-          ;(card as HTMLElement).style.transform = ''
-        })
-      })
-    }, 300)
+    setTimeout(addParallaxEffect, 300)
   })
 })
 
+// Função para adicionar efeito parallax nos cards
+const addParallaxEffect = () => {
+  const projectCards = document.querySelectorAll('.project-card-modern')
+  projectCards.forEach(card => {
+    card.addEventListener('mousemove', handleCardMouseMove)
+    card.addEventListener('mouseleave', handleCardMouseLeave)
+  })
+}
+
+// Handler para mousemove nos cards
+const handleCardMouseMove = (e: Event) => {
+  const mouseEvent = e as MouseEvent
+  const element = mouseEvent.currentTarget as HTMLElement
+  const rect = element.getBoundingClientRect()
+  const x = mouseEvent.clientX - rect.left
+  const y = mouseEvent.clientY - rect.top
+
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+
+  const rotateXVal = ((y - centerY) / centerY) * -6
+  const rotateYVal = ((x - centerX) / centerX) * 6
+
+  element.style.transform = `perspective(1000px) rotateX(${rotateXVal}deg) rotateY(${rotateYVal}deg) translateY(-8px) scale(1.02)`
+}
+
+// Handler para mouseleave nos cards
+const handleCardMouseLeave = (e: Event) => {
+  const element = e.currentTarget as HTMLElement
+  element.style.transform = ''
+}
+
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
-// const loading = computed(() => projectsStore.loading)
-
-// Other Technologies Data
-// const otherTechnologies = [
-//   {
-//     name: 'Docker',
-//     description: 'Containerização e deployment',
-//     icon: 'mdi-docker',
-//     color: '#0db7ed',
-//     level: 85,
-//   },
-//   {
-//     name: 'PostgreSQL',
-//     description: 'Banco de dados relacional',
-//     icon: 'mdi-database',
-//     color: '#336791',
-//     level: 80,
-//   },
-//   {
-//     name: 'MongoDB',
-//     description: 'Banco de dados NoSQL',
-//     icon: 'mdi-leaf',
-//     color: '#47A248',
-//     level: 75,
-//   },
-//   {
-//     name: 'Git',
-//     description: 'Controle de versão',
-//     icon: 'mdi-git',
-//     color: '#F05032',
-//     level: 90,
-//   },
-//   {
-//     name: 'AWS',
-//     description: 'Serviços de nuvem',
-//     icon: 'mdi-aws',
-//     color: '#FF9900',
-//     level: 70,
-//   },
-//   {
-//     name: 'Figma',
-//     description: 'Design e prototipação',
-//     icon: 'mdi-figma',
-//     color: '#F24E1E',
-//     level: 85,
-//   },
-// ]
 
 // Computed filters with counts - using constants base
 const filters = computed<Filter[]>(() =>
@@ -415,13 +381,6 @@ const setFilter = (value: string) => {
   _filterVersion.value++ // Força recálculo das computeds
 }
 
-// const scrollToContact = () => {
-//   const element = document.getElementById('contact')
-//   if (element) {
-//     element.scrollIntoView({ behavior: 'smooth' })
-//   }
-// }
-
 // Cleanup - remover listeners quando o componente for desmontado
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
@@ -514,7 +473,6 @@ onUnmounted(() => {
   grid-template-rows: 1fr;
   gap: 24px;
   max-width: 100%;
-  justify-items: center;
   place-items: center;
 }
 

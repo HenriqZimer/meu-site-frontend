@@ -25,7 +25,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         const data = await $fetch<Certification[]>(
           `${config.public.apiUrl}/certifications/admin/all`
         )
-        this.certifications = data.sort((a, b) => {
+        this.certifications = data.toSorted((a, b) => {
           const yearDiff = Number(b.year ?? 0) - Number(a.year ?? 0)
           if (yearDiff !== 0) return yearDiff
           return Number(b.month ?? 0) - Number(a.month ?? 0)

@@ -1,5 +1,5 @@
 <template>
-  <div class="modern-course-item" :class="itemClasses" :style="itemStyles" role="listitem">
+  <div class="modern-course-item course-list-item" :class="itemClasses" :style="itemStyles">
     <a
       :href="course.link"
       target="_blank"

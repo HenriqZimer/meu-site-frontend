@@ -28,7 +28,7 @@ export const useAdminCoursesStore = defineStore('admin-courses', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Course[]>(`${config.public.apiUrl}/courses/admin/all`)
-        this.courses = data.sort((a, b) => {
+        this.courses = data.toSorted((a, b) => {
           if (!a.date) return 1
           if (!b.date) return -1
           return new Date(b.date).getTime() - new Date(a.date).getTime()

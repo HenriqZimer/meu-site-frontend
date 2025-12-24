@@ -26,7 +26,7 @@ export const useAdminProjectsStore = defineStore('admin-projects', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Project[]>(`${config.public.apiUrl}/projects/admin/all`)
-        this.projects = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        this.projects = data.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
         return data
       } catch (error: any) {
         this.error = error?.message ?? 'Erro ao carregar projetos'

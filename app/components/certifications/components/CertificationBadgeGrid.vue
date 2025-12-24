@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import CertificationBadge from './CertificationBadge.vue'
 interface Badge {
   id?: string
   name: string

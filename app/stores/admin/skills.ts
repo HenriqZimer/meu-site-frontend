@@ -26,7 +26,7 @@ export const useAdminSkillsStore = defineStore('admin-skills', {
       try {
         const config = useRuntimeConfig()
         const data = await $fetch<Skill[]>(`${config.public.apiUrl}/skills/admin/all`)
-        this.skills = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        this.skills = data.toSorted((a, b) => (a.order ?? 0) - (b.order ?? 0))
         return data
       } catch (error: any) {
         this.error = error?.message ?? 'Erro ao carregar skills'

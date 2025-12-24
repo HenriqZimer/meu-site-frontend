@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import CourseItem from '~/components/base/CourseItem.vue'
+import CourseItem from '~/components/courses/components/CourseItem.vue'
 
 // Types
 interface Course {

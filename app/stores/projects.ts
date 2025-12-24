@@ -59,7 +59,7 @@ export const useProjectsStore = defineStore('projects', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/projects`
-        // console.log('[Projects Store] Fetching from:', fullUrl)
+        console.log('[Projects Store] Fetching from:', fullUrl)
 
         const data = await $fetch<Project[]>(fullUrl, {
           method: 'GET',
@@ -68,13 +68,19 @@ export const useProjectsStore = defineStore('projects', {
           },
         })
 
-        // console.log('[Projects Store] Dados recebidos:', data.length, 'items')
+        console.log('[Projects Store] Dados recebidos:', data.length, 'items')
         this.projects = data
         this.lastFetch = Date.now()
         return data
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Erro ao carregar projetos'
-        console.error('Erro ao carregar projetos:', error)
+      } catch (error: any) {
+        const errorMsg = error?.data?.message || error?.message || 'Erro ao carregar projetos'
+        this.error = errorMsg
+        console.error('[Projects Store] Erro ao carregar projetos:', {
+          error,
+          message: errorMsg,
+          status: error?.status,
+          statusText: error?.statusText,
+        })
         throw error
       } finally {
         this.loading = false
