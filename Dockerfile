@@ -24,7 +24,7 @@ ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 RUN npm run build:prod
 
 # --- Stage 2: Production ---
-FROM nginx:mainline-alpine3.23-perl AS production
+FROM cgr.dev/chainguard/nginx:latest AS production
 
 # Copia os arquivos estáticos do estágio builder
 COPY --from=builder /usr/src/app/.output/public /usr/share/nginx/html
