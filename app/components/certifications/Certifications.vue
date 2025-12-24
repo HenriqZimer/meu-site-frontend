@@ -23,17 +23,11 @@ import CertificationBadgeGrid from './components/CertificationBadgeGrid.vue'
 const certificationsStore = useCertificationsStore()
 
 onMounted(async () => {
-  // Garantir que está rodando no cliente
   if (import.meta.client) {
     try {
-      console.log('[Certifications Component] Iniciando fetch...')
       await certificationsStore.fetchCertifications()
-      console.log(
-        '[Certifications Component] Fetch concluído. Total:',
-        certificationsStore.allCertifications.length
-      )
     } catch (error) {
-      console.error('[Certifications Component] Erro ao buscar certificações:', error)
+      console.error('Erro ao buscar certificações:', error)
     }
   }
 })

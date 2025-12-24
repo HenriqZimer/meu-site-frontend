@@ -195,14 +195,11 @@ const animateProjectCards = () => {
 
 // Carregar projetos da API e inicializar animações
 onMounted(async () => {
-  // Garantir que está rodando no cliente
-  if (import.meta.client) {
+  if (process.client) {
     try {
-      console.log('[Portfolio Component] Iniciando fetch...')
       await projectsStore.fetchProjects()
-      console.log('[Portfolio Component] Fetch concluído. Total:', projectsStore.allProjects.length)
     } catch (error) {
-      console.error('[Portfolio Component] Erro ao buscar projetos:', error)
+      console.error('Erro ao buscar projetos:', error)
     }
   }
 

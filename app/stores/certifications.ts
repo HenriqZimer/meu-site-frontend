@@ -60,7 +60,6 @@ export const useCertificationsStore = defineStore('certifications', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/certifications`
-        console.log('[Certifications Store] Fetching from:', fullUrl)
 
         const data = await $fetch<Certification[]>(fullUrl, {
           method: 'GET',
@@ -69,19 +68,15 @@ export const useCertificationsStore = defineStore('certifications', {
           },
         })
 
-        console.log('[Certifications Store] Dados recebidos:', data.length, 'items')
         this.certifications = data
         this.lastFetch = Date.now()
         return data
       } catch (error: any) {
         const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao carregar certificações'
         this.error = errorMsg
-        console.error('[Certifications Store] Erro ao carregar certificações:', {
-          error,
-          message: errorMsg,
-          status: error?.status,
-          statusText: error?.statusText,
-        })
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar certificações:', errorMsg)
+        }
         throw error
       } finally {
         this.loading = false
