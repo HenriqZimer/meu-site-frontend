@@ -114,7 +114,7 @@ const validators = {
     return ''
   },
   email: (value: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!value.trim()) return 'O email é obrigatório'
     if (!emailRegex.test(value)) return 'Email inválido'
     return ''
@@ -145,9 +145,10 @@ const validateAllFields = () => {
 }
 
 const updateValidStatus = () => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   valid.value =
     formData.value.name.trim().length >= 3 &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email) &&
+    emailRegex.test(formData.value.email) &&
     formData.value.subject.trim().length >= 3 &&
     formData.value.message.trim().length >= 10 &&
     !Object.values(errors.value).some(error => error !== '')

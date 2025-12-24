@@ -195,7 +195,8 @@ const editedIndex = ref(-1)
 // Validation rules
 const rules = {
   required: (v: any) => !!v || 'Campo obrigatório',
-  email: (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'E-mail inválido',
+  email: (v: string) =>
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v) || 'E-mail inválido',
   url: (v: string) =>
     !v || /^https?:\/\/.+/.test(v) || 'URL inválida (deve começar com http:// ou https://)',
 }
