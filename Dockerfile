@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM node:lts-trixie-slim AS builder
+FROM cgr.dev/chainguard/node:latest AS builder
 
 # Cria o usuário 'node'
 USER node

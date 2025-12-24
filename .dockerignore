@@ -89,3 +89,6 @@ Thumbs.db
 
 # NPM
 .npmrc
+
+**/*.spec.ts
+**/*.test.ts
