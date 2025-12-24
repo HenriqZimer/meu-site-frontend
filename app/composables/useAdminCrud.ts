@@ -5,89 +5,101 @@ import { computed } from 'vue'
  * Fornece métodos padronizados para qualquer store admin
  */
 export function useAdminCrud<T extends Record<string, any>>(store: any) {
+  // Helper para buscar valores de diferentes propriedades
+  const getStoreValue = (keys: string[], fallback: any = []) => {
+    for (const key of keys) {
+      if (store[key] !== undefined && store[key] !== null) {
+        return store[key]
+      }
+    }
+    return fallback
+  }
+
+  const getStoreMethod = (
+    keys: string[],
+    fallback: () => Promise<any> = () => Promise.resolve()
+  ) => {
+    for (const key of keys) {
+      if (typeof store[key] === 'function') {
+        return store[key]
+      }
+    }
+    return fallback
+  }
+
+  const itemKeys = [
+    'allItems',
+    'items',
+    'allProjects',
+    'allSkills',
+    'allCertifications',
+    'allCourses',
+    'allContacts',
+    'projects',
+    'skills',
+    'certifications',
+    'courses',
+    'contacts',
+  ]
+
   return {
     // Data
-    items: computed(
-      () =>
-        store.allItems ??
-        store.items ??
-        store.allProjects ??
-        store.allSkills ??
-        store.allCertifications ??
-        store.allCourses ??
-        store.allContacts ??
-        store.projects ??
-        store.skills ??
-        store.certifications ??
-        store.courses ??
-        store.contacts ??
-        []
-    ),
+    items: computed(() => getStoreValue(itemKeys, [])),
     loading: computed(() => store.loading),
 
     // Stats (se disponíveis)
     stats: computed(() => {
-      const itemsArray =
-        store.allItems ??
-        store.items ??
-        store.allProjects ??
-        store.allSkills ??
-        store.allCertifications ??
-        store.allCourses ??
-        store.allContacts ??
-        store.projects ??
-        store.skills ??
-        store.certifications ??
-        store.courses ??
-        store.contacts ??
-        []
+      const itemsArray = getStoreValue(itemKeys, [])
 
       return {
         total: itemsArray?.length ?? 0,
         activeCount: store.activeCount ?? 0,
         inactiveCount: store.inactiveCount ?? 0,
         categoriesCount: store.categoriesCount ?? 0,
-        // Outros stats específicos podem ser acessados diretamente
       }
     }),
 
     // CRUD methods
     onFetch: () =>
-      store.fetchItems?.() ??
-      store.fetchProjects?.() ??
-      store.fetchSkills?.() ??
-      store.fetchCertifications?.() ??
-      store.fetchCourses?.() ??
-      store.fetchContacts?.() ??
-      Promise.resolve(),
+      getStoreMethod([
+        'fetchItems',
+        'fetchProjects',
+        'fetchSkills',
+        'fetchCertifications',
+        'fetchCourses',
+        'fetchContacts',
+      ])(),
 
     onCreate: (item: Partial<T>) =>
-      store.createItem?.(item) ??
-      store.createProject?.(item) ??
-      store.createSkill?.(item) ??
-      store.createCertification?.(item) ??
-      store.createCourse?.(item) ??
-      store.createContact?.(item) ??
-      Promise.resolve(),
+      getStoreMethod([
+        'createItem',
+        'createProject',
+        'createSkill',
+        'createCertification',
+        'createCourse',
+        'createContact',
+      ])(item),
 
     onUpdate: (id: string, item: Partial<T>) =>
-      store.updateItem?.(id, item) ??
-      store.updateProject?.(id, item) ??
-      store.updateSkill?.(id, item) ??
-      store.updateCertification?.(id, item) ??
-      store.updateCourse?.(id, item) ??
-      store.updateContact?.(id, item) ??
-      Promise.resolve(),
+      getStoreMethod([
+        'updateItem',
+        'updateProject',
+        'updateSkill',
+        'updateCertification',
+        'updateCourse',
+        'updateContact',
+      ])(id, item),
 
     onDelete: (id: string) =>
-      store.deleteItem?.(id) ??
-      store.deleteProject?.(id) ??
-      store.deleteSkill?.(id) ??
-      store.deleteCertification?.(id) ??
-      store.deleteCourse?.(id) ??
-      store.deleteContact?.(id) ??
-      Promise.resolve(),
+      getStoreMethod([
+        'deleteItem',
+        'deleteProject',
+        'deleteSkill',
+        'deleteCertification',
+        'deleteCourse',
+        'deleteContact',
+      ])(id),
 
-    onToggleActive: (item: T) => store.toggleActive?.(item) ?? Promise.resolve(),
+    onToggleActive: (item: T) => getStoreMethod(['toggleActive'])(item),
   }
 }
