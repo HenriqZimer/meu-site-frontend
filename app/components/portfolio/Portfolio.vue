@@ -195,7 +195,7 @@ const animateProjectCards = () => {
 
 // Carregar projetos da API e inicializar animações
 onMounted(async () => {
-  if (process.client) {
+  if (import.meta.client) {
     try {
       await projectsStore.fetchProjects()
     } catch (error) {
