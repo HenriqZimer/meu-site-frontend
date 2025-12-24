@@ -3,7 +3,17 @@
  * Integrado com o novo sistema de animações
  */
 
-import type { AnimationType } from './useAnimations'
+export type AnimationType =
+  | 'fadeUp'
+  | 'fadeDown'
+  | 'fadeLeft'
+  | 'fadeRight'
+  | 'slideLeft'
+  | 'slideRight'
+  | 'slideUp'
+  | 'slideDown'
+  | 'zoomIn'
+  | 'zoomOut'
 
 export interface ScrollAnimationOptions {
   threshold?: number
@@ -40,7 +50,7 @@ export const useScrollAnimation = () => {
                 element.classList.add('animate-visible')
 
                 // Adicionar classe de animação específica se especificada
-                const animationType = element.dataset.animation || options.animationType
+                const animationType = element.dataset.animation ?? options.animationType
                 if (animationType) {
                   element.classList.add(`animate-${animationType}`)
                 }

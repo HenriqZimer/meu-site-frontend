@@ -92,18 +92,18 @@ describe('useScrollAnimation', () => {
 
       // Primeiro elemento deve ser animado imediatamente
       await vi.advanceTimersByTimeAsync(0)
-      expect(mockElements[0].classList.contains('animate-visible')).toBe(true)
-      expect(mockElements[1].classList.contains('animate-visible')).toBe(false)
-      expect(mockElements[2].classList.contains('animate-visible')).toBe(false)
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(false)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(false)
 
       // Segundo elemento após 100ms
       await vi.advanceTimersByTimeAsync(100)
-      expect(mockElements[1].classList.contains('animate-visible')).toBe(true)
-      expect(mockElements[2].classList.contains('animate-visible')).toBe(false)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(false)
 
       // Terceiro elemento após mais 100ms
       await vi.advanceTimersByTimeAsync(100)
-      expect(mockElements[2].classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(true)
     })
 
     it('should work with NodeList', async () => {
@@ -119,8 +119,8 @@ describe('useScrollAnimation', () => {
 
       await vi.runAllTimersAsync()
 
-      expect(mockElements[0].classList.contains('animate-visible')).toBe(true)
-      expect(mockElements[1].classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
     })
 
     it('should apply custom animation type to all elements', async () => {
@@ -131,8 +131,8 @@ describe('useScrollAnimation', () => {
 
       await vi.runAllTimersAsync()
 
-      expect(mockElements[0].classList.contains('animate-slideLeft')).toBe(true)
-      expect(mockElements[1].classList.contains('animate-slideLeft')).toBe(true)
+      expect(mockElements[0]!.classList.contains('animate-slideLeft')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-slideLeft')).toBe(true)
     })
 
     it('should use default stagger delay of 100ms', async () => {
@@ -142,11 +142,11 @@ describe('useScrollAnimation', () => {
       animateSequence(mockElements, 'fadeUp')
 
       await vi.advanceTimersByTimeAsync(0)
-      expect(mockElements[0].classList.contains('animate-visible')).toBe(true)
-      expect(mockElements[1].classList.contains('animate-visible')).toBe(false)
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(false)
 
       await vi.advanceTimersByTimeAsync(100)
-      expect(mockElements[1].classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
     })
 
     it('should handle empty arrays', async () => {

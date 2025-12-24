@@ -32,7 +32,7 @@ export const useAdminCertificationsStore = defineStore('admin-certifications', {
         })
         return data
       } catch (error: any) {
-        this.error = error?.message || 'Erro ao carregar certificações'
+        this.error = error?.message ?? 'Erro ao carregar certificações'
         console.error('Erro ao carregar certificações:', error)
         throw error
       } finally {
