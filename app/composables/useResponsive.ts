@@ -136,7 +136,7 @@ export const useResponsive = () => {
   // Classes CSS responsivas
   const getResponsiveClasses = (classMap: ResponsiveValue<string | string[]>) => {
     const classes = getResponsiveValue(classMap)
-    return Array.isArray(classes) ? classes.join(' ') : classes || ''
+    return Array.isArray(classes) ? classes.join(' ') : classes ?? ''
   }
 
   // Media query helper
@@ -148,7 +148,7 @@ export const useResponsive = () => {
   // CSS custom properties
   const getCSSCustomProperty = (property: string, fallback?: string) => {
     if (typeof document === 'undefined') return fallback
-    return getComputedStyle(document.documentElement).getPropertyValue(property).trim() || fallback
+    return getComputedStyle(document.documentElement).getPropertyValue(property).trim() ?? fallback
   }
 
   // Layout helpers
