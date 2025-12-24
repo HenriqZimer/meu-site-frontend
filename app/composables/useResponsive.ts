@@ -69,8 +69,8 @@ export const useResponsive = () => {
 
   // Aliases semânticos
   const isMobile = computed(() => isXs.value)
-  const isTablet = computed(() => isSm.value ?? isMd.value)
-  const isDesktop = computed(() => isLg.value ?? isXl.value)
+  const isTablet = computed(() => isSm.value || isMd.value)
+  const isDesktop = computed(() => isLg.value || isXl.value)
 
   // Mobile-first breakpoint checks
   const smAndUp = computed(() => screenSize.value.width >= BREAKPOINTS.sm)
