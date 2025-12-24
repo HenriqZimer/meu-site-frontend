@@ -69,8 +69,8 @@ export const useResponsive = () => {
 
   // Aliases semânticos
   const isMobile = computed(() => isXs.value)
-  const isTablet = computed(() => isSm.value || isMd.value)
-  const isDesktop = computed(() => isLg.value || isXl.value)
+  const isTablet = computed(() => [isSm.value, isMd.value].some(Boolean))
+  const isDesktop = computed(() => [isLg.value, isXl.value].some(Boolean))
 
   // Mobile-first breakpoint checks
   const smAndUp = computed(() => screenSize.value.width >= BREAKPOINTS.sm)
@@ -136,7 +136,7 @@ export const useResponsive = () => {
   // Classes CSS responsivas
   const getResponsiveClasses = (classMap: ResponsiveValue<string | string[]>) => {
     const classes = getResponsiveValue(classMap)
-    return Array.isArray(classes) ? classes.join(' ') : classes ?? ''
+    return Array.isArray(classes) ? classes.join(' ') : (classes ?? '')
   }
 
   // Media query helper
