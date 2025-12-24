@@ -36,21 +36,23 @@ onMounted(() => {
   certificationsStore.fetchStats()
   observeElements({ threshold: 0.15, once: true })
 
+  const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const element = entry.target as HTMLElement
+        const delay = element.getAttribute('data-delay')
+        setTimeout(() => element.classList.add('is-visible'), delay ? parseInt(delay) : 0)
+        observer.unobserve(element)
+      }
+    })
+  }
+
   const animateOnScroll = () => {
     const elements = document.querySelectorAll('[data-animate]')
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const element = entry.target as HTMLElement
-            const delay = element.getAttribute('data-delay')
-            setTimeout(() => element.classList.add('is-visible'), delay ? parseInt(delay) : 0)
-            observer.unobserve(element)
-          }
-        })
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
-    )
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px',
+    })
     elements.forEach(el => observer.observe(el))
   }
 

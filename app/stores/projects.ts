@@ -73,7 +73,7 @@ export const useProjectsStore = defineStore('projects', {
         this.lastFetch = Date.now()
         return data
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao carregar projetos'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao carregar projetos'
         this.error = errorMsg
         console.error('[Projects Store] Erro ao carregar projetos:', {
           error,

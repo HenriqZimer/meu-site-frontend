@@ -74,7 +74,7 @@ export const useCertificationsStore = defineStore('certifications', {
         this.lastFetch = Date.now()
         return data
       } catch (error: any) {
-        const errorMsg = error?.data?.message || error?.message || 'Erro ao carregar certificações'
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao carregar certificações'
         this.error = errorMsg
         console.error('[Certifications Store] Erro ao carregar certificações:', {
           error,
