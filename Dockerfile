@@ -1,35 +1,34 @@
 # --- Estágio 1: Builder ---
 FROM cgr.dev/chainguard/node:latest AS builder
 
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia arquivos de dependência primeiro para aproveitar o cache de camadas
-COPY package*.json ./
+# 1. Copia package.json com a posse correta para o usuário 'node'
+COPY --chown=node:node package*.json ./
 
-# Instala todas as dependências (necessário para o build)
+# Instala as dependências
 RUN npm ci
 
-# Copia o restante do código
-COPY . .
+# 2. Copia o código fonte também garantindo a posse para o usuário 'node'
+COPY --chown=node:node . .
 
-# Executa o build (ajuste para o comando correto do seu projeto, ex: npm run build)
+# Agora o usuário 'node' tem permissão de escrita na pasta /app para criar a .output
 RUN npm run build
 
 # --- Estágio 2: Production ---
-FROM cgr.dev/chainguard/node:latest
+FROM cgr.dev/chainguard/node:latest AS production
 
 WORKDIR /app
 
-# Copia apenas o que é necessário para rodar o servidor (saída do Nitro/Nuxt)
-COPY --from=builder /app/.output ./.output
+# Copia apenas os artefatos gerados, mantendo a posse correta
+COPY --from=builder --chown=node:node /app/.output ./.output
 
-# Variáveis de ambiente para produção
+# Variáveis de ambiente
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
-# Expõe a porta que o Node irá rodar
 EXPOSE 3000
 
-# Comando para iniciar o servidor Nitro
 CMD ["./.output/server/index.mjs"]
