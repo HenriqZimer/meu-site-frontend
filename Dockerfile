@@ -1,39 +1,35 @@
-# --- Stage 1: Builder ---
+# --- Estágio 1: Builder ---
 FROM cgr.dev/chainguard/node:latest AS builder
 
-# Cria o usuário 'node'
-USER node
+WORKDIR /app
 
-# Define o diretório de trabalho
-WORKDIR /usr/src/app
+# Copia arquivos de dependência primeiro para aproveitar o cache de camadas
+COPY package*.json ./
 
-# Copia os arquivos de dependências
-COPY --chown=node:node package*.json ./
+# Instala todas as dependências (necessário para o build)
+RUN npm ci
 
-# Instala as dependências
-RUN npm ci --production
+# Copia o restante do código
+COPY . .
 
-# Copia o restante do código da aplicação
-COPY --chown=node:node . .
+# Executa o build (ajuste para o comando correto do seu projeto, ex: npm run build)
+RUN npm run build
 
-# Define a URL da API para o build
-ARG FRONTEND_API_URL=/api
-ENV FRONTEND_API_URL=${FRONTEND_API_URL}
+# --- Estágio 2: Production ---
+FROM cgr.dev/chainguard/node:latest
 
-# Executa o comando de build que cria o bundle de produção
-RUN npm run build:prod
+WORKDIR /app
 
-# --- Stage 2: Production ---
-FROM nginx:stable-alpine3.23-perl AS production
+# Copia apenas o que é necessário para rodar o servidor (saída do Nitro/Nuxt)
+COPY --from=builder /app/.output ./.output
 
-# Copia os arquivos estáticos do estágio builder
-COPY --from=builder /usr/src/app/.output/public /usr/share/nginx/html
+# Variáveis de ambiente para produção
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3000
 
-# Copia a configuração customizada do nginx
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Expõe a porta que o Node irá rodar
+EXPOSE 3000
 
-# Expõe a porta
-EXPOSE 80
-
-# Inicia o nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Comando para iniciar o servidor Nitro
+CMD ["./.output/server/index.mjs"]

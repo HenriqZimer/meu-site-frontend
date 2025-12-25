@@ -41,7 +41,6 @@ export const useSkillsStore = defineStore('skills', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/skills`
-        // console.log('[Skills Store] Fetching from:', fullUrl)
 
         const data = await $fetch<Technology[]>(fullUrl, {
           method: 'GET',
@@ -50,7 +49,6 @@ export const useSkillsStore = defineStore('skills', {
           },
         })
 
-        // console.log('[Skills Store] Dados recebidos:', data.length, 'items')
         this.skills = data
         this.lastFetch = Date.now()
         return data
