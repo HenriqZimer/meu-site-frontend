@@ -8,17 +8,21 @@ WORKDIR /app
 COPY --chown=node:node package*.json ./
 
 # Instala as dependências
-RUN npm ci
+RUN npm ci --production
 
 # 2. Copia o código fonte também garantindo a posse para o usuário 'node'
 COPY --chown=node:node . .
 
 # Agora o usuário 'node' tem permissão de escrita na pasta /app para criar a .output
-RUN npm run build
+RUN npm run build:prod
+
+# Limpa o cache do npm para reduzir o tamanho da imagem
+RUN npm prune --production
 
 # --- Estágio 2: Production ---
 FROM cgr.dev/chainguard/node:latest AS production
 
+# Define o diretório de trabalho
 WORKDIR /app
 
 # Copia apenas os artefatos gerados, mantendo a posse correta
