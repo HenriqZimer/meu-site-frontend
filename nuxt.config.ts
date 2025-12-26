@@ -84,7 +84,12 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'index, follow' },
         { name: 'theme-color', content: '#3b82f6' },
       ],
-      link: [{ rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }],
+      link: [
+        // Adicione esta linha para navegadores padrão
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // Esta linha é para dispositivos Apple/Mobile
+        { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }
+      ],
     },
   },
 })
