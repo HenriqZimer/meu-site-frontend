@@ -88,7 +88,7 @@ export default defineNuxtConfig({
         // Adicione esta linha para navegadores padrão
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         // Esta linha é para dispositivos Apple/Mobile
-        { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }
+        { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' },
       ],
     },
   },
