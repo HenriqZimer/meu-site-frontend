@@ -397,3 +397,957 @@
     padding: 6px 12px;
   }
 }
+
+/* ===================================
+   COMMON CARD STYLES (DRY)
+   Estilos de cards compartilhados entre componentes
+   =================================== */
+
+.card-base {
+  position: relative;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 24px;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.card-base:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow:
+    0 24px 48px rgba(59, 130, 246, 0.35),
+    0 0 0 1px rgba(59, 130, 246, 0.3);
+  background: rgba(30, 41, 59, 0.8);
+}
+
+/* Card with top border animation */
+.card-border-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.6);
+}
+
+.card-border-top:hover::before {
+  opacity: 1;
+  animation: shimmerFlow 2s ease-in-out infinite;
+}
+
+/* Icon wrapper comum */
+.icon-wrapper-base {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.8);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.icon-wrapper-base:hover {
+  transform: scale(1.2) rotate(15deg);
+  background: rgba(59, 130, 246, 0.2);
+  box-shadow:
+    0 8px 24px rgba(59, 130, 246, 0.4),
+    inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+/* Text label styles */
+.text-label-base {
+  color: rgb(148, 163, 184);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Contact card styles */
+.contact-card-base {
+  position: relative;
+  background: rgba(var(--v-theme-surface-variant), 0.3);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+}
+
+.contact-card-base:hover {
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border-color: rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Social button styles */
+.social-btn-base {
+  background: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: rgb(96, 165, 250) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn-base:hover {
+  transform: translateY(-4px) scale(1.1);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  color: white !important;
+}
+
+/* Stat card responsive */
+@media (max-width: 600px) {
+  .icon-wrapper-base {
+    width: 60px;
+    height: 60px;
+  }
+
+  .contact-card-base {
+    padding: 16px;
+  }
+}
+
+/* ===================================
+   COMMON FLEX UTILITIES (DRY - evitar repetição)
+   Complementa as classes do Vuetify
+   =================================== */
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ===================================
+   COMMON TRANSITIONS
+   =================================== */
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-fast {
+  transition: all 0.2s ease;
+}
+
+.transition-slow {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================
+   COMMON TEXT COLORS (DRY)
+   =================================== */
+
+.text-primary-light {
+  color: rgb(241, 245, 249);
+}
+
+.text-secondary-light {
+  color: rgb(203, 213, 225);
+}
+
+.text-tertiary-light {
+  color: rgb(148, 163, 184);
+}
+
+.text-muted {
+  color: rgb(148, 163, 184);
+  opacity: 0.8;
+}
+
+/* ===================================
+   TECH CARD COLORS - Technology-specific colors
+   Cores oficiais das tecnologias para os cards
+   =================================== */
+
+.tech-card:has([data-icon='docker'])::before {
+  background: rgb(41, 148, 229) !important;
+}
+
+.tech-card:has([data-icon='kubernetes'])::before {
+  background: rgb(51, 113, 227) !important;
+}
+
+.tech-card:has([data-icon='terraform'])::before {
+  background: rgb(124, 77, 255) !important;
+}
+
+.tech-card:has([data-icon='ansible'])::before {
+  background: rgb(238, 0, 0) !important;
+}
+
+.tech-card:has([data-icon='jenkins'])::before {
+  background: rgb(213, 66, 49) !important;
+}
+
+.tech-card:has([data-icon='github-actions'])::before,
+.tech-card:has([data-icon='argo-cd'])::before {
+  background: rgb(42, 129, 246) !important;
+}
+
+.tech-card:has([data-icon='argocd'])::before {
+  background: rgb(239, 111, 54) !important;
+}
+
+.tech-card:has([data-icon='gitlab-ci'])::before {
+  background: rgb(252, 109, 38) !important;
+}
+
+.tech-card:has([data-icon='prometheus'])::before {
+  background: rgb(230, 86, 37) !important;
+}
+
+.tech-card:has([data-icon='grafana'])::before {
+  background: rgb(242, 125, 53) !important;
+}
+
+.tech-card:has([data-icon='elk-stack'])::before {
+  background: rgb(0, 169, 152) !important;
+}
+
+.tech-card:has([data-icon='jaeger'])::before {
+  background: rgb(96, 214, 229) !important;
+}
+
+.tech-card:has([data-icon='aws'])::before {
+  background: rgb(255, 153, 0) !important;
+}
+
+.tech-card:has([data-icon='azure'])::before {
+  background: rgb(0, 120, 212) !important;
+}
+
+.tech-card:has([data-icon='gcp'])::before {
+  background: rgb(234, 67, 53) !important;
+}
+
+.tech-card:has([data-icon='digitalocean'])::before {
+  background: rgb(0, 127, 255) !important;
+}
+
+.tech-card:has([data-icon='python'])::before {
+  background: rgb(55, 118, 171) !important;
+}
+
+.tech-card:has([data-icon='go'])::before {
+  background: rgb(0, 173, 216) !important;
+}
+
+.tech-card:has([data-icon='javascript'])::before {
+  background: rgb(247, 223, 30) !important;
+}
+
+.tech-card:has([data-icon='typescript'])::before {
+  background: rgb(49, 120, 198) !important;
+}
+
+.tech-card:has([data-icon='bash'])::before {
+  background: rgb(76, 175, 80) !important;
+}
+
+.tech-card:has([data-icon='powershell'])::before {
+  background: rgb(1, 114, 182) !important;
+}
+
+.tech-card:has([data-icon='vue'])::before {
+  background: rgb(65, 184, 131) !important;
+}
+
+.tech-card:has([data-icon='react'])::before {
+  background: rgb(97, 218, 251) !important;
+}
+
+.tech-card:has([data-icon='nuxt'])::before {
+  background: rgb(0, 220, 130) !important;
+}
+
+.tech-card:has([data-icon='nodejs'])::before {
+  background: rgb(104, 160, 99) !important;
+}
+
+.tech-card:has([data-icon='postgresql'])::before {
+  background: rgb(51, 103, 145) !important;
+}
+
+.tech-card:has([data-icon='mysql'])::before {
+  background: rgb(0, 117, 143) !important;
+}
+
+.tech-card:has([data-icon='mongodb'])::before {
+  background: rgb(71, 162, 72) !important;
+}
+
+.tech-card:has([data-icon='redis'])::before {
+  background: rgb(220, 61, 50) !important;
+}
+
+.tech-card:has([data-icon='rabbitmq'])::before {
+  background: rgb(255, 102, 0) !important;
+}
+
+.tech-card:has([data-icon='kafka'])::before {
+  background: rgb(200, 200, 200) !important;
+}
+
+.tech-card:has([data-icon='nginx'])::before {
+  background: rgb(0, 150, 57) !important;
+}
+
+.tech-card:has([data-icon='traefik'])::before {
+  background: rgb(36, 182, 239) !important;
+}
+
+.tech-card:has([data-icon='istio'])::before {
+  background: rgb(70, 132, 217) !important;
+}
+
+.tech-card:has([data-icon='envoy'])::before {
+  background: rgb(172, 71, 189) !important;
+}
+
+.tech-card:has([data-icon='helm'])::before {
+  background: rgb(12, 192, 224) !important;
+}
+
+.tech-card:has([data-icon='flux'])::before {
+  background: rgb(52, 140, 212) !important;
+}
+
+.tech-card:has([data-icon='kustomize'])::before {
+  background: rgb(90, 90, 207) !important;
+}
+
+.tech-card:has([data-icon='linkerd'])::before {
+  background: rgb(46, 180, 67) !important;
+}
+
+.tech-card:has([data-icon='consul'])::before {
+  background: rgb(224, 56, 117) !important;
+}
+
+.tech-card:has([data-icon='cilium'])::before {
+  background: rgb(248, 197, 23) !important;
+}
+
+.tech-card:has([data-icon='ebpf'])::before {
+  background: rgb(247, 147, 30) !important;
+}
+
+.tech-card:has([data-icon='git'])::before {
+  background: rgb(240, 80, 50) !important;
+}
+
+.tech-card:has([data-icon='linux'])::before {
+  background: rgb(255, 192, 0) !important;
+}
+
+.tech-card:has([data-icon='webassembly'])::before {
+  background: rgb(101, 79, 240) !important;
+}
+
+/* Icon Colors */
+[data-icon='docker'] .v-icon {
+  color: rgb(41, 148, 229) !important;
+}
+
+[data-icon='kubernetes'] .v-icon {
+  color: rgb(51, 113, 227) !important;
+}
+
+[data-icon='terraform'] .v-icon {
+  color: rgb(124, 77, 255) !important;
+}
+
+[data-icon='ansible'] .v-icon {
+  color: rgb(238, 0, 0) !important;
+}
+
+[data-icon='jenkins'] .v-icon {
+  color: rgb(213, 66, 49) !important;
+}
+
+[data-icon='github-actions'] .v-icon {
+  color: rgb(42, 129, 246) !important;
+}
+
+[data-icon='argocd'] .v-icon,
+[data-icon='argo-cd'] .v-icon {
+  color: rgb(239, 111, 54) !important;
+}
+
+[data-icon='gitlab-ci'] .v-icon {
+  color: rgb(252, 109, 38) !important;
+}
+
+[data-icon='prometheus'] .v-icon {
+  color: rgb(230, 86, 37) !important;
+}
+
+[data-icon='grafana'] .v-icon {
+  color: rgb(242, 125, 53) !important;
+}
+
+[data-icon='elk-stack'] .v-icon {
+  color: rgb(0, 169, 152) !important;
+}
+
+[data-icon='jaeger'] .v-icon {
+  color: rgb(96, 214, 229) !important;
+}
+
+[data-icon='aws'] .v-icon {
+  color: rgb(255, 153, 0) !important;
+}
+
+[data-icon='azure'] .v-icon {
+  color: rgb(0, 120, 212) !important;
+}
+
+[data-icon='gcp'] .v-icon {
+  color: rgb(234, 67, 53) !important;
+}
+
+[data-icon='digitalocean'] .v-icon {
+  color: rgb(0, 127, 255) !important;
+}
+
+[data-icon='python'] .v-icon {
+  color: rgb(55, 118, 171) !important;
+}
+
+[data-icon='go'] .v-icon {
+  color: rgb(0, 173, 216) !important;
+}
+
+[data-icon='javascript'] .v-icon {
+  color: rgb(247, 223, 30) !important;
+}
+
+[data-icon='typescript'] .v-icon {
+  color: rgb(49, 120, 198) !important;
+}
+
+[data-icon='bash'] .v-icon {
+  color: rgb(76, 175, 80) !important;
+}
+
+[data-icon='powershell'] .v-icon {
+  color: rgb(33, 150, 243) !important;
+}
+
+[data-icon='vue'] .v-icon,
+[data-icon='nuxt'] .v-icon,
+[data-icon='nodejs'] .v-icon {
+  color: rgb(104, 184, 104) !important;
+}
+
+[data-icon='react'] .v-icon {
+  color: rgb(77, 199, 237) !important;
+}
+
+[data-icon='postgresql'] .v-icon {
+  color: rgb(51, 103, 145) !important;
+}
+
+[data-icon='mysql'] .v-icon {
+  color: rgb(0, 117, 143) !important;
+}
+
+[data-icon='mongodb'] .v-icon {
+  color: rgb(71, 162, 72) !important;
+}
+
+[data-icon='redis'] .v-icon {
+  color: rgb(211, 57, 50) !important;
+}
+
+[data-icon='rabbitmq'] .v-icon {
+  color: rgb(255, 102, 0) !important;
+}
+
+[data-icon='kafka'] .v-icon {
+  color: rgb(150, 150, 150) !important;
+}
+
+[data-icon='nginx'] .v-icon {
+  color: rgb(0, 150, 57) !important;
+}
+
+[data-icon='traefik'] .v-icon {
+  color: rgb(36, 182, 239) !important;
+}
+
+[data-icon='istio'] .v-icon {
+  color: rgb(70, 132, 217) !important;
+}
+
+[data-icon='envoy'] .v-icon {
+  color: rgb(172, 71, 189) !important;
+}
+
+[data-icon='helm'] .v-icon {
+  color: rgb(89, 132, 169) !important;
+}
+
+[data-icon='flux'] .v-icon {
+  color: rgb(52, 140, 212) !important;
+}
+
+[data-icon='kustomize'] .v-icon {
+  color: rgb(90, 90, 207) !important;
+}
+
+[data-icon='linkerd'] .v-icon {
+  color: rgb(46, 180, 67) !important;
+}
+
+[data-icon='consul'] .v-icon {
+  color: rgb(224, 56, 117) !important;
+}
+
+[data-icon='cilium'] .v-icon {
+  color: rgb(248, 197, 23) !important;
+}
+
+[data-icon='ebpf'] .v-icon {
+  color: rgb(247, 147, 30) !important;
+}
+
+[data-icon='git'] .v-icon {
+  color: rgb(240, 80, 50) !important;
+}
+
+[data-icon='linux'] .v-icon {
+  color: rgb(252, 198, 36) !important;
+}
+
+[data-icon='webassembly'] .v-icon {
+  color: rgb(101, 79, 240) !important;
+}
+
+/* ===================================
+   ADMIN SECTION STYLES
+   =================================== */
+
+/* Admin Section Container */
+.admin-section {
+  padding: 0;
+}
+
+/* Stat Cards - Compacto e eficiente */
+.admin-stat-card {
+  background: rgba(var(--v-theme-surface-variant), 0.3) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.1) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.admin-stat-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.admin-stat-icon-wrapper :deep(.v-icon) {
+  font-size: 22px !important;
+}
+
+.admin-stat-icon-wrapper.blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+  color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.admin-stat-icon-wrapper.green {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+  color: #22c55e;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.admin-stat-icon-wrapper.orange {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.1));
+  color: #f97316;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+.admin-stat-icon-wrapper.purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.1));
+  color: #a855f7;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+}
+
+.admin-stat-icon-wrapper.red {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+  color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.admin-stat-icon-wrapper.cyan {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.1));
+  color: #06b6d4;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+}
+
+.admin-stat-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.125rem;
+}
+
+.admin-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.admin-stat-label {
+  font-size: 0.75rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  opacity: 0.8;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* Table Card */
+.admin-table-card {
+  background: rgba(var(--v-theme-surface-variant), 0.3) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.1) !important;
+  border-radius: 16px !important;
+}
+
+.admin-table-card :deep(.v-card-title) {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.1);
+}
+
+.admin-table-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.admin-action-btn {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+/* Data Table */
+.admin-data-table {
+  background: transparent !important;
+}
+
+.admin-data-table :deep(.v-data-table__th) {
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
+  padding: 12px 16px !important;
+}
+
+.admin-data-table :deep(.v-data-table__td) {
+  color: rgb(var(--v-theme-on-surface)) !important;
+  padding: 12px 16px !important;
+}
+
+/* Colunas específicas com largura otimizada */
+.admin-data-table :deep(th:has(+ th + th + th + th + th)),
+.admin-data-table :deep(td:has(+ td + td + td + td + td)) {
+  width: 80px; /* Imagem */
+}
+
+.admin-data-table :deep(th:nth-child(2)),
+.admin-data-table :deep(td:nth-child(2)) {
+  width: auto; /* Título - flexível */
+  min-width: 180px;
+}
+
+.admin-data-table :deep(th:nth-child(3)),
+.admin-data-table :deep(td:nth-child(3)) {
+  width: 140px; /* Categoria */
+}
+
+.admin-data-table :deep(th:nth-child(4)),
+.admin-data-table :deep(td:nth-child(4)) {
+  width: auto; /* Tecnologias - flexível */
+  min-width: 200px;
+}
+
+.admin-data-table :deep(th:nth-child(5)),
+.admin-data-table :deep(td:nth-child(5)) {
+  width: 100px; /* Status */
+  text-align: center;
+}
+
+.admin-data-table :deep(th:last-child),
+.admin-data-table :deep(td:last-child) {
+  width: 120px; /* Ações */
+  text-align: center;
+}
+
+/* Garantir que a tabela use todo o espaço */
+.admin-data-table :deep(table) {
+  width: 100% !important;
+  table-layout: auto;
+}
+
+.admin-data-table :deep(.v-data-table__wrapper) {
+  overflow-x: auto;
+}
+
+/* Action Buttons */
+.admin-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.admin-action-btn-icon {
+  border-radius: 8px !important;
+  width: 40px !important;
+  margin: 10px 10px 10px 0px !important;
+}
+
+.admin-action-btn-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Dialog Styles */
+.admin-dialog-card {
+  background: rgba(var(--v-theme-surface), 0.98) !important;
+  border-radius: 16px !important;
+  max-height: 85vh;
+}
+
+.admin-dialog-title {
+  padding: 1.5rem 2rem !important;
+  background: rgba(var(--v-theme-primary), 0.05);
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.admin-dialog-content {
+  padding: 1.5rem !important;
+  max-height: calc(85vh - 180px);
+  overflow-y: auto;
+}
+
+.admin-dialog-content :deep(.v-field) {
+  margin-bottom: 0.5rem;
+}
+
+.admin-dialog-actions {
+  padding: 1.25rem 2rem !important;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.admin-dialog-actions :deep(.v-btn) {
+  min-width: 120px;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  padding: 0.625rem 1.5rem !important;
+  font-size: 0.9375rem !important;
+}
+
+/* Responsive Admin */
+@media (max-width: 768px) {
+  .admin-stat-value {
+    font-size: 1.25rem;
+  }
+
+  .admin-stat-label {
+    font-size: 0.7rem;
+  }
+
+  .admin-stat-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-stat-icon-wrapper :deep(.v-icon) {
+    font-size: 20px !important;
+  }
+
+  .admin-dialog-content {
+    max-height: calc(85vh - 160px);
+  }
+
+  .admin-stat-card :deep(.v-card-text) {
+    gap: 0.5rem;
+    padding: 0.75rem !important;
+  }
+
+  /* Ajustar colunas da tabela em mobile */
+  .admin-data-table :deep(th),
+  .admin-data-table :deep(td) {
+    padding: 8px 12px !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .admin-action-btn-icon {
+    width: 36px !important;
+  }
+}
+
+/* ===================================
+   FORM FIELDS COMUNS (DRY)
+   =================================== */
+
+.admin-form-field {
+  margin-bottom: 1rem;
+}
+
+.admin-form-field-dense {
+  margin-bottom: 0.75rem;
+}
+
+/* ===================================
+   COMMON ADMIN COMPONENTS (DRY)
+   =================================== */
+
+/* Chip Groups */
+.admin-chip-group :deep(.v-chip) {
+  margin: 2px;
+  font-size: 0.8125rem;
+}
+
+/* Action Buttons Row */
+.admin-action-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Status Badge */
+.admin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.admin-status-badge.active {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.admin-status-badge.inactive {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Card Header with Icon */
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(var(--v-theme-primary), 0.1);
+  background: rgba(var(--v-theme-primary), 0.03);
+}
+
+.admin-card-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(var(--v-theme-primary), 0.1);
+}
+
+.admin-card-header-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+/* Empty State */
+.admin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: rgb(var(--v-theme-on-surface-variant));
+}
+
+.admin-empty-state-icon {
+  font-size: 64px !important;
+  opacity: 0.3;
+  margin-bottom: 1rem;
+}
+
+.admin-empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.admin-empty-state-text {
+  font-size: 0.9375rem;
+  opacity: 0.7;
+}

@@ -1,36 +1,38 @@
-# Build stage
-FROM node:lts-trixie-slim AS builder
+# --- Estágio 1: Builder ---
+FROM cgr.dev/chainguard/node:latest AS builder
 
-# Set working directory
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# 1. Copia package.json com a posse correta para o usuário 'node'
+COPY --chown=node:node package*.json ./
 
-# Install all dependencies (including dev dependencies for build)
-RUN npm ci --prefer-offline --no-audit --progress=false --loglevel=error
+# Instala as dependências
+RUN npm ci --production
 
-# Copy source code
-COPY . .
+# 2. Copia o código fonte também garantindo a posse para o usuário 'node'
+COPY --chown=node:node . .
 
-# Set API URL for build (accepts from docker-compose build args)
-ARG FRONTEND_API_URL=/api
-ENV FRONTEND_API_URL=${FRONTEND_API_URL}
+# Agora o usuário 'node' tem permissão de escrita na pasta /app para criar a .output
+RUN npm run build:prod
 
-# Generate static site
-RUN npm run generate
+# Limpa o cache do npm para reduzir o tamanho da imagem
+RUN npm prune --production
 
-# Production stage
-FROM nginx:mainline-alpine3.23
+# --- Estágio 2: Production ---
+FROM cgr.dev/chainguard/node:latest AS production
 
-# Copy static files from builder stage
-COPY --from=builder /app/.output/public /usr/share/nginx/html
+# Define o diretório de trabalho
+WORKDIR /app
 
-# Copy custom nginx config if needed (optional)
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Copia apenas os artefatos gerados, mantendo a posse correta
+COPY --from=builder --chown=node:node /app/.output ./.output
 
-# Expose port
-EXPOSE 80
+# Variáveis de ambiente
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3000
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["./.output/server/index.mjs"]

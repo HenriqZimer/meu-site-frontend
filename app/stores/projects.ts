@@ -30,7 +30,7 @@ export const useProjectsStore = defineStore('projects', {
     allProjects: state => state.projects,
     projectsByCategory: state => (category: string) =>
       state.projects.filter(p => p.category === category),
-    projectsCount: state => state.stats?.total || state.projects.length,
+    projectsCount: state => state.stats?.total ?? state.projects.length,
     isLoaded: state => state.projects.length > 0,
     needsRefresh: state => {
       if (!state.lastFetch) return true
@@ -48,7 +48,6 @@ export const useProjectsStore = defineStore('projects', {
     async fetchProjects() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        // console.log('[Projects Store] Usando cache')
         return this.projects
       }
 
@@ -59,7 +58,6 @@ export const useProjectsStore = defineStore('projects', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/projects`
-        // console.log('[Projects Store] Fetching from:', fullUrl)
 
         const data = await $fetch<Project[]>(fullUrl, {
           method: 'GET',
@@ -68,13 +66,15 @@ export const useProjectsStore = defineStore('projects', {
           },
         })
 
-        // console.log('[Projects Store] Dados recebidos:', data.length, 'items')
         this.projects = data
         this.lastFetch = Date.now()
         return data
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Erro ao carregar projetos'
-        console.error('Erro ao carregar projetos:', error)
+      } catch (error: any) {
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao carregar projetos'
+        this.error = errorMsg
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar projetos:', errorMsg)
+        }
         throw error
       } finally {
         this.loading = false
@@ -104,7 +104,9 @@ export const useProjectsStore = defineStore('projects', {
         this.lastStatsFetch = Date.now()
         return data
       } catch (error) {
-        console.error('Erro ao carregar stats de projetos:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar stats de projetos:', error)
+        }
         throw error
       }
     },

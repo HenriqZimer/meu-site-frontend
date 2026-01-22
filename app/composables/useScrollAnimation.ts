@@ -3,7 +3,17 @@
  * Integrado com o novo sistema de animações
  */
 
-import type { AnimationType } from './useAnimations'
+export type AnimationType =
+  | 'fadeUp'
+  | 'fadeDown'
+  | 'fadeLeft'
+  | 'fadeRight'
+  | 'slideLeft'
+  | 'slideRight'
+  | 'slideUp'
+  | 'slideDown'
+  | 'zoomIn'
+  | 'zoomOut'
 
 export interface ScrollAnimationOptions {
   threshold?: number
@@ -23,7 +33,6 @@ export const useScrollAnimation = () => {
   }
 
   const observeElements = (customOptions?: ScrollAnimationOptions) => {
-    // @ts-expect-error - import.meta.client is available in Nuxt runtime
     if (import.meta.client) {
       const options = { ...defaultOptions, ...customOptions }
 
@@ -34,14 +43,14 @@ export const useScrollAnimation = () => {
               const element = entry.target as HTMLElement
 
               // Aplicar delay se especificado
-              const delay = options.delay || parseInt(element.dataset.delay || '0')
+              const delay = options.delay ?? parseInt(element.dataset.delay ?? '0')
 
               setTimeout(() => {
                 element.classList.remove('animate-initial')
                 element.classList.add('animate-visible')
 
                 // Adicionar classe de animação específica se especificada
-                const animationType = element.dataset.animation || options.animationType
+                const animationType = element.dataset.animation ?? options.animationType
                 if (animationType) {
                   element.classList.add(`animate-${animationType}`)
                 }
@@ -103,7 +112,6 @@ export const useScrollAnimation = () => {
 
   // Função para reset de animações
   const resetAnimations = (selector: string = '.animate-visible') => {
-    // @ts-expect-error - import.meta.client is available in Nuxt runtime
     if (import.meta.client) {
       const elements = document.querySelectorAll(selector)
       elements.forEach(element => {

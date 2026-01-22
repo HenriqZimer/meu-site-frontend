@@ -8,7 +8,7 @@ export interface Project {
   technologies: string[]
   demoUrl: string
   githubUrl: string
-  order: number
+  projectDate?: string
   active: boolean
 }
 
@@ -18,8 +18,8 @@ export interface Skill {
   category: string
   icon: string
   color: string
-  bgColor: string
-  order: number
+  bgColor?: string
+  order?: number
   active: boolean
 }
 
@@ -31,7 +31,6 @@ export interface Certification {
   link: string
   date: string
   skills: number
-  order: number
   active: boolean
 }
 
@@ -43,8 +42,7 @@ export interface Course {
   duration: string
   image: string
   link: string
-  year: string
-  order: number
+  date: string
   active: boolean
 }
 

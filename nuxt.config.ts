@@ -13,14 +13,17 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: process.env.FRONTEND_API_URL,
+      apiUrl: '/api',
       siteName: 'Henrique Zimermann',
-      siteDescription: 'DevOps & Cloud',
       siteUrl: 'https://henriqzimer.com.br',
     },
   },
 
-  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt'],
+  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt', '@nuxt/icon'],
+
+  icon: {
+    serverBundle: 'remote',
+  },
 
   vuetify: {
     vuetifyOptions: {
@@ -62,7 +65,7 @@ export default defineNuxtConfig({
 
   components: {
     global: true,
-    dirs: ['~/components', '~/components/base'],
+    dirs: ['~/components', '~/components/base', '~/components/admin/base'],
   },
 
   build: {
@@ -85,7 +88,12 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'index, follow' },
         { name: 'theme-color', content: '#3b82f6' },
       ],
-      link: [{ rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }],
+      link: [
+        // Adicione esta linha para navegadores padrão
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // Esta linha é para dispositivos Apple/Mobile
+        { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' },
+      ],
     },
   },
 })

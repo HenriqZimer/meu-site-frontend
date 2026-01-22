@@ -1,24 +1,266 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { useScrollAnimation } from './useScrollAnimation'
 
 describe('useScrollAnimation', () => {
-  it('should track scroll position', () => {
-    const scrollY = 0
-    expect(scrollY).toBeGreaterThanOrEqual(0)
+  beforeEach(() => {
+    vi.useFakeTimers()
+    document.body.innerHTML = ''
   })
 
-  it('should detect scroll direction', () => {
-    const direction = 'down'
-    expect(['up', 'down']).toContain(direction)
+  afterEach(() => {
+    vi.useRealTimers()
+    document.body.innerHTML = ''
   })
 
-  it('should handle scroll events', () => {
-    const isScrolling = false
-    expect(typeof isScrolling).toBe('boolean')
+  describe('animateElement', () => {
+    it('should add animation classes to element after delay', async () => {
+      const mockElement = document.createElement('div')
+      mockElement.classList.add('animate-initial')
+
+      const { animateElement } = useScrollAnimation()
+      animateElement(mockElement, 'fadeUp', 0)
+
+      await vi.runAllTimersAsync()
+
+      expect(mockElement.classList.contains('animate-initial')).toBe(false)
+      expect(mockElement.classList.contains('animate-visible')).toBe(true)
+      expect(mockElement.classList.contains('animate-fadeUp')).toBe(true)
+    })
+
+    it('should use default animation type when not provided', async () => {
+      const mockElement = document.createElement('div')
+
+      const { animateElement } = useScrollAnimation()
+      animateElement(mockElement)
+
+      await vi.runAllTimersAsync()
+
+      expect(mockElement.classList.contains('animate-fadeUp')).toBe(true)
+    })
+
+    it('should apply custom animation type', async () => {
+      const mockElement = document.createElement('div')
+
+      const { animateElement } = useScrollAnimation()
+      animateElement(mockElement, 'slideLeft')
+
+      await vi.runAllTimersAsync()
+
+      expect(mockElement.classList.contains('animate-slideLeft')).toBe(true)
+    })
+
+    it('should respect delay parameter', async () => {
+      const mockElement = document.createElement('div')
+      mockElement.classList.add('animate-initial')
+
+      const { animateElement } = useScrollAnimation()
+      animateElement(mockElement, 'fadeUp', 300)
+
+      // Verificar que ainda não animou
+      expect(mockElement.classList.contains('animate-visible')).toBe(false)
+
+      // Avançar 300ms
+      await vi.advanceTimersByTimeAsync(300)
+
+      expect(mockElement.classList.contains('animate-visible')).toBe(true)
+    })
+
+    it('should use zero delay as default', async () => {
+      const mockElement = document.createElement('div')
+
+      const { animateElement } = useScrollAnimation()
+      animateElement(mockElement, 'fadeUp')
+
+      await vi.advanceTimersByTimeAsync(0)
+
+      expect(mockElement.classList.contains('animate-visible')).toBe(true)
+    })
   })
 
-  it('should calculate scroll percentage', () => {
-    const percentage = 50
-    expect(percentage).toBeGreaterThanOrEqual(0)
-    expect(percentage).toBeLessThanOrEqual(100)
+  describe('animateSequence', () => {
+    it('should animate elements in staggered sequence', async () => {
+      const mockElements = [
+        document.createElement('div'),
+        document.createElement('div'),
+        document.createElement('div'),
+      ]
+
+      mockElements.forEach(el => el.classList.add('animate-initial'))
+
+      const { animateSequence } = useScrollAnimation()
+      animateSequence(mockElements, 'fadeUp', 100)
+
+      // Primeiro elemento deve ser animado imediatamente
+      await vi.advanceTimersByTimeAsync(0)
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(false)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(false)
+
+      // Segundo elemento após 100ms
+      await vi.advanceTimersByTimeAsync(100)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(false)
+
+      // Terceiro elemento após mais 100ms
+      await vi.advanceTimersByTimeAsync(100)
+      expect(mockElements[2]!.classList.contains('animate-visible')).toBe(true)
+    })
+
+    it('should work with NodeList', async () => {
+      // Create a mock NodeList
+      const mockElements = [document.createElement('div'), document.createElement('div')]
+
+      Object.defineProperty(mockElements, 'length', {
+        value: 2,
+      })
+
+      const { animateSequence } = useScrollAnimation()
+      animateSequence(mockElements as any, 'fadeUp', 50)
+
+      await vi.runAllTimersAsync()
+
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
+    })
+
+    it('should apply custom animation type to all elements', async () => {
+      const mockElements = [document.createElement('div'), document.createElement('div')]
+
+      const { animateSequence } = useScrollAnimation()
+      animateSequence(mockElements, 'slideLeft', 50)
+
+      await vi.runAllTimersAsync()
+
+      expect(mockElements[0]!.classList.contains('animate-slideLeft')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-slideLeft')).toBe(true)
+    })
+
+    it('should use default stagger delay of 100ms', async () => {
+      const mockElements = [document.createElement('div'), document.createElement('div')]
+
+      const { animateSequence } = useScrollAnimation()
+      animateSequence(mockElements, 'fadeUp')
+
+      await vi.advanceTimersByTimeAsync(0)
+      expect(mockElements[0]!.classList.contains('animate-visible')).toBe(true)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(false)
+
+      await vi.advanceTimersByTimeAsync(100)
+      expect(mockElements[1]!.classList.contains('animate-visible')).toBe(true)
+    })
+
+    it('should handle empty arrays', async () => {
+      const mockElements: HTMLElement[] = []
+
+      const { animateSequence } = useScrollAnimation()
+
+      expect(() => {
+        animateSequence(mockElements, 'fadeUp', 100)
+      }).not.toThrow()
+    })
+  })
+
+  describe('observeElements', () => {
+    it('should return a function', () => {
+      const { observeElements } = useScrollAnimation()
+
+      expect(typeof observeElements).toBe('function')
+    })
+
+    it('should accept optional configuration', () => {
+      const { observeElements } = useScrollAnimation()
+
+      expect(() => {
+        observeElements({ threshold: 0.5, rootMargin: '10px' })
+      }).not.toThrow()
+    })
+
+    it('should accept no arguments', () => {
+      const { observeElements } = useScrollAnimation()
+
+      expect(() => {
+        observeElements()
+      }).not.toThrow()
+    })
+  })
+
+  describe('resetAnimations', () => {
+    it('should be callable without errors', () => {
+      const { resetAnimations } = useScrollAnimation()
+
+      expect(() => {
+        resetAnimations('.animate-visible')
+      }).not.toThrow()
+    })
+
+    it('should work with default selector', () => {
+      const element = document.createElement('div')
+      element.classList.add('animate-visible')
+      document.body.appendChild(element)
+
+      const { resetAnimations } = useScrollAnimation()
+
+      expect(() => {
+        resetAnimations()
+      }).not.toThrow()
+    })
+
+    it('should handle elements with no animation classes', () => {
+      const element = document.createElement('div')
+      element.classList.add('animate-visible')
+      document.body.appendChild(element)
+
+      const { resetAnimations } = useScrollAnimation()
+
+      expect(() => {
+        resetAnimations('.animate-visible')
+      }).not.toThrow()
+    })
+  })
+
+  describe('observeElements', () => {
+    it('should return IntersectionObserver when on client', () => {
+      const { observeElements } = useScrollAnimation()
+      const result = observeElements()
+
+      if (import.meta.client) {
+        expect(result).toBeDefined()
+      }
+    })
+
+    it('should accept custom options', () => {
+      const { observeElements } = useScrollAnimation()
+
+      expect(() => {
+        observeElements({
+          threshold: 0.5,
+          rootMargin: '10px',
+          animationType: 'slideLeft',
+          delay: 200,
+          once: false,
+        })
+      }).not.toThrow()
+    })
+  })
+
+  describe('composable structure', () => {
+    it('should return all expected methods', () => {
+      const composable = useScrollAnimation()
+
+      expect(composable).toHaveProperty('observeElements')
+      expect(composable).toHaveProperty('animateElement')
+      expect(composable).toHaveProperty('animateSequence')
+      expect(composable).toHaveProperty('resetAnimations')
+    })
+
+    it('should return functions for all methods', () => {
+      const { observeElements, animateElement, animateSequence, resetAnimations } =
+        useScrollAnimation()
+
+      expect(typeof observeElements).toBe('function')
+      expect(typeof animateElement).toBe('function')
+      expect(typeof animateSequence).toBe('function')
+      expect(typeof resetAnimations).toBe('function')
+    })
   })
 })

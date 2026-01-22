@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper">
     <!-- Header -->
-    <Header />
+    <LayoutHeader />
 
     <!-- Main Content -->
     <main class="main-content">
@@ -28,15 +28,21 @@
     </main>
 
     <!-- Footer -->
-    <Footer />
+    <LayoutFooter />
   </div>
 </template>
 
 <script setup lang="ts">
+import About from '~/components/about/About.vue'
+import Portfolio from '~/components/portfolio/Portfolio.vue'
+import Skills from '~/components/skills/Skills.vue'
+import Certifications from '~/components/certifications/Certifications.vue'
+import Courses from '~/components/courses/Courses.vue'
+import Contact from '~/components/contact/Contact.vue'
+
 // Variáveis de ambiente para SEO
 const config = useRuntimeConfig()
 const siteName = config.public.siteName
-const _siteDescription = config.public.siteDescription
 const siteUrl = config.public.siteUrl
 
 // Configuração de SEO e meta tags

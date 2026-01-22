@@ -25,8 +25,14 @@ export const useCertificationsStore = defineStore('certifications', {
   }),
 
   getters: {
-    allCertifications: state => state.certifications,
-    certificationsCount: state => state.stats?.total || state.certifications.length,
+    allCertifications: state => {
+      // Ordena as certificações pela data mais recente primeiro
+      return [...state.certifications].sort((a, b) => {
+        if (!a.date || !b.date) return 0
+        return b.date.localeCompare(a.date)
+      })
+    },
+    certificationsCount: state => state.stats?.total ?? state.certifications.length,
     isLoaded: state => state.certifications.length > 0,
     needsRefresh: state => {
       if (!state.lastFetch) return true
@@ -44,7 +50,6 @@ export const useCertificationsStore = defineStore('certifications', {
     async fetchCertifications() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        console.log('[Certifications Store] Usando cache')
         return this.certifications
       }
 
@@ -55,7 +60,6 @@ export const useCertificationsStore = defineStore('certifications', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/certifications`
-        // console.log('[Certifications Store] Fetching from:', fullUrl)
 
         const data = await $fetch<Certification[]>(fullUrl, {
           method: 'GET',
@@ -64,13 +68,15 @@ export const useCertificationsStore = defineStore('certifications', {
           },
         })
 
-        // console.log('[Certifications Store] Dados recebidos:', data.length, 'items')
         this.certifications = data
         this.lastFetch = Date.now()
         return data
-      } catch (error) {
-        this.error = error instanceof Error ? error.message : 'Erro ao carregar certificações'
-        console.error('Erro ao carregar certificações:', error)
+      } catch (error: any) {
+        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao carregar certificações'
+        this.error = errorMsg
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar certificações:', errorMsg)
+        }
         throw error
       } finally {
         this.loading = false
@@ -80,7 +86,6 @@ export const useCertificationsStore = defineStore('certifications', {
     async fetchStats() {
       // Evita requisições desnecessárias
       if (this.stats && !this.statsNeedRefresh) {
-        console.log('[Certifications Store] Usando cache de stats')
         return this.stats
       }
 
@@ -100,7 +105,9 @@ export const useCertificationsStore = defineStore('certifications', {
         this.lastStatsFetch = Date.now()
         return data
       } catch (error) {
-        console.error('Erro ao carregar stats de certificações:', error)
+        if (process.env.NODE_ENV !== 'test') {
+          console.error('Erro ao carregar stats de certificações:', error)
+        }
         throw error
       }
     },
