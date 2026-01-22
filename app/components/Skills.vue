@@ -26,8 +26,9 @@
               <div
                 class="tech-icon-container d-flex align-center justify-center rounded-lg"
                 :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')"
+                :style="{ backgroundColor: tech.bgColor }"
               >
-                <v-icon :icon="tech.icon" size="40" />
+                <IconWrapper :icon="tech.icon" :size="40" :color="tech.color" />
               </div>
               <div class="tech-details">
                 <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249)">
@@ -52,8 +53,9 @@
               <div
                 class="tech-icon-container d-flex align-center justify-center rounded-lg"
                 :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')"
+                :style="{ backgroundColor: tech.bgColor }"
               >
-                <v-icon :icon="tech.icon" size="40" />
+                <IconWrapper :icon="tech.icon" :size="40" :color="tech.color" />
               </div>
               <div class="tech-details">
                 <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249)">
@@ -244,14 +246,16 @@ const technologies = computed(() => skillsStore.allSkills)
   animation: iconGlow 2s ease-in-out infinite;
 }
 
-.tech-icon-container .v-icon {
+.tech-icon-container .v-icon,
+.tech-icon-container :deep(svg) {
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   transition: filter 0.3s ease;
 }
 
-.tech-card:hover .tech-icon-container .v-icon {
+.tech-card:hover .tech-icon-container .v-icon,
+.tech-card:hover .tech-icon-container :deep(svg) {
   filter: drop-shadow(0 4px 12px currentColor);
 }
 

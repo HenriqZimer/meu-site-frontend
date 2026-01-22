@@ -78,7 +78,7 @@
           class="data-table"
         >
           <template #[`item.icon`]="{ item }">
-            <v-icon :icon="item.icon" :color="item.color" size="32" />
+            <IconWrapper :icon="item.icon" :color="item.color" :size="32" />
           </template>
 
           <template #[`item.color`]="{ item }">

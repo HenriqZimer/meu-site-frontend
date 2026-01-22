@@ -56,21 +56,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-// interface Props {
-//   name: string
-//   issuer: string
-//   image: string
-//   link: string
-//   date?: string
-//   skills?: number
-//   lazy?: boolean
-// }
+interface Props {
+  name: string
+  issuer: string
+  image: string
+  link: string
+  date?: string
+  skills?: number
+  lazy?: boolean
+}
 
-// const props = withDefaults(defineProps<Props>(), {
-//   lazy: true,
-//   date: '',
-//   skills: 0
-// })
+const props = withDefaults(defineProps<Props>(), {
+  lazy: true,
+  date: '',
+  skills: 0
+})
 
 const cardRef = ref<HTMLElement | null>(null)
 

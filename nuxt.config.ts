@@ -65,6 +65,10 @@ export default defineNuxtConfig({
     dirs: ['~/components', '~/components/base'],
   },
 
+  build: {
+    transpile: ['@iconify/vue'],
+  },
+
   nitro: {
     prerender: {
       routes: ['/'],
