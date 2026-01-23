@@ -139,7 +139,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import ProjectCard from './components/ProjectCard.vue'
-import { PROJECT_FILTERS } from '~/constants'
 
 // Scroll Animation
 const { observeElements } = useScrollAnimation()
@@ -261,32 +260,85 @@ const handleCardMouseLeave = (e: Event) => {
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
 
-// Computed filters with counts - using constants base
-const filters = computed<Filter[]>(() =>
-  PROJECT_FILTERS.map(filter => ({
-    ...filter,
-    count:
-      filter.value === 'all'
-        ? projects.value.length
-        : projects.value.filter(p => p.category === filter.value).length,
+// Computed filters with counts - criando categorias dinamicamente a partir dos projetos
+const filters = computed<Filter[]>(() => {
+  const allProjects = projects.value
+  
+  // Obter categorias únicas dos projetos
+  const uniqueCategories = [...new Set(allProjects.map(p => p.category).filter(Boolean))]
+  
+  // Mapeamento de ícones por categoria (pode ser expandido conforme necessário)
+  const categoryIcons: Record<string, string> = {
+    'infrastructure': 'mdi-server',
+    'containerization': 'mdi-docker',
+    'automation': 'mdi-robot',
+    'cloud': 'mdi-cloud',
+    'web': 'mdi-web',
+    'mobile': 'mdi-cellphone',
+    'desktop': 'mdi-monitor',
+    'api': 'mdi-api',
+    'database': 'mdi-database',
+    'devops': 'mdi-cog',
+    'security': 'mdi-shield-lock',
+    'iot': 'mdi-chip',
+  }
+  
+  // Função para formatar label da categoria
+  const formatCategoryLabel = (category: string): string => {
+    const labels: Record<string, string> = {
+      'infrastructure': 'Infraestrutura',
+      'containerization': 'Containers',
+      'automation': 'Automação',
+      'cloud': 'Cloud',
+      'web': 'Web',
+      'mobile': 'Mobile',
+      'desktop': 'Desktop',
+      'api': 'API',
+      'database': 'Banco de Dados',
+      'devops': 'DevOps',
+      'security': 'Segurança',
+      'iot': 'IoT',
+    }
+    
+    return labels[category] || category.charAt(0).toUpperCase() + category.slice(1)
+  }
+  
+  // Criar filtro "Todos" sempre em primeiro
+  const allFilter: Filter = {
+    value: 'all',
+    label: 'Todos',
+    icon: 'mdi-apps',
+    count: allProjects.length,
+  }
+  
+  // Criar filtros para cada categoria encontrada
+  const categoryFilters: Filter[] = uniqueCategories.map(category => ({
+    value: category,
+    label: formatCategoryLabel(category),
+    icon: categoryIcons[category] || 'mdi-folder',
+    count: allProjects.filter(p => p.category === category).length,
   }))
-)
+  
+  return [allFilter, ...categoryFilters]
+})
 
 // Computed filtered projects - usando função getter para garantir reatividade
 const filteredProjects = computed(() => {
-  // Incluir filterVersion para forçar recálculo
-  // const version = filterVersion.value
   const allProjects = projects.value
   const currentFilter = selectedFilter.value
+  
+  // Garantir que sempre retornamos um array válido
+  if (!allProjects || !Array.isArray(allProjects)) {
+    return []
+  }
 
   // Retorna todos os projetos quando filtro é 'all' ou vazio
   if (!currentFilter || currentFilter === 'all') {
-    const result = allProjects.slice() // Cria nova cópia do array
-    return result
+    return [...allProjects] // Cria nova cópia do array para garantir reatividade
   }
 
-  const filtered = allProjects.filter(project => project.category === currentFilter)
-  return filtered
+  // Filtrar por categoria específica
+  return allProjects.filter(project => project.category === currentFilter)
 })
 
 // Carousel state
@@ -340,24 +392,13 @@ const goToPage = (page: number) => {
   currentPage.value = page
 }
 
-// Reset page when filter changes and force recalculation
-// watch(selectedFilter, newFilter => {
-//   currentPage.value = 0
-
-//   // Força o Vue a recalcular e depois anima os novos cards
-//   nextTick(() => {
-//     // Re-animar os cards após a mudança de filtro
-//     animateProjectCards()
-//   })
-// })
-
 // Reset page when itemsPerPage changes (ex: resize)
-// watch(itemsPerPage, (newValue) => {
-//   // Se a página atual ficou fora do range, voltar para a página 0
-//   if (currentPage.value >= totalPages.value) {
-//     currentPage.value = 0
-//   }
-// })
+watch(itemsPerPage, () => {
+  // Se a página atual ficou fora do range, voltar para a primeira página
+  if (currentPage.value >= totalPages.value && totalPages.value > 0) {
+    currentPage.value = 0
+  }
+})
 
 // Keyboard navigation
 if (typeof window !== 'undefined') {
@@ -374,8 +415,19 @@ if (typeof window !== 'undefined') {
 
 // Methods
 const setFilter = (value: string) => {
+  // Garantir que o valor seja válido
+  if (!value) {
+    value = 'all'
+  }
+  
   selectedFilter.value = value
+  currentPage.value = 0 // Sempre resetar para primeira página ao mudar filtro
   _filterVersion.value++ // Força recálculo das computeds
+  
+  // Re-animar os cards após a mudança de filtro
+  nextTick(() => {
+    animateProjectCards()
+  })
 }
 
 // Cleanup - remover listeners quando o componente for desmontado

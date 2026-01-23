@@ -9,7 +9,7 @@
   >
     <!-- Header da categoria -->
     <div :class="headerClasses">
-      <v-icon v-if="icon" :icon="icon" :size="iconSize" :color="iconColor" :class="iconClasses" />
+      <IconWrapper v-if="icon" :icon="icon" :size="iconSize" :color="iconColor" :class="iconClasses" />
       <h3 :class="titleClasses">{{ title }}</h3>
     </div>
 

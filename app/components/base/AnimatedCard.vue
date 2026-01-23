@@ -2,8 +2,7 @@
   <v-card :class="cardClass" :width="width" :height="height" v-bind="$attrs">
     <v-card-text class="card-content">
       <div class="icon-container" :data-icon="iconDataAttr">
-        <v-icon v-if="icon.startsWith('mdi-')" :icon="icon" :size="iconSize" />
-        <Icon v-else :name="icon" class="custom-icon" :size="iconSize" />
+        <IconWrapper :icon="icon" :size="iconSize" />
       </div>
 
       <div class="card-details">
@@ -150,6 +149,7 @@ const cardClass = computed(() => {
 }
 
 .icon-container :deep(.v-icon),
+.icon-container :deep(svg),
 .icon-container .custom-icon {
   position: relative;
   z-index: 2;
@@ -158,6 +158,7 @@ const cardClass = computed(() => {
 }
 
 .animated-card:hover .icon-container :deep(.v-icon),
+.animated-card:hover .icon-container :deep(svg),
 .animated-card:hover .icon-container .custom-icon {
   filter: drop-shadow(0 4px 12px currentColor);
 }

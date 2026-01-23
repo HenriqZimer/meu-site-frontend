@@ -19,10 +19,31 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/api/**': { 
+      proxy: { 
+        to: `${process.env.FRONTEND_API_URL}/**`
+      } 
+    },
+  },
+
   modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt', '@nuxt/icon'],
 
   icon: {
-    serverBundle: 'remote',
+    provider: 'iconify',
+    fallbackToApi: true,
+    clientBundle: {
+      scan: true,
+      icons: [
+        // Adicionar ícones comuns manualmente no bundle
+        'devicon:nodejs', 'devicon:docker', 'devicon:kubernetes', 'devicon:postgresql',
+        'devicon:redis', 'devicon:git', 'devicon:github', 'devicon:terraform', 
+        'devicon:argocd', 'devicon:grafana', 'devicon:helm', 'devicon:linux',
+        'devicon:amazonwebservices',
+        'material-icon-theme:jenkins',
+      ],
+      sizeLimitKb: 512,
+    },
   },
 
   vuetify: {
@@ -70,6 +91,18 @@ export default defineNuxtConfig({
 
   build: {
     transpile: ['@iconify/vue'],
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@iconify/vue',
+        '@iconify-json/devicon',
+        '@iconify-json/logos', 
+        '@iconify-json/skill-icons',
+        '@iconify-json/simple-icons'
+      ]
+    }
   },
 
   nitro: {

@@ -17,7 +17,7 @@
       <v-icon icon="mdi-docker" size="28" color="info" />
     </div>
     <div class="floating-badge badge-aws">
-      <v-icon icon="mdi-aws" size="28" color="warning" />
+      <IconWrapper icon="devicon:amazonwebservices" :size="28" color="warning" />
     </div>
     <div class="floating-badge badge-infinity">
       <v-icon icon="mdi-infinity" size="28" color="primary" />

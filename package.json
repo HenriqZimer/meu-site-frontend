@@ -44,6 +44,11 @@
   },
   "devDependencies": {
     "@iconify-json/devicon": "^1.2.57",
+    "@iconify-json/logos": "^1.2.10",
+    "@iconify-json/material-icon-theme": "^1.2.49",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.67",
+    "@iconify-json/skill-icons": "^1.2.3",
     "@nuxt/eslint": "^1.9.0",
     "@nuxtjs/sitemap": "^7.4.7",
     "@types/node": "^24.7.1",

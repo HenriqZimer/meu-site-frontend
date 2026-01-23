@@ -73,14 +73,21 @@
         class="admin-form-field"
       />
 
-      <v-text-field
-        v-model="item.icon"
-        label="Ícone"
-        hint="Ex: devicon:kubernetes, logos:docker-icon, skill-icons:jenkins-dark"
-        :rules="[rules.required]"
-        variant="outlined"
-        class="admin-form-field"
-      />
+      <div class="d-flex flex-column gap-2">
+        <v-text-field
+          v-model="item.icon"
+          label="Ícone"
+          hint="Ex: devicon:kubernetes, logos:docker-icon, skill-icons:jenkins-dark"
+          :rules="[rules.required]"
+          variant="outlined"
+          class="admin-form-field"
+        >
+          <template #prepend-inner>
+            <IconWrapper v-if="item.icon" :icon="item.icon" :size="24" class="mr-2" />
+          </template>
+        </v-text-field>
+        <IconPicker v-model="item.icon" />
+      </div>
 
       <v-text-field
         v-model="item.color"
