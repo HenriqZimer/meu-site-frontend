@@ -31,17 +31,10 @@ export default defineNuxtConfig({
 
   icon: {
     provider: 'iconify',
+    serverBundle: 'local',
     fallbackToApi: true,
     clientBundle: {
       scan: true,
-      icons: [
-        // Adicionar ícones comuns manualmente no bundle
-        'devicon:nodejs', 'devicon:docker', 'devicon:kubernetes', 'devicon:postgresql',
-        'devicon:redis', 'devicon:git', 'devicon:github', 'devicon:terraform', 
-        'devicon:argocd', 'devicon:grafana', 'devicon:helm', 'devicon:linux',
-        'devicon:amazonwebservices',
-        'material-icon-theme:jenkins',
-      ],
       sizeLimitKb: 512,
     },
   },
