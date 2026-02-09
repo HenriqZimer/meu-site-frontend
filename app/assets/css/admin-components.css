@@ -1,0 +1,285 @@
+/**
+ * Admin Components - Classes Utilitárias
+ *
+ * Estilos reutilizáveis para painel administrativo
+ * Evita duplicação de CSS em componentes individuais
+ *
+ * Uso: Adicione as classes nos componentes Vuetify
+ * Exemplo: <v-card class="admin-card">
+ */
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.admin-card {
+  background: #1e293b !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(59, 130, 246, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.admin-card-title {
+  font-weight: 600;
+  color: #ffffff !important;
+  padding: 1.5rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.admin-card-text {
+  color: #e2e8f0 !important;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.admin-btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-btn:not(.v-btn--icon):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ============================================================
+   DATA TABLES
+   ============================================================ */
+
+.admin-table {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-radius: 12px;
+}
+
+.admin-table-header {
+  background: rgba(59, 130, 246, 0.05) !important;
+  color: #94a3b8 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-table-row {
+  border-bottom: 1px solid rgba(59, 130, 246, 0.05) !important;
+  color: #e2e8f0 !important;
+}
+
+.admin-table-row:hover {
+  background: rgba(59, 130, 246, 0.05) !important;
+}
+
+/* ============================================================
+   FORM INPUTS
+   ============================================================ */
+
+.admin-field {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+.admin-field:hover {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+.admin-field--focused {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.admin-field-input {
+  color: #e2e8f0 !important;
+}
+
+.admin-field-label {
+  color: #94a3b8 !important;
+}
+
+.admin-field--focused .admin-field-label {
+  color: #3b82f6 !important;
+}
+
+/* ============================================================
+   LIST ITEMS
+   ============================================================ */
+
+.admin-list {
+  background: #1e293b !important;
+  padding: 0.5rem !important;
+}
+
+.admin-list-item {
+  border-radius: 6px !important;
+  margin-bottom: 0.25rem !important;
+  color: #e2e8f0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-list-item:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+}
+
+.admin-list-item--active {
+  background: rgba(59, 130, 246, 0.25) !important;
+  color: #60a5fa !important;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+.admin-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+
+.admin-chip {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+.admin-chip--active {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  color: #93c5fd !important;
+}
+
+/* ============================================================
+   DIALOGS
+   ============================================================ */
+
+.admin-dialog .v-card {
+  background: #1e293b !important;
+}
+
+.admin-dialog .v-card-title {
+  background: rgba(59, 130, 246, 0.1);
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+
+.admin-sidebar-item {
+  margin-bottom: 0.5rem;
+  border-radius: 12px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #94a3b8 !important;
+  min-height: 52px !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.admin-sidebar-item:hover {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+}
+
+.admin-sidebar-item--active {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2) 0%,
+    rgba(59, 130, 246, 0.1) 100%
+  ) !important;
+  color: #3b82f6 !important;
+  border-left: 3px solid #3b82f6;
+  font-weight: 600;
+}
+
+/* ============================================================
+   STATS CARDS
+   ============================================================ */
+
+.admin-stat-card {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(59, 130, 246, 0.05) 100%
+  ) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2) !important;
+}
+
+.admin-stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+  line-height: 1;
+}
+
+.admin-stat-label {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 960px) {
+  .admin-card-title {
+    padding: 1rem;
+  }
+
+  .admin-sidebar-item {
+    min-height: 48px !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .admin-stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-card {
+    border-radius: 8px !important;
+  }
+
+  .admin-btn {
+    font-size: 0.875rem !important;
+  }
+
+  .admin-stat-card {
+    padding: 1rem !important;
+  }
+
+  .admin-stat-value {
+    font-size: 1.75rem;
+  }
+}

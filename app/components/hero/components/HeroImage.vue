@@ -26,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { IMAGE_URLS } from '~/constants'
+
 withDefaults(
   defineProps<{
     imageUrl?: string
@@ -33,7 +35,7 @@ withDefaults(
     size?: number
   }>(),
   {
-    imageUrl: '/foto-perfil-profissional.jpg',
+    imageUrl: IMAGE_URLS.PROFILE_PHOTO,
     imageAlt: 'Foto profissional',
     size: 320,
   }

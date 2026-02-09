@@ -263,46 +263,46 @@ const projects = computed(() => projectsStore.allProjects)
 // Computed filters with counts - criando categorias dinamicamente a partir dos projetos
 const filters = computed<Filter[]>(() => {
   const allProjects = projects.value
-  
+
   // Obter categorias únicas dos projetos
   const uniqueCategories = [...new Set(allProjects.map(p => p.category).filter(Boolean))]
-  
+
   // Mapeamento de ícones por categoria (pode ser expandido conforme necessário)
   const categoryIcons: Record<string, string> = {
-    'infrastructure': 'mdi-server',
-    'containerization': 'mdi-docker',
-    'automation': 'mdi-robot',
-    'cloud': 'mdi-cloud',
-    'web': 'mdi-web',
-    'mobile': 'mdi-cellphone',
-    'desktop': 'mdi-monitor',
-    'api': 'mdi-api',
-    'database': 'mdi-database',
-    'devops': 'mdi-cog',
-    'security': 'mdi-shield-lock',
-    'iot': 'mdi-chip',
+    infrastructure: 'mdi-server',
+    containerization: 'mdi-docker',
+    automation: 'mdi-robot',
+    cloud: 'mdi-cloud',
+    web: 'mdi-web',
+    mobile: 'mdi-cellphone',
+    desktop: 'mdi-monitor',
+    api: 'mdi-api',
+    database: 'mdi-database',
+    devops: 'mdi-cog',
+    security: 'mdi-shield-lock',
+    iot: 'mdi-chip',
   }
-  
+
   // Função para formatar label da categoria
   const formatCategoryLabel = (category: string): string => {
     const labels: Record<string, string> = {
-      'infrastructure': 'Infraestrutura',
-      'containerization': 'Containers',
-      'automation': 'Automação',
-      'cloud': 'Cloud',
-      'web': 'Web',
-      'mobile': 'Mobile',
-      'desktop': 'Desktop',
-      'api': 'API',
-      'database': 'Banco de Dados',
-      'devops': 'DevOps',
-      'security': 'Segurança',
-      'iot': 'IoT',
+      infrastructure: 'Infraestrutura',
+      containerization: 'Containers',
+      automation: 'Automação',
+      cloud: 'Cloud',
+      web: 'Web',
+      mobile: 'Mobile',
+      desktop: 'Desktop',
+      api: 'API',
+      database: 'Banco de Dados',
+      devops: 'DevOps',
+      security: 'Segurança',
+      iot: 'IoT',
     }
-    
+
     return labels[category] || category.charAt(0).toUpperCase() + category.slice(1)
   }
-  
+
   // Criar filtro "Todos" sempre em primeiro
   const allFilter: Filter = {
     value: 'all',
@@ -310,7 +310,7 @@ const filters = computed<Filter[]>(() => {
     icon: 'mdi-apps',
     count: allProjects.length,
   }
-  
+
   // Criar filtros para cada categoria encontrada
   const categoryFilters: Filter[] = uniqueCategories.map(category => ({
     value: category,
@@ -318,7 +318,7 @@ const filters = computed<Filter[]>(() => {
     icon: categoryIcons[category] || 'mdi-folder',
     count: allProjects.filter(p => p.category === category).length,
   }))
-  
+
   return [allFilter, ...categoryFilters]
 })
 
@@ -326,7 +326,7 @@ const filters = computed<Filter[]>(() => {
 const filteredProjects = computed(() => {
   const allProjects = projects.value
   const currentFilter = selectedFilter.value
-  
+
   // Garantir que sempre retornamos um array válido
   if (!allProjects || !Array.isArray(allProjects)) {
     return []
@@ -419,11 +419,11 @@ const setFilter = (value: string) => {
   if (!value) {
     value = 'all'
   }
-  
+
   selectedFilter.value = value
   currentPage.value = 0 // Sempre resetar para primeira página ao mudar filtro
   _filterVersion.value++ // Força recálculo das computeds
-  
+
   // Re-animar os cards após a mudança de filtro
   nextTick(() => {
     animateProjectCards()

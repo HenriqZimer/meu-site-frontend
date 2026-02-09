@@ -15,6 +15,7 @@ A modern, responsive, and accessible portfolio website built with Nuxt 3, Vue 3,
 ## ✨ Features
 
 ### 🎯 Core Features
+
 - **Responsive Design** - Optimized for all devices (mobile, tablet, desktop)
 - **Minimalist UI** - Clean and professional design focused on content
 - **Dark Mode** - Built-in theme support with Vuetify
@@ -24,6 +25,7 @@ A modern, responsive, and accessible portfolio website built with Nuxt 3, Vue 3,
 - **Google Maps Integration** - Interactive location display
 
 ### 📊 Portfolio Sections
+
 - **Hero Section** - Eye-catching introduction with CTA
 - **About** - Professional background and bio
 - **Skills** - Technical competencies showcase
@@ -33,11 +35,13 @@ A modern, responsive, and accessible portfolio website built with Nuxt 3, Vue 3,
 - **Contact** - Contact form with social links
 
 ### 🔄 State Management
+
 - **Pinia Stores** - Centralized state management
 - **API Integration** - RESTful backend communication
 - **Reactive Data** - Real-time updates and synchronization
 
 ### 🧪 Testing & Quality
+
 - **Vitest** - Fast unit and component testing
 - **Cypress** - Comprehensive E2E testing
 - **Accessibility Tests** - WCAG compliance validation
@@ -47,11 +51,13 @@ A modern, responsive, and accessible portfolio website built with Nuxt 3, Vue 3,
 - **Prettier** - Automated code formatting
 
 ### 📈 Observability
+
 - **Prometheus Metrics** - Application performance monitoring
 - **Health Endpoints** - Readiness and liveness checks
 - **Analytics Ready** - Google Analytics integration support
 
 ### 🚀 DevOps Ready
+
 - **Docker** - Containerized deployment
 - **Jenkins CI/CD** - Automated build and deployment pipeline
 - **SonarQube** - Code quality analysis
@@ -201,28 +207,28 @@ meu-site-frontend/
 
 ## 🔧 NPM Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run dev:prod` | Preview production build |
-| `npm run build` | Build for production |
-| `npm run build:prod` | Build with production env |
-| `npm run generate` | Generate static site |
-| `npm run preview` | Preview production build |
-| `npm start` | Start production server |
-| `npm run test` | Run unit tests |
-| `npm run test:unit:watch` | Run tests in watch mode |
-| `npm run test:unit:ui` | Run tests with Vitest UI |
-| `npm run test:coverage` | Generate coverage report |
-| `npm run test:e2e` | Run E2E tests |
-| `npm run test:e2e:quick` | Run quick E2E tests |
-| `npm run test:e2e:headed` | Open Cypress UI |
-| `npm run test:component` | Run component tests |
-| `npm run lint` | Lint and fix code |
-| `npm run lint:check` | Check linting |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check formatting |
-| `npm run security` | Run security audit |
+| Command                   | Description               |
+| ------------------------- | ------------------------- |
+| `npm run dev`             | Start development server  |
+| `npm run dev:prod`        | Preview production build  |
+| `npm run build`           | Build for production      |
+| `npm run build:prod`      | Build with production env |
+| `npm run generate`        | Generate static site      |
+| `npm run preview`         | Preview production build  |
+| `npm start`               | Start production server   |
+| `npm run test`            | Run unit tests            |
+| `npm run test:unit:watch` | Run tests in watch mode   |
+| `npm run test:unit:ui`    | Run tests with Vitest UI  |
+| `npm run test:coverage`   | Generate coverage report  |
+| `npm run test:e2e`        | Run E2E tests             |
+| `npm run test:e2e:quick`  | Run quick E2E tests       |
+| `npm run test:e2e:headed` | Open Cypress UI           |
+| `npm run test:component`  | Run component tests       |
+| `npm run lint`            | Lint and fix code         |
+| `npm run lint:check`      | Check linting             |
+| `npm run format`          | Format code with Prettier |
+| `npm run format:check`    | Check formatting          |
+| `npm run security`        | Run security audit        |
 
 ## 🌍 Accessing the Application
 
@@ -259,16 +265,19 @@ export default defineNuxtConfig({
 ### Adding New Sections
 
 1. Create component:
+
 ```bash
 touch app/components/NewSection.vue
 ```
 
 2. Create test:
+
 ```bash
 touch app/components/NewSection.spec.ts
 ```
 
 3. Add to homepage:
+
 ```vue
 <!-- app/pages/index.vue -->
 <template>
@@ -282,6 +291,7 @@ touch app/components/NewSection.spec.ts
 ```
 
 4. Create store (if needed):
+
 ```bash
 touch app/stores/newSection.ts
 touch app/stores/newSection.spec.ts
@@ -332,21 +342,21 @@ services:
   frontend:
     build: ./meu-site-frontend
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NUXT_PUBLIC_API_BASE_URL=http://backend:5000
     depends_on:
       - backend
-  
+
   backend:
     build: ./meu-site-backend
     ports:
-      - "5000:5000"
+      - '5000:5000'
     environment:
       - MONGODB_URI=mongodb://mongo:27017/portfolio
     depends_on:
       - mongo
-  
+
   mongo:
     image: mongo:8
     volumes:
@@ -357,6 +367,7 @@ volumes:
 ```
 
 Run with:
+
 ```bash
 docker-compose up -d
 ```
@@ -395,6 +406,7 @@ npm run test:e2e:headed
 ### Coverage Reports
 
 Coverage reports include:
+
 - Component coverage
 - Composable coverage
 - Store coverage
@@ -403,6 +415,7 @@ Coverage reports include:
 ## 🔐 Security Considerations
 
 ### Best Practices Applied
+
 - ✅ XSS protection with Vue sanitization
 - ✅ CSRF protection with Nuxt security headers
 - ✅ Environment variable validation
@@ -412,6 +425,7 @@ Coverage reports include:
 - ✅ Secure API communication
 
 ### Performance Optimizations
+
 - ✅ Server-side rendering (SSR)
 - ✅ Code splitting and lazy loading
 - ✅ Image optimization with @nuxt/image
@@ -424,6 +438,7 @@ Coverage reports include:
 ### Prometheus Metrics
 
 Metrics available at `/api/_health`:
+
 - Request duration
 - Request count
 - Response status codes
@@ -504,6 +519,7 @@ npm install vuetify@latest
 ## 🎯 Lighthouse Scores
 
 Target performance metrics:
+
 - **Performance**: 90+
 - **Accessibility**: 95+
 - **Best Practices**: 95+

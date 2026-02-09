@@ -1,114 +1,54 @@
 import { defineStore } from 'pinia'
 import type { Course } from '~/types/admin'
 
-export const useAdminCoursesStore = defineStore('admin-courses', {
-  state: () => ({
-    courses: [] as Course[],
-    loading: false,
-    error: null as string | null,
-  }),
+export const useAdminCoursesStore = defineStore('admin-courses', () => {
+  // Usa composable genérico para operações CRUD
+  const api = useAdminApi<Course>({ endpoint: 'courses' })
 
-  getters: {
-    allCourses: state => state.courses,
-    activeCount: state => state.courses.filter(c => c.active).length,
-    inactiveCount: state => state.courses.filter(c => !c.active).length,
-    uniqueYears: state => {
-      const years = new Set(
-        state.courses.filter(c => c.date).map(c => new Date(c.date).getFullYear())
-      )
-      return years.size
-    },
-  },
+  // Getters computados
+  const allCourses = computed(() => api.data.value)
+  const activeCount = computed(() => api.data.value.filter(c => c.active).length)
+  const inactiveCount = computed(() => api.data.value.filter(c => !c.active).length)
+  const uniqueYears = computed(() => {
+    const years = new Set(
+      api.data.value.filter(c => c.date).map(c => new Date(c.date).getFullYear())
+    )
+    return years.size
+  })
 
-  actions: {
-    async fetchCourses() {
-      this.loading = true
-      this.error = null
+  // Cursos ordenados por data (lógica específica de courses)
+  const sortedCourses = computed(() => {
+    return [...api.data.value].sort((a, b) => {
+      if (!a.date) return 1
+      if (!b.date) return -1
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+  })
 
-      try {
-        const config = useRuntimeConfig()
-        const data = await $fetch<Course[]>(`${config.public.apiUrl}/courses/admin/all`)
-        this.courses = data.toSorted((a, b) => {
-          if (!a.date) return 1
-          if (!b.date) return -1
-          return new Date(b.date).getTime() - new Date(a.date).getTime()
-        })
-        return data
-      } catch (error: any) {
-        this.error = error?.message ?? 'Erro ao carregar cursos'
-        console.error('Erro ao carregar cursos:', error)
-        throw error
-      } finally {
-        this.loading = false
-      }
-    },
+  // Wrapper para fetchCourses
+  const fetchCourses = async () => {
+    const result = await api.fetchAll()
+    return result
+  }
 
-    async createCourse(courseData: Omit<Course, '_id' | 'createdAt' | 'updatedAt'>) {
-      try {
-        const config = useRuntimeConfig()
-        const newCourse = await $fetch<Course>(`${config.public.apiUrl}/courses`, {
-          method: 'POST',
-          body: courseData,
-        })
-        await this.fetchCourses()
-        return newCourse
-      } catch (error: any) {
-        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar curso'
-        console.error('Erro ao criar curso:', error)
-        throw new Error(errorMsg)
-      }
-    },
+  return {
+    // State
+    courses: api.data,
+    loading: api.loading,
+    error: api.error,
 
-    async updateCourse(id: string, courseData: Partial<Course>) {
-      try {
-        const config = useRuntimeConfig()
-        const {
-          _id,
-          createdAt: _createdAt,
-          updatedAt: _updatedAt,
-          year: _year,
-          month: _month,
-          order: _order,
-          __v,
-          ...cleanData
-        } = courseData as any
+    // Getters
+    allCourses,
+    sortedCourses,
+    activeCount,
+    inactiveCount,
+    uniqueYears,
 
-        const updatedCourse = await $fetch<Course>(`${config.public.apiUrl}/courses/${id}`, {
-          method: 'PUT',
-          body: cleanData,
-        })
-
-        await this.fetchCourses()
-        return updatedCourse
-      } catch (error: any) {
-        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar curso'
-        console.error('Erro ao atualizar curso:', error)
-        throw new Error(errorMsg)
-      }
-    },
-
-    async toggleActive(course: Course) {
-      try {
-        const updatedCourse = { ...course, active: !course.active }
-        await this.updateCourse((course as any)._id!, updatedCourse)
-        return updatedCourse
-      } catch (error: any) {
-        console.error('Erro ao alterar status do curso:', error)
-        throw error
-      }
-    },
-
-    async deleteCourse(id: string) {
-      try {
-        const config = useRuntimeConfig()
-        await $fetch(`${config.public.apiUrl}/courses/${id}`, {
-          method: 'DELETE',
-        })
-        await this.fetchCourses()
-      } catch (error: any) {
-        console.error('Erro ao excluir curso:', error)
-        throw error
-      }
-    },
-  },
+    // Actions
+    fetchCourses,
+    createCourse: api.create,
+    updateCourse: api.update,
+    deleteCourse: api.remove,
+    toggleActive: api.toggleActive,
+  }
 })

@@ -1,114 +1,51 @@
 import { defineStore } from 'pinia'
 import type { Certification } from '~/types/admin'
 
-export const useAdminCertificationsStore = defineStore('admin-certifications', {
-  state: () => ({
-    certifications: [] as Certification[],
-    loading: false,
-    error: null as string | null,
-  }),
+export const useAdminCertificationsStore = defineStore('admin-certifications', () => {
+  // Usa composable genérico para operações CRUD
+  const api = useAdminApi<Certification>({ endpoint: 'certifications' })
 
-  getters: {
-    allCertifications: state => state.certifications,
-    activeCount: state => state.certifications.filter(c => c.active).length,
-    inactiveCount: state => state.certifications.filter(c => !c.active).length,
-    totalSkills: state => state.certifications.reduce((sum, cert) => sum + (cert.skills ?? 0), 0),
-  },
+  // Getters computados
+  const allCertifications = computed(() => api.data.value)
+  const activeCount = computed(() => api.data.value.filter(c => c.active).length)
+  const inactiveCount = computed(() => api.data.value.filter(c => !c.active).length)
+  const totalSkills = computed(() =>
+    api.data.value.reduce((sum, cert) => sum + (cert.skills ?? 0), 0)
+  )
 
-  actions: {
-    async fetchCertifications() {
-      this.loading = true
-      this.error = null
+  // Certificações ordenadas por ano e mês (lógica específica de certifications)
+  const sortedCertifications = computed(() => {
+    return [...api.data.value].sort((a, b) => {
+      const yearDiff = Number(b.year ?? 0) - Number(a.year ?? 0)
+      if (yearDiff !== 0) return yearDiff
+      return Number(b.month ?? 0) - Number(a.month ?? 0)
+    })
+  })
 
-      try {
-        const config = useRuntimeConfig()
-        const data = await $fetch<Certification[]>(
-          `${config.public.apiUrl}/certifications/admin/all`
-        )
-        this.certifications = data.toSorted((a, b) => {
-          const yearDiff = Number(b.year ?? 0) - Number(a.year ?? 0)
-          if (yearDiff !== 0) return yearDiff
-          return Number(b.month ?? 0) - Number(a.month ?? 0)
-        })
-        return data
-      } catch (error: any) {
-        this.error = error?.message ?? 'Erro ao carregar certificações'
-        console.error('Erro ao carregar certificações:', error)
-        throw error
-      } finally {
-        this.loading = false
-      }
-    },
+  // Wrapper para fetchCertifications
+  const fetchCertifications = async () => {
+    const result = await api.fetchAll()
+    return result
+  }
 
-    async createCertification(certData: Omit<Certification, '_id' | 'createdAt' | 'updatedAt'>) {
-      try {
-        const config = useRuntimeConfig()
-        const newCert = await $fetch<Certification>(`${config.public.apiUrl}/certifications`, {
-          method: 'POST',
-          body: certData,
-        })
-        await this.fetchCertifications()
-        return newCert
-      } catch (error: any) {
-        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao criar certificação'
-        console.error('Erro ao criar certificação:', error)
-        throw new Error(errorMsg)
-      }
-    },
+  return {
+    // State
+    certifications: api.data,
+    loading: api.loading,
+    error: api.error,
 
-    async updateCertification(id: string, certData: Partial<Certification>) {
-      try {
-        const config = useRuntimeConfig()
-        const {
-          _id,
-          createdAt: _createdAt,
-          updatedAt: _updatedAt,
-          year: _year,
-          month: _month,
-          order: _order,
-          __v,
-          ...cleanData
-        } = certData as any
+    // Getters
+    allCertifications,
+    sortedCertifications,
+    activeCount,
+    inactiveCount,
+    totalSkills,
 
-        const updatedCert = await $fetch<Certification>(
-          `${config.public.apiUrl}/certifications/${id}`,
-          {
-            method: 'PUT',
-            body: cleanData,
-          }
-        )
-
-        await this.fetchCertifications()
-        return updatedCert
-      } catch (error: any) {
-        const errorMsg = error?.data?.message ?? error?.message ?? 'Erro ao atualizar certificação'
-        console.error('Erro ao atualizar certificação:', error)
-        throw new Error(errorMsg)
-      }
-    },
-
-    async toggleActive(certification: Certification) {
-      try {
-        const updatedCert = { ...certification, active: !certification.active }
-        await this.updateCertification((certification as any)._id!, updatedCert)
-        return updatedCert
-      } catch (error: any) {
-        console.error('Erro ao alterar status da certificação:', error)
-        throw error
-      }
-    },
-
-    async deleteCertification(id: string) {
-      try {
-        const config = useRuntimeConfig()
-        await $fetch(`${config.public.apiUrl}/certifications/${id}`, {
-          method: 'DELETE',
-        })
-        await this.fetchCertifications()
-      } catch (error: any) {
-        console.error('Erro ao excluir certificação:', error)
-        throw error
-      }
-    },
-  },
+    // Actions
+    fetchCertifications,
+    createCertification: api.create,
+    updateCertification: api.update,
+    deleteCertification: api.remove,
+    toggleActive: api.toggleActive,
+  }
 })

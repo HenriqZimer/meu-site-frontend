@@ -13,21 +13,122 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: '/api',
+      apiUrl: process.env.NODE_ENV === 'production' ? 'https://api.henriqzimer.com.br' : '/api',
       siteName: 'Henrique Zimermann',
       siteUrl: 'https://henriqzimer.com.br',
+      siteFirstName: 'Henrique',
+      email: 'contato@henriqzimer.com.br',
+      githubUrl: 'https://github.com/henriqzimer',
+      linkedinUrl: 'https://linkedin.com/in/henriqzimer',
     },
   },
 
   routeRules: {
-    '/api/**': { 
-      proxy: { 
-        to: `${process.env.FRONTEND_API_URL}/**`
-      } 
+    '/api/**': {
+      proxy: {
+        to: `${process.env.FRONTEND_API_URL}/**`,
+      },
     },
+    // Cache estático para páginas públicas
+    '/': { prerender: true },
+    // CSR para área admin
+    '/admin/**': { ssr: false },
   },
 
-  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus', '@pinia/nuxt', '@nuxt/icon'],
+  modules: [
+    'vuetify-nuxt-module',
+    '@artmizu/nuxt-prometheus',
+    '@pinia/nuxt',
+    '@nuxt/icon',
+    'nuxt-security',
+  ],
+
+  security: {
+    headers: {
+      // Content Security Policy - Mais restritivo em produção
+      contentSecurityPolicy:
+        process.env.NODE_ENV === 'production'
+          ? {
+              'default-src': ["'self'"],
+              'script-src': ["'self'", "'wasm-unsafe-eval'"], // Removido unsafe-inline/eval em prod
+              'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'], // Vuetify requer unsafe-inline
+              'img-src': ["'self'", 'data:', 'https:', 'https://imagens.henriqzimer.com.br'],
+              'font-src': ["'self'", 'https://cdn.jsdelivr.net'],
+              'connect-src': [
+                "'self'",
+                'https://api.henriqzimer.com.br',
+                'https://henriqzimer.com.br',
+              ],
+              'frame-ancestors': ["'none'"],
+              'base-uri': ["'self'"],
+              'form-action': ["'self'"],
+              'upgrade-insecure-requests': true,
+            }
+          : {
+              'default-src': ["'self'"],
+              'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+              'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+              'img-src': ["'self'", 'data:', 'https:', 'https://imagens.henriqzimer.com.br'],
+              'font-src': ["'self'", 'https://cdn.jsdelivr.net'],
+              'connect-src': ["'self'", 'https://henriqzimer.com.br'],
+              'frame-ancestors': ["'none'"],
+            },
+
+      // Strict Transport Security
+      strictTransportSecurity: {
+        maxAge: 31536000, // 1 ano
+        includeSubdomains: true,
+        preload: true,
+      },
+
+      // X-Frame-Options
+      xFrameOptions: 'DENY',
+
+      // X-Content-Type-Options
+      xContentTypeOptions: 'nosniff',
+
+      // Referrer Policy
+      referrerPolicy: 'strict-origin-when-cross-origin',
+
+      // Permissions Policy
+      permissionsPolicy: {
+        camera: [],
+        microphone: [],
+        geolocation: [],
+        payment: [],
+        usb: [],
+      },
+
+      // Cross-Origin-Embedder-Policy
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'production' ? 'require-corp' : false,
+
+      // Cross-Origin-Opener-Policy
+      crossOriginOpenerPolicy: process.env.NODE_ENV === 'production' ? 'same-origin' : false,
+
+      // Cross-Origin-Resource-Policy
+      crossOriginResourcePolicy: 'same-origin',
+    },
+
+    // Rate Limiting
+    rateLimiter: {
+      tokensPerInterval: 150, // Aumentado um pouco para melhor UX
+      interval: 60000, // 1 minuto
+      headers: true,
+      driver: {
+        name: 'lruCache', // Mais performático para aplicações pequenas
+      },
+    },
+
+    // CORS - Apenas em produção com domínios específicos
+    corsHandler:
+      process.env.NODE_ENV === 'production'
+        ? {
+            origin: ['https://henriqzimer.com.br', 'https://www.henriqzimer.com.br'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            credentials: true,
+          }
+        : false, // Desabilitado em dev para evitar conflitos com proxy
+  },
 
   icon: {
     provider: 'iconify',
@@ -74,6 +175,7 @@ export default defineNuxtConfig({
     '~/assets/css/sections.css',
     '~/assets/css/components.css',
     '~/assets/css/vuetify.css',
+    '~/assets/css/admin-components.css',
     '~/assets/css/global.css',
   ],
 
@@ -91,11 +193,27 @@ export default defineNuxtConfig({
       include: [
         '@iconify/vue',
         '@iconify-json/devicon',
-        '@iconify-json/logos', 
+        '@iconify-json/logos',
         '@iconify-json/skill-icons',
-        '@iconify-json/simple-icons'
-      ]
-    }
+        '@iconify-json/simple-icons',
+        '@iconify-json/mdi',
+      ],
+    },
+    build: {
+      // Minificação agressiva em produção
+      minify: process.env.NODE_ENV === 'production' ? 'esbuild' : false,
+      // Sourcemaps apenas em dev
+      sourcemap: process.env.NODE_ENV !== 'production',
+      // Chunking inteligente para melhor cache
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vuetify: ['vuetify'],
+            icons: ['@iconify/vue'],
+          },
+        },
+      },
+    },
   },
 
   nitro: {
@@ -103,6 +221,9 @@ export default defineNuxtConfig({
       routes: ['/'],
       crawlLinks: false,
     },
+    // Compressão em produção
+    compressPublicAssets: true,
+    minify: process.env.NODE_ENV === 'production',
   },
 
   app: {

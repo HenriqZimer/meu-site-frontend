@@ -63,11 +63,10 @@ export const CAROUSEL_CONFIG = {
 } as const
 
 // ===== IMAGE URLS =====
+// TODO: Migrar para S3 após configurar domínio imagens.henriqzimer.com.br
 export const IMAGE_URLS = {
-  LOGO: '/logo.png',
+  LOGO: 'https://imagens.henriqzimer.com.br/logo.png',
   PROFILE_PHOTO: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg',
-  PLATFORM_LINUXTIPS: 'https://imagens.henriqzimer.com.br/linux-tips.png',
-  PLATFORM_UDEMY: 'https://imagens.henriqzimer.com.br/udemy.png',
 } as const
 
 // ===== EXTERNAL URLS =====

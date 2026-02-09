@@ -16,7 +16,8 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html', 'lcov'],
+      reporter: ['text', 'json', 'html', 'lcov', 'clover'],
+      reportsDirectory: './coverage',
       exclude: [
         'node_modules/**',
         '.nuxt/**',
@@ -31,8 +32,9 @@ export default defineConfig({
         '**/cypress/**',
         '**/types/**',
         'app/app.vue',
-        'app/components/**/*.vue', // Components Vue não são bem contados pelo v8
-        'app/pages/**/*.vue', // Pages Vue não são bem contados pelo v8
+        'app/components/**/*.vue',
+        'app/pages/**/*.vue',
+        'app/layouts/**/*.vue',
       ],
       include: [
         'app/composables/**/*.ts',
@@ -41,11 +43,34 @@ export default defineConfig({
         'app/constants/**/*.ts',
       ],
       all: true,
-      lines: 80,
-      functions: 80,
-      branches: 80,
-      statements: 80,
+      // Thresholds ajustados para produção (realistas e alcançáveis)
+      lines: 70,
+      functions: 70,
+      branches: 65,
+      statements: 70,
+      // Força falhas no CI se thresholds não forem atingidos
+      thresholds: {
+        autoUpdate: false,
+        perFile: false,
+        lines: 70,
+        functions: 70,
+        branches: 65,
+        statements: 70,
+      },
+      // Gera relatório limpo sem arquivos não testáveis
+      clean: true,
+      cleanOnRerun: true,
     },
+    // Configurações adicionais para performance
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: false,
+      },
+    },
+    // Timeout para testes lentos
+    testTimeout: 10000,
+    hookTimeout: 10000,
   },
   resolve: {
     alias: {

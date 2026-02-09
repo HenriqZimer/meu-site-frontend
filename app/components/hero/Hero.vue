@@ -32,7 +32,11 @@
           lg="6"
           class="d-flex flex-column justify-center align-center mb-10 mb-md-0"
         >
-          <HeroComponentsHeroImage :size="avatarSize" :image-alt="imageAlt" />
+          <HeroComponentsHeroImage
+            :size="avatarSize"
+            :image-alt="imageAlt"
+            :image-url="IMAGE_URLS.PROFILE_PHOTO"
+          />
 
           <!-- Social Links -->
           <div class="hero-social-links mt-10">
@@ -72,6 +76,7 @@
 </template>
 
 <script setup lang="ts">
+import { IMAGE_URLS } from '~/constants'
 import { useSocialLinks } from '~/composables/useSocialLinks'
 import { useProjectsStore } from '~/stores/projects'
 import { useCertificationsStore } from '~/stores/certifications'
