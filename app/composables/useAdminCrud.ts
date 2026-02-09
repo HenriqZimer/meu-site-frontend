@@ -4,8 +4,10 @@ import { computed } from 'vue'
  * Composable genérico para Admin CRUD
  * Fornece métodos padronizados para qualquer store admin
  */
+ 
 export function useAdminCrud<T extends Record<string, any>>(store: any) {
   // Helper para buscar valores de diferentes propriedades
+   
   const getStoreValue = (keys: string[], fallback: any = []) => {
     for (const key of keys) {
       if (store[key] !== undefined && store[key] !== null) {
@@ -17,6 +19,7 @@ export function useAdminCrud<T extends Record<string, any>>(store: any) {
 
   const getStoreMethod = (
     keys: string[],
+     
     fallback: () => Promise<any> = () => Promise.resolve()
   ) => {
     for (const key of keys) {

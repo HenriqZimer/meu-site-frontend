@@ -1,94 +1,59 @@
 # Dependencies
 node_modules
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Build outputs (keep for production build)
+# Nuxt
 .nuxt
+.output
 .cache
-.nitro
-.data
 
-# Environment files
-.env
-.env.*
-!.env.example
-
-# Git
-.git
-.gitignore
-.github
+# Build files
+dist
+build
+*.log
 
 # Testing
 coverage
 .nyc_output
-cypress
-cypress.config.mjs
-*.spec.ts
 *.test.ts
-vitest.config.ts
+*.spec.ts
+test
+cypress
+**/__tests__/**
+**/__mocks__/**
 
-# IDE
+# Environment & Config
+.env
+.env.local
+.env.*.local
 .vscode
 .idea
-.fleet
-*.swp
-*.swo
-*~
 
-# CI/CD
-Jenkinsfile
-jenkinsPod.yaml
-sonar-project.properties
+# Git & CI/CD
+.git
+.gitignore
 .gitlab-ci.yml
-.travis.yml
+.github
 
 # Documentation
 README.md
 CHANGELOG.md
-LICENSE
 *.md
-!nuxt.md
+docs
 
 # Docker
 Dockerfile
-.dockerignore
+Dockerfile.*
 docker-compose*.yml
-Makefile
+.dockerignore
 
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Cache
-.npm
-.cache
-.eslintcache
-
-# OS
+# Misc
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-
-# Development
-./scripts
-/data
-/tmp
-/temp
-
-# NPM
-.npmrc
-
-**/*.spec.ts
-**/*.test.ts
+*.swp
+*.swo
+*~
+.eslintcache

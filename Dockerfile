@@ -1,38 +1,53 @@
-# --- Estágio 1: Builder ---
-FROM cgr.dev/chainguard/node:latest AS builder
+# ========================================
+# Stage 1: Build
+# Usa latest-dev pois precisa do npm para build
+# ========================================
+FROM cgr.dev/chainguard/node:latest-dev AS builder
 
-# Define o diretório de trabalho
+# Argumentos para build time
+ARG FRONTEND_API_URL=http://localhost:5000/api
+ARG NODE_ENV=production
+ENV FRONTEND_API_URL=$FRONTEND_API_URL
+ENV NODE_ENV=$NODE_ENV
+
 WORKDIR /app
 
-# 1. Copia package.json com a posse correta para o usuário 'node'
+# Copia arquivos de dependências
 COPY --chown=node:node package*.json ./
 
-# Instala as dependências
-RUN npm ci --production
+# Instala todas as dependências (necessário para build)
+RUN npm ci --no-audit --no-fund
 
-# 2. Copia o código fonte também garantindo a posse para o usuário 'node'
+# Copia código fonte
 COPY --chown=node:node . .
 
-# Agora o usuário 'node' tem permissão de escrita na pasta /app para criar a .output
+# Build da aplicação Nuxt
 RUN npm run build:prod
 
-# Limpa o cache do npm para reduzir o tamanho da imagem
-RUN npm prune --production
+# Remove devDependencies e limpa cache
+RUN npm prune --production --no-audit --no-fund && \
+    npm cache clean --force
 
-# --- Estágio 2: Production ---
+# ========================================
+# Stage 2: Production
+# Usa latest (sem npm) - mais leve e sem vulnerabilidades
+# ========================================
 FROM cgr.dev/chainguard/node:latest AS production
 
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia apenas os artefatos gerados, mantendo a posse correta
+# Copia apenas o build final (.output) do stage anterior
 COPY --from=builder --chown=node:node /app/.output ./.output
 
 # Variáveis de ambiente
-ENV NODE_ENV=production
-ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
+    PORT=3000
 
 EXPOSE 3000
 
+# Usuário non-root (já é o padrão na Chainguard, mas deixo explícito)
+USER node
+
+# Inicia o servidor Nitro (ENTRYPOINT já tem /usr/bin/node)
 CMD ["./.output/server/index.mjs"]

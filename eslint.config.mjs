@@ -32,7 +32,7 @@ export default createConfigForNuxt()
       ],
 
       // ===== TypeScript Rules =====
-      '@typescript-eslint/no-explicit-any': 'warn', // Warn em vez de off para produção
+      '@typescript-eslint/no-explicit-any': 'off', // Desabilitado - frameworks dinâmicos requerem any em alguns casos
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

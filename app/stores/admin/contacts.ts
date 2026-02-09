@@ -44,12 +44,13 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       )
       contacts.value = response.data ?? []
       return contacts.value
-    } catch (err: any) {
-      const errorMsg = err?.message ?? 'Erro ao carregar contatos'
+    } catch (err: unknown) {
+       
+      const errorMsg = (err as any)?.message ?? 'Erro ao carregar contatos'
       error.value = errorMsg
 
       if (import.meta.dev) {
-        console.error('[useAdminContactsStore] fetchContacts:', err)
+        console.error('[useAdminContactsStore] fetchContacts:', err as any)
       }
 
       throw new Error(errorMsg)
@@ -76,9 +77,10 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       }
 
       return response.data
-    } catch (err: any) {
+    } catch (err: unknown) {
+       
       if (import.meta.dev) {
-        console.error('[useAdminContactsStore] toggleRead:', err)
+        console.error('[useAdminContactsStore] toggleRead:', err as any)
       }
       throw err
     }
@@ -92,9 +94,10 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
         headers: getAuthHeaders(),
       })
       await fetchContacts()
-    } catch (err: any) {
+    } catch (err: unknown) {
+       
       if (import.meta.dev) {
-        console.error('[useAdminContactsStore] deleteContact:', err)
+        console.error('[useAdminContactsStore] deleteContact:', err as any)
       }
       throw err
     }
@@ -106,9 +109,10 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       const readContacts = contacts.value.filter(c => c.read && c._id)
       await Promise.all(readContacts.map(contact => deleteContact(contact._id as string)))
       await fetchContacts()
-    } catch (err: any) {
+    } catch (err: unknown) {
+       
       if (import.meta.dev) {
-        console.error('[useAdminContactsStore] deleteAllRead:', err)
+        console.error('[useAdminContactsStore] deleteAllRead:', err as any)
       }
       throw err
     }

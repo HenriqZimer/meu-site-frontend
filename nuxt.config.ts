@@ -21,6 +21,7 @@ export default defineNuxtConfig({
       githubUrl: 'https://github.com/henriqzimer',
       linkedinUrl: 'https://linkedin.com/in/henriqzimer',
     },
+    frontendApiUrl: process.env.FRONTEND_API_URL || 'http://localhost:5000/api',
   },
 
   routeRules: {
@@ -47,11 +48,11 @@ export default defineNuxtConfig({
     headers: {
       // Content Security Policy - Mais restritivo em produção
       contentSecurityPolicy:
-        process.env.NODE_ENV === 'production'
+        process.env.NODE_ENV === 'production' && process.env.DEPLOY_ENV === 'production'
           ? {
               'default-src': ["'self'"],
-              'script-src': ["'self'", "'wasm-unsafe-eval'"], // Removido unsafe-inline/eval em prod
-              'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'], // Vuetify requer unsafe-inline
+              'script-src': ["'self'", "'wasm-unsafe-eval'"],
+              'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
               'img-src': ["'self'", 'data:', 'https:', 'https://imagens.henriqzimer.com.br'],
               'font-src': ["'self'", 'https://cdn.jsdelivr.net'],
               'connect-src': [
@@ -62,24 +63,30 @@ export default defineNuxtConfig({
               'frame-ancestors': ["'none'"],
               'base-uri': ["'self'"],
               'form-action': ["'self'"],
-              'upgrade-insecure-requests': true,
+              'upgrade-insecure-requests': true,  // Apenas em produção real
             }
           : {
               'default-src': ["'self'"],
-              'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+              'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", "'wasm-unsafe-eval'"],
               'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
-              'img-src': ["'self'", 'data:', 'https:', 'https://imagens.henriqzimer.com.br'],
+              'img-src': ["'self'", 'data:', 'https:', 'http:', 'https://imagens.henriqzimer.com.br'],
               'font-src': ["'self'", 'https://cdn.jsdelivr.net'],
-              'connect-src': ["'self'", 'https://henriqzimer.com.br'],
+              'connect-src': ["'self'", 'http:', 'https:', 'ws:', 'wss:'],
               'frame-ancestors': ["'none'"],
+              'base-uri': ["'self'"],
+              'form-action': ["'self'"],
+              // NÃO force HTTPS em desenvolvimento/Docker local
             },
 
-      // Strict Transport Security
-      strictTransportSecurity: {
-        maxAge: 31536000, // 1 ano
-        includeSubdomains: true,
-        preload: true,
-      },
+      // Strict Transport Security - APENAS em produção real
+      strictTransportSecurity:
+        process.env.DEPLOY_ENV === 'production'
+          ? {
+              maxAge: 31536000, // 1 ano
+              includeSubdomains: true,
+              preload: true,
+            }
+          : false,
 
       // X-Frame-Options
       xFrameOptions: 'DENY',
@@ -99,14 +106,14 @@ export default defineNuxtConfig({
         usb: [],
       },
 
-      // Cross-Origin-Embedder-Policy
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'production' ? 'require-corp' : false,
+      // Cross-Origin-Embedder-Policy - APENAS em produção real
+      crossOriginEmbedderPolicy: process.env.DEPLOY_ENV === 'production' ? 'require-corp' : false,
 
-      // Cross-Origin-Opener-Policy
-      crossOriginOpenerPolicy: process.env.NODE_ENV === 'production' ? 'same-origin' : false,
+      // Cross-Origin-Opener-Policy - APENAS em produção real
+      crossOriginOpenerPolicy: process.env.DEPLOY_ENV === 'production' ? 'same-origin' : false,
 
       // Cross-Origin-Resource-Policy
-      crossOriginResourcePolicy: 'same-origin',
+      crossOriginResourcePolicy: process.env.DEPLOY_ENV === 'production' ? 'same-origin' : false,
     },
 
     // Rate Limiting

@@ -3,6 +3,15 @@
  * Todas as strings, URLs e configurações reutilizáveis
  */
 
+// Type for runtime config
+interface RuntimeConfig {
+  public: {
+    githubUrl: string
+    linkedinUrl: string
+    email: string
+  }
+}
+
 // ===== MENU ITEMS =====
 export const MENU_ITEMS = [
   { id: 'about', label: 'Sobre', icon: 'mdi-account-circle' },
@@ -70,7 +79,7 @@ export const IMAGE_URLS = {
 } as const
 
 // ===== EXTERNAL URLS =====
-export const getExternalUrls = (config: any) => ({
+export const getExternalUrls = (config: RuntimeConfig) => ({
   GITHUB: config.public.githubUrl,
   LINKEDIN: config.public.linkedinUrl,
   EMAIL: `mailto:${config.public.email}`,
@@ -92,7 +101,7 @@ export const TECH_CATEGORIES = {
 } as const
 
 // ===== SOCIAL LINKS BUILDER =====
-export const buildSocialLinks = (config: any) => [
+export const buildSocialLinks = (config: RuntimeConfig) => [
   {
     name: 'GitHub',
     icon: 'mdi-github',
@@ -114,7 +123,7 @@ export const buildSocialLinks = (config: any) => [
 ]
 
 // ===== FOOTER SOCIAL LINKS =====
-export const buildFooterSocialLinks = (config: any) => [
+export const buildFooterSocialLinks = (config: RuntimeConfig) => [
   { name: 'GitHub', icon: 'mdi-github', href: config.public.githubUrl },
   { name: 'LinkedIn', icon: 'mdi-linkedin', href: config.public.linkedinUrl },
   {
