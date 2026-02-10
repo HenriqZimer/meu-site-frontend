@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NODE_ENV === 'production' ? 'https://api.henriqzimer.com.br' : '/api',
+      apiUrl: process.env.NODE_ENV === 'production' ? 'https://api.henriqzimer.com.br/api' : '/api',
       siteName: 'Henrique Zimermann',
       siteUrl: 'https://henriqzimer.com.br',
       siteFirstName: 'Henrique',
