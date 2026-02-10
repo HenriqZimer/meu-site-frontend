@@ -3,19 +3,19 @@ import { ref as vueRef, computed as vueComputed } from 'vue'
 
 // Extend global types
 declare global {
-  // eslint-disable-next-line no-var
+   
   var ref: typeof vueRef
-  // eslint-disable-next-line no-var
+   
   var computed: typeof vueComputed
-  // eslint-disable-next-line no-var
+   
   var useRuntimeConfig: () => {
     public: {
       apiUrl: string
     }
   }
-  // eslint-disable-next-line no-var
+   
   var $fetch: ReturnType<typeof vi.fn>
-  // eslint-disable-next-line no-var
+   
   var useAdminApi: typeof import('./app/composables/useAdminApi').useAdminApi
 }
 

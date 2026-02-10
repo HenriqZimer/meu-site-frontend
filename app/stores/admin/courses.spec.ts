@@ -144,7 +144,9 @@ describe('useAdminCoursesStore', () => {
     vi.mocked(mockFetch).mockRejectedValue({})
 
     const store = useAdminCoursesStore()
-    await expect(store.createCourse({ name: 'Test' } as any)).rejects.toThrow('Erro ao criar courses')
+    await expect(store.createCourse({ name: 'Test' } as any)).rejects.toThrow(
+      'Erro ao criar courses'
+    )
   })
 
   it('should handle update error with error.data.message', async () => {
