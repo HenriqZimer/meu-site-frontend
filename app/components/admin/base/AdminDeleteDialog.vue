@@ -19,7 +19,9 @@
       <v-divider />
 
       <v-card-actions class="admin-dialog-actions">
-        <v-btn variant="text" size="large" @click="$emit('cancel')">{{ cancelText }}</v-btn>
+        <v-btn variant="text" size="large" color="error" @click="$emit('cancel')">{{
+          cancelText
+        }}</v-btn>
         <v-btn
           color="error"
           :loading="loading"

@@ -191,6 +191,32 @@ const showSnackbar = (text: string, color: string = 'success') => {
   snackbar.value = true
 }
 
+/**
+ * Converte campos de data ISO para formato yyyy-MM
+ * Necessário para campos HTML type="month" que esperam formato específico
+ */
+const convertDatesForForm = (item: any): any => {
+  const converted = { ...item }
+
+  // Lista de campos que podem conter datas no formato month (yyyy-MM)
+  const dateFields = ['date', 'projectDate', 'issueDate', 'completionDate']
+
+  dateFields.forEach(field => {
+    if (converted[field]) {
+      const value = converted[field]
+      // Se for timestamp ISO completo (contém 'T'), converte para yyyy-MM
+      if (typeof value === 'string' && value.includes('T')) {
+        const date = new Date(value)
+        const year = date.getFullYear()
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        converted[field] = `${year}-${month}`
+      }
+    }
+  })
+
+  return converted
+}
+
 const openCreateDialog = () => {
   isEditing.value = false
   editedItem.value = { ...props.defaultItem }
@@ -200,7 +226,8 @@ const openCreateDialog = () => {
 const editItem = (item: T) => {
   isEditing.value = true
   editedIndex.value = props.items.indexOf(item)
-  editedItem.value = { ...item }
+  // Converte datas ISO para formato yyyy-MM antes de abrir o modal
+  editedItem.value = convertDatesForForm(item)
   dialog.value = true
 }
 
@@ -216,10 +243,18 @@ const saveItem = async () => {
   saving.value = true
   try {
     // Remove campos internos do MongoDB/sistema
-    const { _id, _createdAt, _updatedAt, __v, ...itemData } = editedItem.value as any
+    const {
+      _id,
+      _createdAt,
+      _updatedAt,
+      createdAt: _createdAt2,
+      updatedAt: _updatedAt2,
+      __v,
+      ...itemData
+    } = editedItem.value as any
 
     if (isEditing.value && _id) {
-      await props.onUpdate(_id, editedItem.value)
+      await props.onUpdate(_id, itemData)
       showSnackbar(`${props.singularName} atualizado com sucesso`)
     } else {
       await props.onCreate(itemData)

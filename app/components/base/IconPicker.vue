@@ -60,7 +60,7 @@
 
         <v-card-actions class="admin-dialog-actions">
           <v-spacer />
-          <v-btn variant="tonal" size="large" color="grey" class="px-8" @click="dialog = false">
+          <v-btn variant="tonal" size="large" color="error" class="px-8" @click="dialog = false">
             Fechar
           </v-btn>
           <v-spacer />

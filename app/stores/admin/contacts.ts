@@ -45,7 +45,6 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       contacts.value = response.data ?? []
       return contacts.value
     } catch (err: unknown) {
-       
       const errorMsg = (err as any)?.message ?? 'Erro ao carregar contatos'
       error.value = errorMsg
 
@@ -78,7 +77,6 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
 
       return response.data
     } catch (err: unknown) {
-       
       if (import.meta.dev) {
         console.error('[useAdminContactsStore] toggleRead:', err as any)
       }
@@ -95,7 +93,6 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       })
       await fetchContacts()
     } catch (err: unknown) {
-       
       if (import.meta.dev) {
         console.error('[useAdminContactsStore] deleteContact:', err as any)
       }
@@ -110,7 +107,6 @@ export const useAdminContactsStore = defineStore('admin-contacts', () => {
       await Promise.all(readContacts.map(contact => deleteContact(contact._id as string)))
       await fetchContacts()
     } catch (err: unknown) {
-       
       if (import.meta.dev) {
         console.error('[useAdminContactsStore] deleteAllRead:', err as any)
       }

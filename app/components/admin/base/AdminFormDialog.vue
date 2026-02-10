@@ -16,7 +16,7 @@
 
       <v-card-actions class="admin-dialog-actions">
         <v-spacer />
-        <v-btn variant="tonal" size="large" color="grey" class="px-8" @click="$emit('cancel')">
+        <v-btn variant="tonal" size="large" color="error" class="px-8" @click="$emit('cancel')">
           {{ cancelText }}
         </v-btn>
         <v-btn

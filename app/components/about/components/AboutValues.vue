@@ -63,8 +63,9 @@ const valuesData: Value[] = [
     gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
   },
   {
-    title: 'Colaboração',
-    description: 'Trabalho em equipe e comunicação efetiva são fundamentais para o sucesso',
+    title: 'Comunidade',
+    description:
+      'Lidero iniciativas como AWS Cloud Club Captain e DevOpsDays Floripa, promovendo troca de conhecimento e crescimento coletivo',
     icon: 'mdi-account-group',
     gradient: 'linear-gradient(135deg, #3b82f6 0%, #3730a3 100%)',
   },

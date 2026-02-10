@@ -6,7 +6,7 @@ import type { Ref } from 'vue'
  */
 interface BaseModel {
   _id: string
-   
+
   [key: string]: any
 }
 
@@ -73,8 +73,8 @@ export function useAdminApi<T extends BaseModel>(
       data.value = response as T[]
       return response as T[]
     } catch (err: unknown) {
-       
-      const errorMsg = (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao carregar ${endpoint}`
+      const errorMsg =
+        (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao carregar ${endpoint}`
       error.value = errorMsg
 
       if (import.meta.dev) {
@@ -102,8 +102,8 @@ export function useAdminApi<T extends BaseModel>(
       await fetchAll() // Recarrega lista
       return newItem as T
     } catch (err: unknown) {
-       
-      const errorMsg = (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao criar ${endpoint}`
+      const errorMsg =
+        (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao criar ${endpoint}`
 
       if (import.meta.dev) {
         console.error(`[useAdminApi] create ${endpoint}:`, err as any)
@@ -120,7 +120,7 @@ export function useAdminApi<T extends BaseModel>(
   const update = async (id: string, item: Partial<T>): Promise<T> => {
     try {
       // Remove campos imutáveis
-       
+
       const { _id, _createdAt, _updatedAt, __v, ...cleanData } = item as any
 
       const updatedItem = await $fetch<T>(`${config.public.apiUrl}/${endpoint}/${id}`, {
@@ -132,8 +132,8 @@ export function useAdminApi<T extends BaseModel>(
       await fetchAll() // Recarrega lista
       return updatedItem as T
     } catch (err: unknown) {
-       
-      const errorMsg = (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao atualizar ${endpoint}`
+      const errorMsg =
+        (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao atualizar ${endpoint}`
 
       if (import.meta.dev) {
         console.error(`[useAdminApi] update ${endpoint}:`, err as any)
@@ -156,8 +156,8 @@ export function useAdminApi<T extends BaseModel>(
 
       await fetchAll() // Recarrega lista
     } catch (err: unknown) {
-       
-      const errorMsg = (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao deletar ${endpoint}`
+      const errorMsg =
+        (err as any)?.data?.message ?? (err as any)?.message ?? `Erro ao deletar ${endpoint}`
 
       if (import.meta.dev) {
         console.error(`[useAdminApi] remove ${endpoint}:`, err as any)

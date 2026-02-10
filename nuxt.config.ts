@@ -63,13 +63,19 @@ export default defineNuxtConfig({
               'frame-ancestors': ["'none'"],
               'base-uri': ["'self'"],
               'form-action': ["'self'"],
-              'upgrade-insecure-requests': true,  // Apenas em produção real
+              'upgrade-insecure-requests': true, // Apenas em produção real
             }
           : {
               'default-src': ["'self'"],
               'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'", "'wasm-unsafe-eval'"],
               'style-src': ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
-              'img-src': ["'self'", 'data:', 'https:', 'http:', 'https://imagens.henriqzimer.com.br'],
+              'img-src': [
+                "'self'",
+                'data:',
+                'https:',
+                'http:',
+                'https://imagens.henriqzimer.com.br',
+              ],
               'font-src': ["'self'", 'https://cdn.jsdelivr.net'],
               'connect-src': ["'self'", 'http:', 'https:', 'ws:', 'wss:'],
               'frame-ancestors': ["'none'"],

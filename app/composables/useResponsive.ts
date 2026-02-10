@@ -14,7 +14,6 @@ export interface Breakpoints {
   xl: number
 }
 
- 
 export interface ResponsiveValue<T = any> {
   mobile?: T
   tablet?: T

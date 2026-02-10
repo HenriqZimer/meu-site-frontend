@@ -40,7 +40,7 @@ const storyItems: StoryItem[] = [
     icon: 'mdi-history',
     title: 'Minha História',
     description:
-      'Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva.',
+      'Iniciei minha trajetória profissional desenvolvendo soft skills essenciais, mas minha paixão pela tecnologia impulsionou uma transição de carreira acelerada. Em curto prazo, evoluí de estagiário para Assistente de Infraestrutura Sênior, atuando em migrações críticas, redução de custos e administração de servidores Windows e Linux.',
     color: 'purple',
     variant: 'past',
   },
@@ -48,7 +48,7 @@ const storyItems: StoryItem[] = [
     icon: 'mdi-cogs',
     title: 'Presente',
     description:
-      'Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas.',
+      'Atuo fortemente como SRE e DevOps em ambientes Cloud (AWS, Azure, Oracle) e On-premise. Além da atuação técnica com CI/CD, Docker e Terraform, exerço liderança comunitária como AWS Cloud Club Captain na Univali e organizador do DevOpsDays Floripa, fomentando a cultura tech na região.',
     color: 'primary',
     variant: 'present',
   },
@@ -56,7 +56,7 @@ const storyItems: StoryItem[] = [
     icon: 'mdi-rocket-launch',
     title: 'Futuro',
     description:
-      'Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes.',
+      'Meu foco é a especialização contínua em arquiteturas Cloud Native e orquestração de containers com Kubernetes. Busco construir soluções cada vez mais escaláveis e resilientes, aplicando conceitos avançados de observabilidade e automação para entregar alta performance ao negócio.',
     color: 'cyan',
     variant: 'future',
   },
