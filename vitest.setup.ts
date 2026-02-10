@@ -3,19 +3,18 @@ import { ref as vueRef, computed as vueComputed } from 'vue'
 
 // Extend global types
 declare global {
-   
   var ref: typeof vueRef
-   
+
   var computed: typeof vueComputed
-   
+
   var useRuntimeConfig: () => {
     public: {
       apiUrl: string
     }
   }
-   
+
   var $fetch: ReturnType<typeof vi.fn>
-   
+
   var useAdminApi: typeof import('./app/composables/useAdminApi').useAdminApi
 }
 
