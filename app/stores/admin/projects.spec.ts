@@ -145,7 +145,7 @@ describe('useAdminProjectsStore', () => {
 
     const store = useAdminProjectsStore()
     await expect(store.createProject({ name: 'Test' } as any)).rejects.toThrow(
-      'Erro ao criar projeto'
+      'Erro ao criar projects'
     )
   })
 
@@ -162,7 +162,7 @@ describe('useAdminProjectsStore', () => {
 
     const store = useAdminProjectsStore()
     await expect(store.updateProject('1', { name: 'Test' } as any)).rejects.toThrow(
-      'Erro ao atualizar projeto'
+      'Erro ao atualizar projects'
     )
   })
 

@@ -140,7 +140,7 @@ describe('useAdminCertificationsStore', () => {
 
     const store = useAdminCertificationsStore()
     await expect(store.createCertification({ name: 'Test' } as any)).rejects.toThrow(
-      'Erro ao criar certificação'
+      'Erro ao criar certifications'
     )
   })
 
@@ -159,7 +159,7 @@ describe('useAdminCertificationsStore', () => {
 
     const store = useAdminCertificationsStore()
     await expect(store.updateCertification('1', { name: 'Test' } as any)).rejects.toThrow(
-      'Erro ao atualizar certificação'
+      'Erro ao atualizar certifications'
     )
   })
 

@@ -8,7 +8,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: [],
+    setupFiles: ['./vitest.setup.ts'],
     server: {
       deps: {
         inline: ['vuetify'],
@@ -43,11 +43,6 @@ export default defineConfig({
         'app/constants/**/*.ts',
       ],
       all: true,
-      // Thresholds ajustados para produção (realistas e alcançáveis)
-      lines: 70,
-      functions: 70,
-      branches: 65,
-      statements: 70,
       // Força falhas no CI se thresholds não forem atingidos
       thresholds: {
         autoUpdate: false,
